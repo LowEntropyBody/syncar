@@ -39,7 +39,7 @@ typedef struct {
 
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*));
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match_t)(int,int,int),int(*judge_rect_t)(area_infor*));
 
 
 //处理图片返回目标信息
@@ -77,7 +77,7 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 */
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*)){
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match_t)(int,int,int),int(*judge_rect_t)(area_infor*)){
 	//用于计算连通图
 	unsigned char* flags = calloc(width * height, sizeof (unsigned char)); 
 	//返回结果
@@ -92,7 +92,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 	//颜色过滤
 	for (size_t i = 0; i < width; i++) {
 		for (size_t j = 0; j < height; j++) {
-			if((*color_match)(rgb[(i * height + j) * 3 + 0],
+			if((*color_match_t)(rgb[(i * height + j) * 3 + 0],
 				rgb[(i * height + j) * 3 + 1],rgb[(i * height + j) * 3 + 2])){
 				flags[i * height + j] = 0;
 			}else{
@@ -110,7 +110,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 		for (size_t j = 0; j < height; j++) {
 			if(flags[i * height + j] == 0){
 				area_infor* temp_area = deal_area(flags,height,width,i,j);
-				if((*judge_rect)(temp_area)){
+				if((*judge_rect_t)(temp_area)){
 					printf("(%d,%d)\n",i,j);
 					printf("area:%d\n",temp_area->area);
 					printf("left_x:%d\n",temp_area->left_x);

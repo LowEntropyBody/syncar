@@ -62,9 +62,9 @@ int main(void){
 			fclose(out);
 		}
 		//找寻目标
-		int (*color_match)(int,int,int) = color_match;
-		int (*judge_rect)(area_infor*) = judge_rect;
-		aim_infor* infor = find_aim(rgb, camera->width, camera->height, color_match, judge_rect);
+		int (*color_match_t)(int,int,int) = color_match;
+		int (*judge_rect_t)(area_infor*) = judge_rect;
+		aim_infor* infor = find_aim(rgb, camera->width, camera->height, color_match_t, judge_rect_t);
 		//存处理过的图片
 		if(flag_save_img){
 			FILE* out2 = fopen("result2.jpg", "w");
@@ -141,9 +141,9 @@ int main(void){
 			fclose(out);
 		}
 		//找寻目标
-		int (*color_match)(int,int,int) = color_match;
-		int (*judge_rect)(area_infor*) = judge_rect;
-		aim_infor* infor = find_aim(rgb, camera->width, camera->height, color_match, judge_rect);
+		int (*color_match_t)(int,int,int) = color_match;
+		int (*judge_rect_t)(area_infor*) = judge_rect;
+		aim_infor* infor = find_aim(rgb, camera->width, camera->height, color_match_t, judge_rect_t);
 		//存处理过的图片
 		if(flag_save_img){
 			FILE* out2 = fopen("result2.jpg", "w");
