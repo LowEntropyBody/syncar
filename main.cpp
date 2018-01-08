@@ -62,7 +62,7 @@ int main(void){
 			fclose(out);
 		}
 		//找寻目标
-		int (*color_match)(int,int,int) = color_match_red;
+		int (*color_match)(int,int,int) = color_match_green;
 		int (*judge_rect)(area_infor*) = judge_rect_1;
 		aim_infor* infor = find_aim(rgb, camera->width, camera->height, color_match, judge_rect);
 		//存处理过的图片
@@ -141,7 +141,7 @@ int main(void){
 			fclose(out);
 		}
 		//找寻目标
-		int (*color_match)(int,int,int) = color_match_red;
+		int (*color_match)(int,int,int) = color_match_green;
 		int (*judge_rect)(area_infor*) = judge_rect_1;
 		aim_infor* infor = find_aim(rgb, camera->width, camera->height, color_match, judge_rect);
 		//存处理过的图片
