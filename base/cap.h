@@ -98,7 +98,7 @@ camera_t* camera_open(const char * device, uint32_t width, uint32_t height)
 {
   int fd = open(device, O_RDWR | O_NONBLOCK, 0);
   if (fd == -1) quit("open");
-  camera_t* camera = malloc(sizeof (camera_t));
+  camera_t* camera = (camera_t*)malloc(sizeof (camera_t));
   camera->fd = fd;
   camera->width = width;
   camera->height = height;
