@@ -10,6 +10,7 @@ int main(void){
 	
 	auto res = cli.post("/uploadinfor/", "name=john1&note=coder", "application/x-www-form-urlencoded");
     if (res && res->status == 200) {
+		cout << "success" << endl;
         cout << res->body << endl;
     }else{
 		cout << "failed" << endl;
