@@ -181,7 +181,7 @@ int color_match_red(int r,int g,int b){
 **flags为呆测矩阵,二维用一维形式表示flags[(i * height + j)]，0表示没有走过，1表示走过
 */
 area_infor* deal_area(unsigned char* flags,int height,int width,int start_x,int start_y){
-	area_infor* ainfor = (aim_infor*)malloc(sizeof (area_infor));
+	area_infor* ainfor = (area_infor*)malloc(sizeof (area_infor));
 	area_infor* temp = NULL;
 	//初始化
 	ainfor -> area = 0;

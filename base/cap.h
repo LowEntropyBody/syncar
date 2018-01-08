@@ -158,7 +158,7 @@ void camera_init(camera_t* camera) {
     if (buf.length > buf_max) buf_max = buf.length;
     camera->buffers[i].length = buf.length;
     camera->buffers[i].start =
-      mmap((uint8_t*)NULL, buf.length, PROT_READ | PROT_WRITE, MAP_SHARED,
+      (uint8_t*)mmap(NULL, buf.length, PROT_READ | PROT_WRITE, MAP_SHARED,
            camera->fd, buf.m.offset);
     if (camera->buffers[i].start == MAP_FAILED) quit("mmap");
   }
