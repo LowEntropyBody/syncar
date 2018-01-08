@@ -38,6 +38,9 @@ typedef struct {
 } area_infor;
 
 
+//处理图片返回目标信息
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*));
+
 
 //处理图片返回目标信息
 aim_infor* find_cricle(unsigned char* rgb,int height,int width);
@@ -72,6 +75,76 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 	|
 	width=360 x i
 */
+
+//处理图片返回目标信息
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*)){
+	//用于计算连通图
+	unsigned char* flags = calloc(width * height, sizeof (unsigned char)); 
+	//返回结果
+	aim_infor* infor = malloc(sizeof (aim_infor));
+	infor -> isfind = 0;
+	infor -> center_x = 0;
+	infor -> center_y = 0;
+	infor -> l = 0;
+	infor -> w = 0;
+	infor -> area = 0;
+	
+	//颜色过滤
+	for (size_t i = 0; i < width; i++) {
+		for (size_t j = 0; j < height; j++) {
+			if((*color_match)(rgb[(i * height + j) * 3 + 0],
+				rgb[(i * height + j) * 3 + 1],rgb[(i * height + j) * 3 + 2])){
+				flags[i * height + j] = 0;
+			}else{
+				flags[i * height + j] = 1;
+				rgb[(i * height + j) * 3 + 0] = 0;
+				rgb[(i * height + j) * 3 + 1] = 0;
+				rgb[(i * height + j) * 3 + 2] = 0;
+			}
+		}
+	}
+	
+	
+	//形状过滤
+	for (size_t i = 0; i < width; i++) {
+		for (size_t j = 0; j < height; j++) {
+			if(flags[i * height + j] == 0){
+				area_infor* temp_area = deal_area(flags,height,width,i,j);
+				if((*judge_rect)(temp_area)){
+					printf("(%d,%d)\n",i,j);
+					printf("area:%d\n",temp_area->area);
+					printf("left_x:%d\n",temp_area->left_x);
+					printf("left_y:%d\n",temp_area->left_y);
+					printf("right_x:%d\n",temp_area->right_x);
+					printf("right_y:%d\n",temp_area->right_y);
+					printf("top_x:%d\n",temp_area->top_x);
+					printf("top_y:%d\n",temp_area->top_y);
+					printf("bottom_x:%d\n",temp_area->bottom_x);
+					printf("bottom_y:%d\n",temp_area->bottom_y);
+					
+					printf("面积 S = %d,中心 O = (%d,%d),长 l = %d,宽 w = %d\n",temp_area->area,
+					(temp_area -> bottom_x + temp_area -> top_x)/2,
+					(temp_area -> right_y + temp_area -> left_y)/2,
+					(temp_area -> bottom_x - temp_area -> top_x),
+					(temp_area -> right_y - temp_area -> left_y));
+					//保存结果
+					infor -> isfind = 1;
+					if(infor -> area < temp_area -> area){
+						infor -> area = temp_area -> area;
+						infor -> center_x = (temp_area -> bottom_x + temp_area -> top_x)/2;
+						infor -> center_y = (temp_area -> right_y + temp_area -> left_y)/2;
+						infor -> l = (temp_area -> bottom_x - temp_area -> top_x);
+						infor -> w = (temp_area -> right_y - temp_area -> left_y);
+					}
+					free(temp_area);
+				}
+			}
+		}
+	}
+	free(flags);
+	return infor;
+}
+
 aim_infor* find_cricle(unsigned char* rgb,int height,int width){
 	//用于计算连通图
 	unsigned char* flags = calloc(width * height, sizeof (unsigned char)); 
