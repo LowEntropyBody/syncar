@@ -42,9 +42,6 @@ typedef struct {
 //处理图片返回目标信息
 aim_infor* find_cricle(unsigned char* rgb,int height,int width);
 
-//判断连通图是否是圆形
-int judge_cricle(area_infor* ar);
-
 //判断连通图是否是8.5*21 矩形
 int judge_rect(area_infor* ar);
 
@@ -166,36 +163,18 @@ int judge_rect(area_infor* ar){
 	return 1;
 }
 
-//判断连通图是否是圆形
-int judge_cricle(area_infor* ar){
-	//太小不算目标
-	if(ar -> area < 5 * 5 * 3.1415926)
-		return 0;
-	//左右直径
-	int left_right_l = (ar -> right_y - ar -> left_y);
-	//上下直径
-	int top_bottom_l = (ar -> bottom_x - ar -> top_x);
-	
-	//左右边界的差值小于左右直径的三分之一
-	if(abs(ar -> left_x - ar -> right_x) >= left_right_l/3){
-		return 0;
+//颜色是否匹配
+int color_match(int r,int g,int b){
+	//红色分量大
+	if((double)r/(double)g > 1.3 && (double)r/(double)b >1.3){
+		//其他两色分量差别不大
+		if((double)g/(double)b < 2 && (double)g/(double)b > 0.5){
+			return 1;
+		}
 	}
-	
-	//上下边界的差值小于上下直径的三分之一
-	if(abs(ar -> top_y - ar -> bottom_y) >= top_bottom_l/3){
-		return 0;
-	}
-	//上下和左右的直径相似
-	if(abs(left_right_l - top_bottom_l)/((left_right_l + top_bottom_l) / 2) >= 0.2){
-		return 0;
-	}
-	//面积要吻合
-	double r = (left_right_l + top_bottom_l)/4;
-	if(((r * r * 3.1415926)/((double)ar -> area)) > 1.3 || ((r * r * 3.1415926)/((double)ar -> area)) < 0.77){
-		return 0;
-	}
-	return 1;
+	return 0;
 }
+
 
 
 /*递归计算连通图大小，上下左右边界点并返回
@@ -269,15 +248,4 @@ void compare_two_ainfor(area_infor* a,area_infor* b){
 }
 
 
-//颜色是否匹配
-int color_match(int r,int g,int b){
-	//红色分量大
-	if((double)r/(double)g > 1.3 && (double)r/(double)b >1.3){
-		//其他两色分量差别不大
-		if((double)g/(double)b < 2 && (double)g/(double)b > 0.5){
-			return 1;
-		}
-	}
-	return 0;
-}
 #endif
