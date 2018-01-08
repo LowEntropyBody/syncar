@@ -144,7 +144,7 @@ void camera_init(camera_t* camera) {
   req.memory = V4L2_MEMORY_MMAP;
   if (xioctl(camera->fd, VIDIOC_REQBUFS, &req) == -1) quit("VIDIOC_REQBUFS");
   camera->buffer_count = req.count;
-  camera->buffers = calloc(req.count, sizeof (buffer_t));
+  camera->buffers = (buffer_t*)calloc(req.count, sizeof (buffer_t));
 
   size_t buf_max = 0;
   for (size_t i = 0; i < camera->buffer_count; i++) {
@@ -158,11 +158,11 @@ void camera_init(camera_t* camera) {
     if (buf.length > buf_max) buf_max = buf.length;
     camera->buffers[i].length = buf.length;
     camera->buffers[i].start =
-      mmap(NULL, buf.length, PROT_READ | PROT_WRITE, MAP_SHARED,
+      mmap((uint8_t*)NULL, buf.length, PROT_READ | PROT_WRITE, MAP_SHARED,
            camera->fd, buf.m.offset);
     if (camera->buffers[i].start == MAP_FAILED) quit("mmap");
   }
-  camera->head.start = malloc(buf_max);
+  camera->head.start = (uint8_t*)malloc(buf_max);
 }
 
 
@@ -236,9 +236,9 @@ int camera_frame(camera_t* camera, struct timeval timeout) {
 void jpeg(FILE* dest, uint8_t* rgb, uint32_t width, uint32_t height, int quality)
 {
   JSAMPARRAY image;
-  image = calloc(height, sizeof (JSAMPROW));
+  image = (JSAMPARRAY)calloc(height, sizeof (JSAMPROW));
   for (size_t i = 0; i < height; i++) {
-    image[i] = calloc(width * 3, sizeof (JSAMPLE));
+    image[i] = (JSAMPROW)calloc(width * 3, sizeof (JSAMPLE));
     for (size_t j = 0; j < width; j++) {
       image[i][j * 3 + 0] = rgb[(i * width + j) * 3 + 0];
       image[i][j * 3 + 1] = rgb[(i * width + j) * 3 + 1];
@@ -279,7 +279,7 @@ int minmax(int min, int v, int max)
 
 uint8_t* yuyv2rgb(uint8_t* yuyv, uint32_t width, uint32_t height)
 {
-   uint8_t* rgb = calloc(width * height * 3, sizeof (uint8_t));
+   uint8_t* rgb = (uint8_t*)calloc(width * height * 3, sizeof (uint8_t));
   for (size_t i = 0; i < height; i++) {
     for (size_t j = 0; j < width; j += 2) {
       size_t index = i * width + j;

@@ -75,9 +75,9 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 //处理图片返回目标信息
 aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*)){
 	//用于计算连通图
-	unsigned char* flags = calloc(width * height, sizeof (unsigned char)); 
+	unsigned char* flags = (unsigned char*)calloc(width * height, sizeof (unsigned char)); 
 	//返回结果
-	aim_infor* infor = malloc(sizeof (aim_infor));
+	aim_infor* infor = (aim_infor*)malloc(sizeof (aim_infor));
 	infor -> isfind = 0;
 	infor -> center_x = 0;
 	infor -> center_y = 0;
@@ -181,7 +181,7 @@ int color_match_red(int r,int g,int b){
 **flags为呆测矩阵,二维用一维形式表示flags[(i * height + j)]，0表示没有走过，1表示走过
 */
 area_infor* deal_area(unsigned char* flags,int height,int width,int start_x,int start_y){
-	area_infor* ainfor = malloc(sizeof (area_infor));
+	area_infor* ainfor = (aim_infor*)malloc(sizeof (area_infor));
 	area_infor* temp = NULL;
 	//初始化
 	ainfor -> area = 0;
