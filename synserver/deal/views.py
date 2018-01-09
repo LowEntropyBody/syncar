@@ -21,3 +21,11 @@ def uploadinfor(request):
 @csrf_exempt
 def end(request):
 	return HttpResponse(u"end")
+
+@csrf_exempt
+def controlstart(request):
+	return HttpResponse(u"end")
+	
+@csrf_exempt
+def getstatus(request):
+	return HttpResponse(u"end")
