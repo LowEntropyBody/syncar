@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from deal import views as deal_views  # new
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+	url(r'^admin/', admin.site.urls),
+	url(r'^uploadinfor/', deal_views.uploadinfor,name='uploadinfor'),
+	url(r'^start/', deal_views.start,name='start'),
+	url(r'^end/', deal_views.end,name='end'),
 ]
