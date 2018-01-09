@@ -22,9 +22,18 @@ def uploadinfor(request):
 def end(request):
 	return HttpResponse(u"end")
 
+#启动系统
 @csrf_exempt
 def controlstart(request):
-	return HttpResponse(u"end")
+	startFlag = StartFlag.objects.filter(id = 1);
+	if startFlag:
+		startFlag = startFlag[0]
+		startFlag.flag = 1;
+		startFlag.save();
+		return HttpResponse("System start");
+	sf = StartFlag(id = 1, flag = 1);
+	sf.save();
+	return HttpResponse("System start")
 	
 @csrf_exempt
 def getstatus(request):
