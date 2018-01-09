@@ -22,4 +22,6 @@ urlpatterns = [
 	url(r'^uploadinfor/', deal_views.uploadinfor,name='uploadinfor'),
 	url(r'^start/', deal_views.start,name='start'),
 	url(r'^end/', deal_views.end,name='end'),
+	url(r'^controlstart/', deal_views.controlstart,name='controlstart'),
+	url(r'^getstatus/', deal_views.getstatus,name='getstatus'),
 ]
