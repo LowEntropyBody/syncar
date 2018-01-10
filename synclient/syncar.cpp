@@ -21,14 +21,13 @@ class RectTarget {
 		int (*cm)(int,int,int);
 		double width;
 		double hight;
-		int id;
+		string id;
 		double distance;
 		double degree;
 		aim_infor* infor;
-		int index;
 	public:
-		RectTarget(int id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp);
-		bool findTarget(bool isSave, int flag);
+		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp);
+		bool findTarget(bool isSave, string flag);
 		aim_infor* getAimInfor();
 		double getDistance();
 		double getDegree();
@@ -79,15 +78,15 @@ int main(int argc, char* argv[])
 	}
 	// 启动
 	cout << "------system start------" << endl;
-	RectTarget rt(1, color_match_red, 8.5, 21);
-	rt.findTarget(true,5);
-	rt.findTarget(true,6);
+	RectTarget rt("t1", color_match_red, 8.5, 21);
+	rt.findTarget(true,"5");
+	rt.findTarget(true,"6");
 	rt.show();
 	return   0;
 }
 
 //构造函数
-RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp){
+RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp){
 	id = id_temp;
 	cm = color_match_temp;
 	width = width_temp;
@@ -97,7 +96,7 @@ RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), double
 	infor = NULL;	
 }
 //找目标返回是否找到目标
-bool RectTarget::findTarget(bool isSave, int flag){
+bool RectTarget::findTarget(bool isSave, string flag){
 	//打开摄像机
 	camera_t* camera = camera_open("/dev/video0", 640,360);
 	camera_init(camera);
@@ -115,7 +114,7 @@ bool RectTarget::findTarget(bool isSave, int flag){
 	unsigned char* rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
 	if(isSave){
 		string name = "orign_pic_";
-		name = name + to_string(id) + "_" + flag + ".jpg";
+		name = name + id + "_" + flag + ".jpg";
 		FILE* out = fopen(name.c_str(), "w");
 		jpeg(out, rgb, camera->width, camera->height, 100);
 		fclose(out);
