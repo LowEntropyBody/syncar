@@ -16,9 +16,9 @@
 #include <iostream>
 using namespace std;
 
-//标识设备id
+// 标识设备id
 string devId = "1";
-//服务器ip
+// 服务器ip
 string serverIP = "166.111.66.49";
 
 int main(int argc, char* argv[])
@@ -37,17 +37,30 @@ int main(int argc, char* argv[])
 		cout<<"use default server IP: "<<serverIP<<endl;
 	}
 	cout<<"------wait for starting......------"<<endl;
+	// 连接网络
 	httplib::Client cli(serverIP.c_str(), 8001);
-	//while(1){
+	// 等待50s服务器给指令
+	int i = 0;
+	for(i = 0; i < 100; i++){
 		string send = "devId=";
 		send = send + devId;
 		auto res = cli.post("/start/", send.c_str(), "application/x-www-form-urlencoded");
 		if (res && res->status == 200) {
-			cout << "success" << endl;
-			cout << res->body << endl;
+			if(strcmp(res->body, "1")){
+				break;
+			}else{
+				usleep(1000*500);
+			}
 		}else{
-			cout << "failed" << endl;
+			cout<<"------network failed------"<<endl;
+			exit(-1);
 		}
-	//}
+	}
+	if(i == 100){
+		cout<<"------server command timeout------"<<endl;
+		exit(-1);
+	}
+	// 启动
+	cout<<"------system start------"<<endl;
 	return   0;
 }
