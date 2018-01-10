@@ -127,7 +127,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	}
 	//找目标
 	if(infor != NULL) free(infor);
-	infor = find_aim(rgb, camera->width, camera->height, color_match, width, height);
+	infor = find_aim(rgb, camera->width, camera->height, cm, width, height);
 	if(isSave){
 		string name = "deal_pic_";
 		name = name + id + "_" + flag + ".jpg";
