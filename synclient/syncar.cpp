@@ -111,7 +111,7 @@ double RectTarget::getDegree(){
 	return degree;
 }
 //输出信息
-void show(){
+void RectTarget::show(){
 	cout << "id: " << id << endl;
 	if(cm == color_match_red) cout << "color: red" << endl;
 	if(cm == color_match_green) cout << "color: green" << endl;
