@@ -37,11 +37,11 @@ int main(int argc, char* argv[])
 		cout<<"use default server IP: "<<serverIP<<endl;
 	}
 	cout<<"------wait for starting......------"<<endl;
-	httplib::Client cli(serverIP, 8001);
+	httplib::Client cli(serverIP.c_str(), 8001);
 	//while(1){
 		string send = "devId=";
 		send = send + devId;
-		auto res = cli.post("/start/", send, "application/x-www-form-urlencoded");
+		auto res = cli.post("/start/", send.c_str(), "application/x-www-form-urlencoded");
 		if (res && res->status == 200) {
 			cout << "success" << endl;
 			cout << res->body << endl;
