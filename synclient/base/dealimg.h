@@ -48,7 +48,7 @@ int color_match_red(int r,int g,int b);
 int color_match_green(int r,int g,int b);
 
 //判断连通图是否是8.5*21 矩形
-int judge_rect(area_infor* ar);
+judge_rect(area_infor* ar, double width, double height);
 
 /*递归计算连通图大小，上下左右边界点并返回
 **flags为呆测矩阵,二维用一维形式表示flags[(i * width + j)]，0表示没有走过，1表示走过
