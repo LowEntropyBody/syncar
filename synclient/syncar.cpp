@@ -23,7 +23,7 @@ string serverIP = "166.111.66.49";
 
 int main(int argc, char* argv[])
 {
-	cout<<"system prepare"<<endl;
+	cout<<"------system prepare------"<<endl;
 	if( argc >= 2){
 		devId = argv[2];
 		cout<<"read dev Id: "<<devId<<endl;
@@ -36,7 +36,18 @@ int main(int argc, char* argv[])
 	}else{
 		cout<<"use default server IP: "<<serverIP<<endl;
 	}
-	cout<<"wait for starting......"<<endl;
-	
+	cout<<"------wait for starting......------"<<endl;
+	httplib::Client cli(serverIP, 8001);
+	//while(1){
+		string send = "devId=";
+		send = send + devId;
+		auto res = cli.post("/start/", send, "application/x-www-form-urlencoded");
+		if (res && res->status == 200) {
+			cout << "success" << endl;
+			cout << res->body << endl;
+		}else{
+			cout << "failed" << endl;
+		}
+	//}
 	return   0;
 }

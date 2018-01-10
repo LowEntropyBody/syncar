@@ -6,6 +6,7 @@ from deal.models import StartFlag
 
 @csrf_exempt
 def start(request):
+	devId=str(request.POST['devId']);
 	startFlag = StartFlag.objects.filter(id = 1);
 	if startFlag:
 		startFlag = startFlag[0]
