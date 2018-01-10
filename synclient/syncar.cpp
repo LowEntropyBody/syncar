@@ -16,6 +16,23 @@
 #include <iostream>
 using namespace std;
 
+class RectTarget {	
+	private:
+		int (*color_match)(int,int,int);
+		int width;
+		int high;
+		int id;
+		double distance;
+		double degree;
+		aim_infor* infor;
+	public:
+		RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int high_temp);
+		bool findTarget();
+		aim_infor* getAimInfor();
+		double getDistance();
+		double getDegree();
+};
+
 // 标识设备id
 string devId = "1";
 // 服务器ip
@@ -26,15 +43,15 @@ int main(int argc, char* argv[])
 	cout << "------system prepare------" << endl;
 	if( argc >= 2){
 		devId = argv[2];
-		cout << "read dev Id: " << devId << endl;
+		cout << " read dev Id: " << devId << endl;
 	}else{
-		cout << "use default dev Id: " << devId << endl;
+		cout << " use default dev Id: " << devId << endl;
 	}
 	if( argc >= 4){
 		serverIP = argv[4];
-		cout << "read server IP: " << serverIP << endl;
+		cout << " read server IP: " << serverIP << endl;
 	}else{
-		cout << "use default server IP: " << serverIP << endl;
+		cout << " use default server IP: " << serverIP << endl;
 	}
 	cout << "------wait for starting------" << endl;
 	// 连接网络
@@ -60,5 +77,37 @@ int main(int argc, char* argv[])
 	}
 	// 启动
 	cout << "------system start------" << endl;
+	RectTarget rt(1, color_match_red, 8.5, 21);
+	rt.findTarget();
+	rt.getAimInfor();
+	rt.getDistance();
+	rt.getDegree();
 	return   0;
+}
+
+//构造函数
+RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int high_temp){
+	id = id_temp;
+	color_match = color_match_temp;
+	width = width_temp;
+	hight = width_temp;
+	distance = -1;
+	degree = -1;
+	infor = NULL;	
+}
+//找目标返回是否找到目标
+bool RectTarget::findTarget(){
+	return 0;
+}
+
+aim_infor* RectTarget::getAimInfor(){
+	return infor;
+}
+//返回目标距离
+double RectTarget::getDistance(){
+	return distance;
+}
+//返回目标偏角
+double RectTarget::getDegree(){
+	return degree;
 }
