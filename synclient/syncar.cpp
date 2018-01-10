@@ -18,7 +18,7 @@ using namespace std;
 
 class RectTarget {	
 	private:
-		int (*color_match)(int,int,int);
+		int (*cm)(int,int,int);
 		int width;
 		int hight;
 		int id;
@@ -31,6 +31,7 @@ class RectTarget {
 		aim_infor* getAimInfor();
 		double getDistance();
 		double getDegree();
+		void show();
 };
 
 // 标识设备id
@@ -79,16 +80,14 @@ int main(int argc, char* argv[])
 	cout << "------system start------" << endl;
 	RectTarget rt(1, color_match_red, 8.5, 21);
 	rt.findTarget();
-	rt.getAimInfor();
-	rt.getDistance();
-	rt.getDegree();
+	rt.show();
 	return   0;
 }
 
 //构造函数
 RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int hight_temp){
 	id = id_temp;
-	color_match = color_match_temp;
+	cm = color_match_temp;
 	width = width_temp;
 	hight = hight_temp;
 	distance = -1;
@@ -111,3 +110,29 @@ double RectTarget::getDistance(){
 double RectTarget::getDegree(){
 	return degree;
 }
+//输出信息
+void show(){
+	cout << "id: " << id << endl;
+	if(cm == color_match_red) cout << "color: red" << endl;
+	if(cm == color_match_green) cout << "color: green" << endl;
+	cout << "width: " << width << endl;
+	cout << "hight: " << hight << endl;
+	cout << "distance: " << distance << endl;
+	cout << "degree: " << degree << endl;
+	if(infor != NULL){
+		if(infor->isfind){
+			cout << "infor->isfind: " << "yes" << endl;
+			cout << "center: (" << infor->center_x <<", "<< infor->center_y <<")"<<endl;
+			cout << "infor->l: " << infor->l <<endl;
+			cout << "infor->w: " << infor->w <<endl;
+			cout << "infor->area: " << infor->area <<endl;
+		}else cout << "can not find target" << endl;
+	}else cout << "infor is NULL, use getAimInfor() to find" << endl;
+}
+
+
+
+
+
+
+
