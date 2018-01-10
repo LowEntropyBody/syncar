@@ -23,26 +23,26 @@ string serverIP = "166.111.66.49";
 
 int main(int argc, char* argv[])
 {
-	cout<<"------system prepare------"<<endl;
+	cout << "------system prepare------" << endl;
 	if( argc >= 2){
 		devId = argv[2];
-		cout<<"read dev Id: "<<devId<<endl;
+		cout << "read dev Id: " << devId << endl;
 	}else{
-		cout<<"use default dev Id: "<<devId<<endl;
+		cout << "use default dev Id: " << devId << endl;
 	}
 	if( argc >= 4){
 		serverIP = argv[4];
-		cout<<"read server IP: "<<serverIP<<endl;
+		cout << "read server IP: " << serverIP << endl;
 	}else{
-		cout<<"use default server IP: "<<serverIP<<endl;
+		cout << "use default server IP: " << serverIP << endl;
 	}
-	cout<<"------wait for starting......------"<<endl;
+	cout << "------wait for starting------" << endl;
 	// 连接网络
 	httplib::Client cli(serverIP.c_str(), 8001);
 	// 等待50s服务器给指令
 	int i = 0;
 	for(i = 0; i < 100; i++){
-		if(i%2 == 0) cout<<"wait->"<<i/2<<"s"<<endl;
+		if(i%2 == 0) cout << " " << i/2 + 1 << "s pass..." << endl;
 		string send = "devId=";
 		send = send + devId;
 		auto res = cli.post("/start/", send.c_str(), "application/x-www-form-urlencoded");
@@ -50,15 +50,15 @@ int main(int argc, char* argv[])
 			string body = res->body;
 			if(body == "1")	break; else usleep(1000*500);
 		}else{
-			cout<<"------network failed------"<<endl;
+			cout << "------network failed------" << endl;
 			exit(-1);
 		}
 	}
 	if(i == 100){
-		cout<<"------server command timeout------"<<endl;
+		cout << "------server command timeout------" << endl;
 		exit(-1);
 	}
 	// 启动
-	cout<<"------system start------"<<endl;
+	cout << "------system start------" << endl;
 	return   0;
 }
