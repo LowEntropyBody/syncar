@@ -42,16 +42,13 @@ int main(int argc, char* argv[])
 	// 等待50s服务器给指令
 	int i = 0;
 	for(i = 0; i < 100; i++){
+		if(i%2 == 0) cout<<"wait->"<<i/2<<"s"<<endl;
 		string send = "devId=";
 		send = send + devId;
 		auto res = cli.post("/start/", send.c_str(), "application/x-www-form-urlencoded");
 		if (res && res->status == 200) {
 			string body = res->body;
-			if(body == "1"){
-				break;
-			}else{
-				usleep(1000*500);
-			}
+			if(body == "1")	break; else usleep(1000*500);
 		}else{
 			cout<<"------network failed------"<<endl;
 			exit(-1);
