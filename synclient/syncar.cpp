@@ -19,15 +19,16 @@ using namespace std;
 class RectTarget {	
 	private:
 		int (*cm)(int,int,int);
-		int width;
-		int hight;
+		double width;
+		double hight;
 		int id;
 		double distance;
 		double degree;
 		aim_infor* infor;
+		int index;
 	public:
-		RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int hight_temp);
-		bool findTarget();
+		RectTarget(int id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp);
+		bool findTarget(bool isSave, int flag);
 		aim_infor* getAimInfor();
 		double getDistance();
 		double getDegree();
@@ -79,13 +80,14 @@ int main(int argc, char* argv[])
 	// 启动
 	cout << "------system start------" << endl;
 	RectTarget rt(1, color_match_red, 8.5, 21);
-	rt.findTarget();
+	rt.findTarget(true,5);
+	rt.findTarget(true,6);
 	rt.show();
 	return   0;
 }
 
 //构造函数
-RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int hight_temp){
+RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp){
 	id = id_temp;
 	cm = color_match_temp;
 	width = width_temp;
@@ -95,7 +97,35 @@ RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int wi
 	infor = NULL;	
 }
 //找目标返回是否找到目标
-bool RectTarget::findTarget(){
+bool RectTarget::findTarget(bool isSave, int flag){
+	//打开摄像机
+	camera_t* camera = camera_open("/dev/video0", 640,360);
+	camera_init(camera);
+	camera_start(camera);
+	struct timeval timeout;
+	timeout.tv_sec = 1;
+	timeout.tv_usec = 0;
+	// 跳过前面的5帧图像 
+	for (int i = 0; i < 5; i++) {
+		camera_frame(camera, timeout);
+	}
+	//拍摄照片
+	camera_frame(camera, timeout);
+	//转换为rgb
+	unsigned char* rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
+	if(isSave){
+		string name = "orign_pic_";
+		name = name + to_string(id) + "_" + flag + ".jpg";
+		FILE* out = fopen(name.c_str(), "w");
+		jpeg(out, rgb, camera->width, camera->height, 100);
+		fclose(out);
+		cout << " save orign picture into " << name << endl;
+	}
+	free(rgb);
+	// 关闭摄像机
+	camera_stop(camera);
+	camera_finish(camera);
+	camera_close(camera);
 	return 0;
 }
 
@@ -112,22 +142,22 @@ double RectTarget::getDegree(){
 }
 //输出信息
 void RectTarget::show(){
-	cout << "id: " << id << endl;
+	cout << " id: " << id << endl;
 	if(cm == color_match_red) cout << "color: red" << endl;
 	if(cm == color_match_green) cout << "color: green" << endl;
-	cout << "width: " << width << endl;
-	cout << "hight: " << hight << endl;
-	cout << "distance: " << distance << endl;
-	cout << "degree: " << degree << endl;
+	cout << " width: " << width << endl;
+	cout << " hight: " << hight << endl;
+	cout << " distance: " << distance << endl;
+	cout << " degree: " << degree << endl;
 	if(infor != NULL){
 		if(infor->isfind){
-			cout << "infor->isfind: " << "yes" << endl;
-			cout << "center: (" << infor->center_x <<", "<< infor->center_y <<")"<<endl;
-			cout << "infor->l: " << infor->l <<endl;
-			cout << "infor->w: " << infor->w <<endl;
-			cout << "infor->area: " << infor->area <<endl;
+			cout << " infor->isfind: " << "yes" << endl;
+			cout << " center: (" << infor->center_x <<", "<< infor->center_y <<")"<<endl;
+			cout << " infor->l: " << infor->l <<endl;
+			cout << " infor->w: " << infor->w <<endl;
+			cout << " infor->area: " << infor->area <<endl;
 		}else cout << "can not find target" << endl;
-	}else cout << "infor is NULL, use getAimInfor() to find" << endl;
+	}else cout << " infor is NULL, use getAimInfor() to find" << endl;
 }
 
 
