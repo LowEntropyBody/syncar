@@ -1,6 +1,6 @@
 /*
 **  Author: ZhaoYang
-**	Compile: g++ syncar.cpp -ljpeg -lm -fpermissive -o syncar.out
+**	Compile: g++ synclient/syncar.cpp -ljpeg -lm -fpermissive -o syncar.out
 **  Run: ./syncar.out -devId 1 -serverIP "166.111.66.49"
 **  Lib: sudo apt-get install libv4l-dev
 **		 sudo apt-get install libjpeg-dev
@@ -20,13 +20,13 @@ class RectTarget {
 	private:
 		int (*color_match)(int,int,int);
 		int width;
-		int high;
+		int hight;
 		int id;
 		double distance;
 		double degree;
 		aim_infor* infor;
 	public:
-		RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int high_temp);
+		RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int hight_temp);
 		bool findTarget();
 		aim_infor* getAimInfor();
 		double getDistance();
@@ -86,11 +86,11 @@ int main(int argc, char* argv[])
 }
 
 //构造函数
-RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int high_temp){
+RectTarget::RectTarget(int id_temp, int (*color_match_temp)(int,int,int), int width_temp, int hight_temp){
 	id = id_temp;
 	color_match = color_match_temp;
 	width = width_temp;
-	hight = width_temp;
+	hight = hight_temp;
 	distance = -1;
 	degree = -1;
 	infor = NULL;	
