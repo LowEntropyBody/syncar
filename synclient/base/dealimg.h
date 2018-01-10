@@ -39,7 +39,7 @@ typedef struct {
 
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*));
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), int width_tag, int height_tag);
 
 //颜色是否匹配->红
 int color_match_red(int r,int g,int b);
@@ -48,7 +48,7 @@ int color_match_red(int r,int g,int b);
 int color_match_green(int r,int g,int b);
 
 //判断连通图是否是8.5*21 矩形
-int judge_rect_1(area_infor* ar);
+int judge_rect(area_infor* ar);
 
 /*递归计算连通图大小，上下左右边界点并返回
 **flags为呆测矩阵,二维用一维形式表示flags[(i * width + j)]，0表示没有走过，1表示走过
@@ -76,7 +76,7 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 */
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int),int(*judge_rect)(area_infor*)){
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), int width_tag, int height_tag){
 	//用于计算连通图
 	unsigned char* flags = (unsigned char*)calloc(width * height, sizeof (unsigned char)); 
 	//返回结果
@@ -109,7 +109,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 		for (size_t j = 0; j < height; j++) {
 			if(flags[i * height + j] == 0){
 				area_infor* temp_area = deal_area(flags,height,width,i,j);
-				if((*judge_rect)(temp_area)){
+				if(judge_rect(temp_area, width_tag, height_tag)){
 					printf("(%d,%d)\n",i,j);
 					printf("area:%d\n",temp_area->area);
 					printf("left_x:%d\n",temp_area->left_x);
@@ -145,7 +145,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 }
 
 //判断连通图是否是8.5*21 矩形
-int judge_rect_1(area_infor* ar){
+int judge_rect(area_infor* ar, double width, double height){
 	//太小不算目标
 	if(ar -> area < 200)
 		return 0;
@@ -155,14 +155,14 @@ int judge_rect_1(area_infor* ar){
 	//上下直径
 	double top_bottom_l = (ar -> bottom_x - ar -> top_x);
 
-	/*//上下和左右的直径符合要求比例
+	//上下和左右的直径符合要求比例
 	if(top_bottom_l/left_right_l >= 3.2||top_bottom_l/left_right_l <= 2){
 		return 0;
-	}*/
-	//上下和左右的直径符合要求比例
+	}
+	/*//上下和左右的直径符合要求比例
 	if(top_bottom_l/left_right_l >= 3.6||top_bottom_l/left_right_l <= 2.4){
 		return 0;
-	}
+	}*/
 	//面积要吻合
 	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.2 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
 		return 0;

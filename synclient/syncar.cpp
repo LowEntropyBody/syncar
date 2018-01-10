@@ -20,13 +20,14 @@ class RectTarget {
 	private:
 		int (*cm)(int,int,int);
 		double width;
-		double hight;
+		double height;
 		string id;
 		double distance;
 		double degree;
 		aim_infor* infor;
 	public:
-		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp);
+		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp);
+		~RectTarget();
 		bool findTarget(bool isSave, string flag);
 		aim_infor* getAimInfor();
 		double getDistance();
@@ -86,14 +87,18 @@ int main(int argc, char* argv[])
 }
 
 //构造函数
-RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double hight_temp){
+RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp){
 	id = id_temp;
 	cm = color_match_temp;
 	width = width_temp;
-	hight = hight_temp;
+	height = height_temp;
 	distance = -1;
 	degree = -1;
 	infor = NULL;	
+}
+//析构函数
+RectTarget::~RectTarget(){
+	if(infor != NULL) free(infor);
 }
 //找目标返回是否找到目标
 bool RectTarget::findTarget(bool isSave, string flag){
@@ -114,6 +119,17 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	unsigned char* rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
 	if(isSave){
 		string name = "orign_pic_";
+		name = name + id + "_" + flag + ".jpg";
+		FILE* out = fopen(name.c_str(), "w");
+		jpeg(out, rgb, camera->width, camera->height, 100);
+		fclose(out);
+		cout << " save orign picture into " << name << endl;
+	}
+	//找目标
+	if(infor != NULL) free(infor);
+	infor = find_aim(rgb, camera->width, camera->height, color_match, width, height);
+	if(isSave){
+		string name = "deal_pic_";
 		name = name + id + "_" + flag + ".jpg";
 		FILE* out = fopen(name.c_str(), "w");
 		jpeg(out, rgb, camera->width, camera->height, 100);
@@ -142,10 +158,10 @@ double RectTarget::getDegree(){
 //输出信息
 void RectTarget::show(){
 	cout << " id: " << id << endl;
-	if(cm == color_match_red) cout << "color: red" << endl;
-	if(cm == color_match_green) cout << "color: green" << endl;
+	if(cm == color_match_red) cout << " color: red" << endl;
+	if(cm == color_match_green) cout << " color: green" << endl;
 	cout << " width: " << width << endl;
-	cout << " hight: " << hight << endl;
+	cout << " height: " << height << endl;
 	cout << " distance: " << distance << endl;
 	cout << " degree: " << degree << endl;
 	if(infor != NULL){
