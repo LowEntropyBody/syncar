@@ -46,7 +46,8 @@ int main(int argc, char* argv[])
 		send = send + devId;
 		auto res = cli.post("/start/", send.c_str(), "application/x-www-form-urlencoded");
 		if (res && res->status == 200) {
-			if(strcmp(res->body, "1")){
+			string body = res->body;
+			if(body == "1"){
 				break;
 			}else{
 				usleep(1000*500);
