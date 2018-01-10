@@ -4,6 +4,7 @@
 **  Run: ./syncar.out -devId 1 -serverIP "166.111.66.49"
 **  Lib: sudo apt-get install libv4l-dev
 **		 sudo apt-get install libjpeg-dev
+**  Download: git clone https://github.com/LowEntropyBody/syncar.git
 **  Date: 2018/1
 */
 
@@ -16,9 +17,9 @@
 using namespace std;
 
 //标识设备id
-int devId = 1;
+string devId = "1";
 //服务器ip
-char* serverIP = "166.111.66.49";
+string serverIP = "166.111.66.49";
 
 int main(int argc, char* argv[])
 {
