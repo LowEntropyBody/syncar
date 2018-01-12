@@ -81,12 +81,12 @@ int main(int argc, char* argv[])
 	}
 	// start
 	cout << "------system start------" << endl;
-	rts.push_back(new RectTarget("target1", color_match_red, 8.5, 21)));
-	rts.push_back(new RectTarget("target2", color_match_red, 8.5, 21)));
-	rts.push_back(new RectTarget("target3", color_match_green, 8.5, 21)));
-	rts.push_back(new RectTarget("target4", color_match_green, 8.5, 21)));
-	rts.push_back(new RectTarget("target5", color_match_blue, 8.5, 21)));
-	rts.push_back(new RectTarget("target6", color_match_blue, 8.5, 21)));
+	rts.push_back(new RectTarget("target1", color_match_red, 8.5, 21));
+	rts.push_back(new RectTarget("target2", color_match_red, 8.5, 21));
+	rts.push_back(new RectTarget("target3", color_match_green, 8.5, 21));
+	rts.push_back(new RectTarget("target4", color_match_green, 8.5, 21));
+	rts.push_back(new RectTarget("target5", color_match_blue, 8.5, 21));
+	rts.push_back(new RectTarget("target6", color_match_blue, 8.5, 21));
 
 	rts[0]->findTarget(true,"5");
 	rts[0]->show();
