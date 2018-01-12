@@ -9,7 +9,7 @@
 */
 
 #include "base/httplib.h"
-#include "base/move.h"
+#include "base/car.h"
 #include "base/cap.h"
 #include "base/dealimg.h"
 #include <math.h>
@@ -42,6 +42,8 @@ string devId = "1";
 string serverIP = "166.111.66.49";
 // 识别目标们
 vector<RectTarget*> rts;
+// 小车运动
+Car car(usart_fd);
 
 int main(int argc, char* argv[])
 {
@@ -81,15 +83,27 @@ int main(int argc, char* argv[])
 	}
 	// start
 	cout << "------system start------" << endl;
+	car.move_frist_start();
+	cout << " car motative system start" << endl;
 	rts.push_back(new RectTarget("target1", color_match_red, 8.5, 21));
 	rts.push_back(new RectTarget("target2", color_match_red, 8.5, 21));
 	rts.push_back(new RectTarget("target3", color_match_green, 8.5, 21));
 	rts.push_back(new RectTarget("target4", color_match_green, 8.5, 21));
 	rts.push_back(new RectTarget("target5", color_match_blue, 8.5, 21));
 	rts.push_back(new RectTarget("target6", color_match_blue, 8.5, 21));
+	cout << " target infornation load success" << endl;
+	
+	
+	car.move_rotate(100);
+	usleep(1000*2000);
+	car.move_rotate(0);
+	usleep(1000*2000);
+	car.move_rotate(-100);
+	usleep(1000*2000);
 
-	rts[0]->findTarget(true,"5");
-	rts[0]->show();
+	//rts[0]->findTarget(true,"5");
+	//rts[0]->show();
+	cout << "------system end------" << endl;
 	return   0;
 }
 
