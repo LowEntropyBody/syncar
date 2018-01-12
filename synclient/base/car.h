@@ -11,7 +11,7 @@ class Car{
 		void move_frist_start();
 		void move_rotate(int degree);
 		
-}
+};
 
 void Car::move_rotate(int degree){
 	degree = degree * 21;
