@@ -43,7 +43,7 @@ string serverIP = "166.111.66.49";
 // 识别目标们
 vector<RectTarget*> rts;
 // 小车运动
-Car car(usart_fd);
+Car car();
 
 int main(int argc, char* argv[])
 {
@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
 	usleep(1000*2000);
 	car.move_rotate(-100);
 	usleep(1000*2000);
-
+	car.move_rotate(0);
 	//rts[0]->findTarget(true,"5");
 	//rts[0]->show();
 	cout << "------system end------" << endl;

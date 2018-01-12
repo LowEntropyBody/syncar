@@ -6,7 +6,7 @@
 class Car{
 	int fd;
 	public:
-		Car(int fd_temp);
+		Car();
 		~Car();
 		void move_frist_start();
 		void move_rotate(int degree);
@@ -30,22 +30,21 @@ void Car::move_rotate(int degree){
 		ch[4] = ch[6] = ch[8] = low;
 		ch[9] = 0x00;
 	}
-	write(fd, ch, sizeof(ch));
-	tcflush(fd, TCIFLUSH);//清空in缓冲区
-    tcflush(fd, TCOFLUSH);//清空out缓冲区
+	write(usart_fd, ch, sizeof(ch));
+	tcflush(usart_fd, TCIFLUSH);//清空in缓冲区
+    tcflush(usart_fd, TCOFLUSH);//清空out缓冲区
 }
 
 void Car::move_frist_start(){
 	char ch[1] = {0x00};
 	int re = usart_init();
 	if(re < 0) exit(-1);
-	write(fd, ch, sizeof(ch));
-	tcflush(fd, TCIFLUSH);//清空in缓冲区
-    tcflush(fd, TCOFLUSH);//清空out缓冲区
+	write(usart_fd, ch, sizeof(ch));
+	tcflush(usart_fd, TCIFLUSH);//清空in缓冲区
+    tcflush(usart_fd, TCOFLUSH);//清空out缓冲区
 }
 
-Car::Car(int fd_temp){
-	fd = fd_temp;
+Car::Car(){
 }
 Car::~Car(){
 	usart_close();
