@@ -99,11 +99,11 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 				flags[i * height + j] = 0;
 			}else{
 				flags[i * height + j] = 1;
-				
+				/*
 				rgb[(i * height + j) * 3 + 0] = 0;
 				rgb[(i * height + j) * 3 + 1] = 0;
 				rgb[(i * height + j) * 3 + 2] = 0;
-				
+				*/
 			}
 		}
 	}
