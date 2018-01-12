@@ -47,6 +47,9 @@ int color_match_red(int r,int g,int b);
 //颜色是否匹配->绿
 int color_match_green(int r,int g,int b);
 
+//颜色是否匹配->蓝
+int color_match_blue(int r,int g,int b);
+
 //判断连通图是否是8.5*21 矩形
 int judge_rect(area_infor* ar, double width, double height);
 
@@ -170,7 +173,7 @@ int judge_rect(area_infor* ar, double width, double height){
 	return 1;
 }
 
-//颜色是否匹配
+//颜色是否匹配->红
 int color_match_red(int r,int g,int b){
 	//红色分量大
 	if((double)r/(double)g > 1.3 && (double)r/(double)b >1.3){
@@ -192,6 +195,11 @@ int color_match_green(int r,int g,int b){
 			}
 		}
 	}
+	return 0;
+}
+
+//颜色是否匹配->蓝
+int color_match_blue(int r,int g,int b){
 	return 0;
 }
 

@@ -14,6 +14,7 @@
 #include "base/dealimg.h"
 #include <math.h>
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class RectTarget {	
@@ -39,6 +40,8 @@ class RectTarget {
 string devId = "1";
 // 服务器ip
 string serverIP = "166.111.66.49";
+// 识别目标们
+vector<RectTarget*> rts;
 
 int main(int argc, char* argv[])
 {
@@ -56,9 +59,8 @@ int main(int argc, char* argv[])
 		cout << " use default server IP: " << serverIP << endl;
 	}
 	cout << "------wait for starting------" << endl;
-	// 连接网络
 	httplib::Client cli(serverIP.c_str(), 8001);
-	// 等待50s服务器给指令
+	// 50s
 	int i = 0;
 	for(i = 0; i < 100; i++){
 		if(i%2 == 0) cout << " " << i/2 + 1 << "s pass..." << endl;
@@ -77,12 +79,17 @@ int main(int argc, char* argv[])
 		cout << "------server command timeout------" << endl;
 		exit(-1);
 	}
-	// 启动
+	// start
 	cout << "------system start------" << endl;
-	RectTarget rt("t1", color_match_red, 8.5, 21);
-	rt.findTarget(true,"5");
-	rt.findTarget(true,"6");
-	rt.show();
+	rts.push_back(new RectTarget("target1", color_match_red, 8.5, 21)));
+	rts.push_back(new RectTarget("target2", color_match_red, 8.5, 21)));
+	rts.push_back(new RectTarget("target3", color_match_green, 8.5, 21)));
+	rts.push_back(new RectTarget("target4", color_match_green, 8.5, 21)));
+	rts.push_back(new RectTarget("target5", color_match_blue, 8.5, 21)));
+	rts.push_back(new RectTarget("target6", color_match_blue, 8.5, 21)));
+
+	rts[0]->findTarget(true,"5");
+	rts[0]->show();
 	return   0;
 }
 
