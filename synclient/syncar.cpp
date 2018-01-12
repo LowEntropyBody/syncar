@@ -232,7 +232,7 @@ void RectTarget::show(){
 			cout << " infor->l: " << infor->l <<endl;
 			cout << " infor->w: " << infor->w <<endl;
 			cout << " infor->area: " << infor->area <<endl;
-		}else cout << "can not find target" << endl;
+		}else cout << " can not find target" << endl;
 	}else cout << " infor is NULL, use getAimInfor() to find" << endl;
 }
 
