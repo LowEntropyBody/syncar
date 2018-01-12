@@ -27,9 +27,11 @@ class RectTarget {
 		double degree;
 		aim_infor* infor;
 	public:
+		unsigned char* pic_rgb;
 		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp);
 		~RectTarget();
 		bool findTarget(bool isSave, string flag);
+		bool findTarget(unsigned char* rbg_temp, bool isSave, string flag)
 		aim_infor* getAimInfor();
 		double getDistance();
 		double getDegree();
@@ -115,11 +117,13 @@ RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), dou
 	height = height_temp;
 	distance = -1;
 	degree = -1;
-	infor = NULL;	
+	infor = NULL;
+	pic_rgb = NULL;	
 }
 //析构函数
 RectTarget::~RectTarget(){
 	if(infor != NULL) free(infor);
+	if(pic_rgb != NULL) free(pic_rgb);
 }
 //找目标返回是否找到目标
 bool RectTarget::findTarget(bool isSave, string flag){
@@ -137,27 +141,52 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	//拍摄照片
 	camera_frame(camera, timeout);
 	//转换为rgb
-	unsigned char* rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
+	if(pic_rgb != NULL) free(pic_rgb);
+	pic_rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
 	if(isSave){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
 		FILE* out = fopen(name.c_str(), "w");
-		jpeg(out, rgb, camera->width, camera->height, 100);
+		jpeg(out, pic_rgb, camera->width, camera->height, 100);
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
 	}
 	//找目标
 	if(infor != NULL) free(infor);
-	infor = find_aim(rgb, camera->width, camera->height, cm, width, height);
+	infor = find_aim(pic_rgb, camera->width, camera->height, cm, width, height);
+	// 关闭摄像机
+	camera_stop(camera);
+	camera_finish(camera);
+	camera_close(camera);
+	if(infor -> isfind){
+		distance = (double)(707.14 * height)/(double)infor -> l;
+		degree = 0;
+		if(infor -> center_y > 320){
+			double k = (double)(640 - infor -> center_y)/(double)(infor -> center_y - 320);
+			degree = -atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+		}else if (infor -> center_y < 320){
+			double k = (double)(infor -> center_y)/(double)(320 - infor -> center_y);
+			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+		}
+	}
+	return 0;
+}
+
+// 找目标返回是否找到目标
+bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
+	if(pic_rgb != NULL) free(pic_rgb);
+	pic_rgb = rbg_temp;
 	if(isSave){
-		string name = "deal_pic_";
+		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
 		FILE* out = fopen(name.c_str(), "w");
-		jpeg(out, rgb, camera->width, camera->height, 100);
+		jpeg(out, pic_rgb, camera->width, camera->height, 100);
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
 	}
-	free(rgb);
+	//找目标
+	if(infor != NULL) free(infor);
+	infor = find_aim(pic_rgb, camera->width, camera->height, cm, width, height);
 	// 关闭摄像机
 	camera_stop(camera);
 	camera_finish(camera);

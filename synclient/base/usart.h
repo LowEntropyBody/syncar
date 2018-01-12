@@ -36,7 +36,7 @@ int usart_set(int fd);
 
 /*关闭串口*/
 int usart_close(){
-	printf("close usart!\n");
+	printf(" close usart!\n");
 	return close(usart_fd);
 }
 
@@ -46,17 +46,17 @@ int usart_init(){
 	
 	usart_fd = open("/dev/ttyUSB0", O_RDWR);
 	if(usart_fd < 0){
-		printf("open /dev/ttyUSB0 failed!\n");
+		printf(" open /dev/ttyUSB0 failed!\n");
 		return -1;
 	}
 	if(usart_set(usart_fd) == -1){
-		printf("set usart parameter failed!\n");
+		printf(" set usart parameter failed!\n");
 		return -1;
 	}
 	struct timeval timeout;
 	timeout.tv_sec = 1;//设置超时时间为1秒
     timeout.tv_usec = 0;
-	printf("init usart success!\n");
+	printf(" init usart success!\n");
     return 0;
 }
 
