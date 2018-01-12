@@ -43,7 +43,7 @@ string serverIP = "166.111.66.49";
 // 识别目标们
 vector<RectTarget*> rts;
 // 小车运动
-Car car();
+Car car = new car();
 
 int main(int argc, char* argv[])
 {
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 	}
 	// start
 	cout << "------system start------" << endl;
-	car.move_frist_start();
+	car->move_frist_start();
 	cout << " car motative system start" << endl;
 	rts.push_back(new RectTarget("target1", color_match_red, 8.5, 21));
 	rts.push_back(new RectTarget("target2", color_match_red, 8.5, 21));
@@ -94,11 +94,11 @@ int main(int argc, char* argv[])
 	cout << " target infornation load success" << endl;
 	
 	
-	car.move_rotate(100);
+	car->move_rotate(100);
 	usleep(1000*2000);
-	car.move_rotate(0);
+	car->move_rotate(0);
 	usleep(1000*2000);
-	car.move_rotate(-100);
+	car->move_rotate(-100);
 	usleep(1000*2000);
 	car.move_rotate(0);
 	//rts[0]->findTarget(true,"5");
