@@ -10,6 +10,7 @@
 
 #include "base/httplib.h"
 #include "base/car.h"
+#include "base/move.h"
 #include "base/cap.h"
 #include "base/dealimg.h"
 #include <math.h>
@@ -83,7 +84,7 @@ int main(int argc, char* argv[])
 	}
 	// start
 	cout << "------system start------" << endl;
-	car.move_frist_start();
+	//car.move_frist_start();
 	cout << " car motative system start" << endl;
 	rts.push_back(new RectTarget("target1", color_match_red, 8.5, 21));
 	rts.push_back(new RectTarget("target2", color_match_red, 8.5, 21));
@@ -93,12 +94,12 @@ int main(int argc, char* argv[])
 	rts.push_back(new RectTarget("target6", color_match_blue, 8.5, 21));
 	cout << " target infornation load success" << endl;
 	
-	
-	car.move_rotate(100);
+	move_start();
+	move_rotate(100*21);
 	usleep(1000*2000);
-	car.move_rotate(0);
+	move_rotate(0*21);
 	usleep(1000*2000);
-	car.move_rotate(-100);
+	move_rotate(-100*21);
 	usleep(1000*2000);
 
 	//rts[0]->findTarget(true,"5");
