@@ -172,6 +172,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 			double k = (double)(infor -> center_y)/(double)(320 - infor -> center_y);
 			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
 		}
+	}
 	return 0;
 }
 
