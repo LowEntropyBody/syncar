@@ -33,7 +33,7 @@ class RectTarget {
 		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp);
 		~RectTarget();
 		bool findTarget(bool isSave, string flag);
-		bool findTarget(unsigned char* rbg_temp, bool isSave, string flag)
+		bool findTarget(unsigned char* rbg_temp, bool isSave, string flag);
 		aim_infor* getAimInfor();
 		double getDistance();
 		double getDegree();
