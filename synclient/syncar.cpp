@@ -94,15 +94,15 @@ int main(int argc, char* argv[])
 	cout << " target infornation load success" << endl;
 	
 	
-	car.move_rotate(100);
+	/*car.move_rotate(100);
 	usleep(1000*2000);
 	car.move_rotate(0);
 	usleep(1000*2000);
 	car.move_rotate(-100);
 	usleep(1000*2000);
-	car.move_rotate(0);
-	//rts[0]->findTarget(true,"5");
-	//rts[0]->show();
+	car.move_rotate(0);*/
+	rts[0]->findTarget(true,"0");
+	rts[0]->show();
 	cout << "------system end------" << endl;
 	return   0;
 }
@@ -162,6 +162,16 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	camera_stop(camera);
 	camera_finish(camera);
 	camera_close(camera);
+	if(infor -> isfind){
+		distance = (double)(707.14 * height)/(double)infor -> l;
+		degree = 0;
+		if(infor -> center_y > 320){
+			double k = (double)(640 - infor -> center_y)/(double)(infor -> center_y - 320);
+			degree = -atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+		}else if (infor -> center_y < 320){
+			double k = (double)(infor -> center_y)/(double)(320 - infor -> center_y);
+			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+		}
 	return 0;
 }
 
