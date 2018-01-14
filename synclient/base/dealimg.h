@@ -393,6 +393,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 
 // 找目标返回是否找到目标
 bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
+	cout <<"111111"<<endl;
 	if(pic_rgb != NULL) free(pic_rgb);
 	pic_rgb = rbg_temp;
 	if(isSave){
@@ -405,7 +406,9 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 	}
 	// 找目标
 	if(infor != NULL) free(infor);
+	cout <<"2222222"<<endl;
 	infor = find_aim(pic_rgb, cm_width, cm_height, cm, width, height);
+	cout <<"3333333"<<endl;
 	if(infor -> isfind){
 		// 摄像头到目标距离
 		distance = (double)(707.14 * height)/(double)infor -> l;
