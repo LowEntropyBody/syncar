@@ -3,6 +3,9 @@
 //////////////////////////////////////
 #include "cap.h"
 #include <math.h>
+#include <iostream>
+#include <vector>
+using namespace std;
 //处理图片返回的结果
 typedef struct {
   int isfind;
