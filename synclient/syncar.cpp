@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
 	}
 	// 归位
 	car.move_rotate(rotate_degrees_array[i]);
-	for(int i = 0; i < rts.size(); i++) rts.show();
+	for(int i = 0; i < rts.size(); i++) rts[i]->show();
 		
 	
 	cout << "------system end------" << endl;
