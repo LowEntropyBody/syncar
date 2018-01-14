@@ -66,7 +66,7 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 
 //处理图片返回目标信息
 /*
-	O------------------------>height=640  y j
+	O------------------------>width=640  y j
 	|
 	|
 	|
@@ -75,13 +75,13 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 	|
 	|
 	|
-	width=360 x i
+	height=360 x i
 */
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), double width_tag, double height_tag){
+aim_infor* find_aim(unsigned char* rgb,int w,int h,int(*color_match)(int,int,int), double width_tag, double height_tag){
 	//用于计算连通图
-	unsigned char* flags = (unsigned char*)calloc(width * height, sizeof (unsigned char)); 
+	unsigned char* flags = (unsigned char*)calloc(w * h, sizeof (unsigned char)); 
 	//返回结果
 	aim_infor* infor = (aim_infor*)malloc(sizeof (aim_infor));
 	infor -> isfind = 0;
@@ -92,17 +92,17 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 	infor -> area = 0;
 	
 	//颜色过滤
-	for (size_t i = 0; i < width; i++) {
-		for (size_t j = 0; j < height; j++) {
-			if((*color_match)(rgb[(i * height + j) * 3 + 0],
-				rgb[(i * height + j) * 3 + 1],rgb[(i * height + j) * 3 + 2])){
-				flags[i * height + j] = 0;
+	for (size_t i = 0; i < h; i++) {
+		for (size_t j = 0; j < w; j++) {
+			if((*color_match)(rgb[(i * w + j) * 3 + 0],
+				rgb[(i * w + j) * 3 + 1],rgb[(i * w + j) * 3 + 2])){
+				flags[i * w + j] = 0;
 			}else{
-				flags[i * height + j] = 1;
+				flags[i * w + j] = 1;
 				
-				//rgb[(i * height + j) * 3 + 0] = 0;
-				//rgb[(i * height + j) * 3 + 1] = 0;
-				//rgb[(i * height + j) * 3 + 2] = 0;
+				//rgb[(i * w + j) * 3 + 0] = 0;
+				//rgb[(i * w + j) * 3 + 1] = 0;
+				//rgb[(i * w + j) * 3 + 2] = 0;
 				
 			}
 		}
@@ -110,10 +110,10 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 	
 	
 	//形状过滤
-	for (size_t i = 0; i < width; i++) {
-		for (size_t j = 0; j < height; j++) {
-			if(flags[i * height + j] == 0){
-				area_infor* temp_area = deal_area(flags,height,width,i,j);
+	for (size_t i = 0; i < h; i++) {
+		for (size_t j = 0; j < w; j++) {
+			if(flags[i * w + j] == 0){
+				area_infor* temp_area = deal_area(flags,w,h,i,j);
 				if(judge_rect(temp_area, width_tag, height_tag)){
 					/*
 					printf("(%d,%d)\n",i,j);

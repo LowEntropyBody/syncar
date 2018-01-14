@@ -105,11 +105,7 @@ int main(int argc, char* argv[])
 	car.move_rotate(-100);
 	usleep(1000*2000);
 	car.move_rotate(0);*/
-	rts[0]->findTarget(true, "0");
-	rts[0]->show();
-	rts[0]->findTarget(true, "1");
-	rts[0]->show();
-	rts[0]->findTarget(true, "2");
+	rts[0]->findTarget(false, "0");
 	rts[0]->show();
 	
 	rts[1]->findTarget(rts[0]->pic_rgb,true, "0");
@@ -129,8 +125,8 @@ RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), dou
 	degree = -1;
 	infor = NULL;
 	pic_rgb = NULL;
-	cm_height = 640;
-	cm_width = 320;
+	cm_width = 640;
+	cm_height = 320;
 }
 //析构函数
 RectTarget::~RectTarget(){
@@ -140,7 +136,7 @@ RectTarget::~RectTarget(){
 //找目标返回是否找到目标
 bool RectTarget::findTarget(bool isSave, string flag){
 	//打开摄像机
-	camera_t* camera = camera_open("/dev/video0", cm_height,cm_width);
+	camera_t* camera = camera_open("/dev/video0", cm_width, cm_height);
 	camera_init(camera);
 	camera_start(camera);
 	struct timeval timeout;
@@ -166,7 +162,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	//找目标
 	if(infor != NULL) free(infor);
 	infor = find_aim(pic_rgb, camera->width, camera->height, cm, width, height);
-	
+	/*
 	if(isSave){
 		string name = "deal_pic_";
 		name = name + id + "_" + flag + ".jpg";
@@ -174,7 +170,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 		jpeg(out, pic_rgb, camera->width, camera->height, 100);
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
-	}
+	}*/
 	// 关闭摄像机
 	camera_stop(camera);
 	camera_finish(camera);
@@ -201,13 +197,13 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
 		FILE* out = fopen(name.c_str(), "w");
-		jpeg(out, pic_rgb, cm_height, cm_width, 100);
+		jpeg(out, pic_rgb, cm_width, cm_height, 100);
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
 	}
 	//找目标
 	if(infor != NULL) free(infor);
-	infor = find_aim(pic_rgb, cm_height, cm_width, cm, width, height);
+	infor = find_aim(pic_rgb, cm_width, cm_height, cm, width, height);
 	if(infor -> isfind){
 		distance = (double)(707.14 * height)/(double)infor -> l;
 		degree = 0;
