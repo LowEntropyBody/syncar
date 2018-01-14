@@ -177,12 +177,14 @@ int judge_rect(area_infor* ar, double width, double height){
 
 //颜色是否匹配->红
 int color_match_red(int r,int g,int b){
-	//红色分量大
-	if((double)r/(double)g > 1.3 && (double)r/(double)b >1.3){
-		//其他两色分量差别不大
-		if((double)g/(double)b < 2 && (double)g/(double)b > 0.5){
-			return 1;
-		}
+	if((double)r >= 70 && (double)r <= 120){
+		if(g>=10&&g<=40&&b<=40) return 1;
+	}
+	if((double)r >= 120){
+		if(1.1 * (double)r - (double)g >= 80&&
+		   1.1 * (double)r - (double)g <= 160&&
+	       1.2 * (double)r - (double)b >= 100&&
+	       1.2 * (double)r - (double)b <= 200) return 1;
 	}
 	return 0;
 }
