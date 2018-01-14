@@ -201,13 +201,13 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
 		FILE* out = fopen(name.c_str(), "w");
-		jpeg(out, pic_rgb, cm_width, cm_height, 100);
+		jpeg(out, pic_rgb, cm_height, cm_width, 100);
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
 	}
 	//找目标
 	if(infor != NULL) free(infor);
-	infor = find_aim(pic_rgb, cm_width, cm_height, cm, width, height);
+	infor = find_aim(pic_rgb, cm_height, cm_width, cm, width, height);
 	if(infor -> isfind){
 		distance = (double)(707.14 * height)/(double)infor -> l;
 		degree = 0;
