@@ -107,6 +107,10 @@ int main(int argc, char* argv[])
 	car.move_rotate(0);*/
 	rts[0]->findTarget(true, "0");
 	rts[0]->show();
+	rts[0]->findTarget(true, "1");
+	rts[0]->show();
+	rts[0]->findTarget(true, "2");
+	rts[0]->show();
 	
 	rts[1]->findTarget(rts[0]->pic_rgb,true, "0");
 	rts[1]->show();
@@ -162,7 +166,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	//找目标
 	if(infor != NULL) free(infor);
 	infor = find_aim(pic_rgb, camera->width, camera->height, cm, width, height);
-	/*
+	
 	if(isSave){
 		string name = "deal_pic_";
 		name = name + id + "_" + flag + ".jpg";
@@ -170,7 +174,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 		jpeg(out, pic_rgb, camera->width, camera->height, 100);
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
-	}*/
+	}
 	// 关闭摄像机
 	camera_stop(camera);
 	camera_finish(camera);
