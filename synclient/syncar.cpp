@@ -118,7 +118,7 @@ int main(int argc, char* argv[])
 	string targetdata = "[";
 	for(int i = 0; i < rts.size(); i++){
 		string dd = "{id=\'";
-		dd = dd + rts[i]->infor->id + "\',distance=\'" + rts[i].getDistance() +'},';
+		dd = dd + rts[i]->id + "\',distance=\'" + to_string(rts[i]->getDistance()) +'},';
 		targetdata = targetdata + dd;
 	}
 	send += targetdata;
