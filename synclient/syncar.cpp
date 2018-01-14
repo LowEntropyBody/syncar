@@ -89,8 +89,10 @@ int main(int argc, char* argv[])
 		int find_num = 0;
 		for(int j = 0; j < rts.size(); j++){
 			if(rts[j]->isfind()) find_num++;
-		}	
+		}
+		cout <<"ffffffff:"<< find_num << endl;
 		for(int j = 0; j < rts.size(); j++){
+			cout <<"jjjjjjjj:"<< j << endl;
 			if(!rts[j]->isfind()){
 				if(takephoto_index != -1){
 					rts[j]->findTarget(rts[takephoto_index]->pic_rgb, false, "0");
