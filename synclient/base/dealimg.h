@@ -394,7 +394,6 @@ bool RectTarget::findTarget(bool isSave, string flag){
 // 找目标返回是否找到目标
 bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 	cout <<"111111"<<endl;
-	if(pic_rgb != NULL) free(pic_rgb);
 	cout <<"2222222"<<endl;
 	pic_rgb = rbg_temp;
 	cout <<"33333333"<<endl;
