@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 	rts[0]->findTarget(false, "0");
 	rts[0]->show();
 	
-	rts[1]->findTarget(rts[0]->pic_rgb,true, "0");
+	rts[1]->findTarget(rts[0]->pic_rgb, false, "0");
 	rts[1]->show();
 	
 	cout << "------system end------" << endl;
@@ -205,15 +205,19 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 	if(infor != NULL) free(infor);
 	infor = find_aim(pic_rgb, cm_width, cm_height, cm, width, height);
 	if(infor -> isfind){
+		//摄像头到目标距离
 		distance = (double)(707.14 * height)/(double)infor -> l;
 		degree = 0;
 		if(infor -> center_y > 320){
 			double k = (double)(640 - infor -> center_y)/(double)(infor -> center_y - 320);
-			degree = -atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+			degree = -atan(1/((1+k)*sqrt(3)))*180.0/3.1415926;
 		}else if (infor -> center_y < 320){
 			double k = (double)(infor -> center_y)/(double)(320 - infor -> center_y);
-			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.1415926;
 		}
+		//余弦定理算机器人中心距目标多远c^2 = a^2 + b^2 - 2abcos(<c)
+		distance = sqrt(14.5 * 14.5 + distance * distance -
+						2 * 14.5 * distance * cos((double)(180 - abs(degree))/180.0 * 3.1415926));
 	}
 	return 0;
 }
