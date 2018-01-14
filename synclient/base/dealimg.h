@@ -39,7 +39,7 @@ typedef struct {
 
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), int width_tag, int height_tag);
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), double width_tag, double height_tag);
 
 //颜色是否匹配->红
 int color_match_red(int r,int g,int b);
@@ -79,7 +79,7 @@ void compare_two_ainfor(area_infor* a,area_infor* b);
 */
 
 //处理图片返回目标信息
-aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), int width_tag, int height_tag){
+aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), double width_tag, double height_tag){
 	//用于计算连通图
 	unsigned char* flags = (unsigned char*)calloc(width * height, sizeof (unsigned char)); 
 	//返回结果
@@ -160,7 +160,6 @@ int judge_rect(area_infor* ar, double width, double height){
 	//上下直径
 	double top_bottom_l = (ar -> bottom_x - ar -> top_x);
 
-	printf("wwwwwwwww:%f\n",width);
 	if(width == 8.2){
 	//上下和左右的直径符合要求比例
 		if(top_bottom_l/left_right_l >= 3.06||top_bottom_l/left_right_l <= 2.06){
@@ -171,7 +170,6 @@ int judge_rect(area_infor* ar, double width, double height){
 		if(top_bottom_l/left_right_l >= 4.25||top_bottom_l/left_right_l <= 3.25){
 			return 0;
 		}
-		printf("55555555555555\n");
 	}
 	//面积要吻合
 	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.2 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
