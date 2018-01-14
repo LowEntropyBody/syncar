@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 	cout << "------system start------" << endl;
 	car.move_frist_start();
 	cout << " car motative system start" << endl;
-	rts.push_back(new RectTarget("target1", color_match_red, 8.2, 21));
+	rts.push_back(new RectTarget("target1", color_match_red, 5.6, 21));
 	rts.push_back(new RectTarget("target2", color_match_red, 5.6, 21));
 	rts.push_back(new RectTarget("target3", color_match_green, 8.2, 21));
 	rts.push_back(new RectTarget("target4", color_match_green, 5.6, 21));
@@ -107,9 +107,6 @@ int main(int argc, char* argv[])
 	car.move_rotate(0);*/
 	rts[0]->findTarget(true, "0");
 	rts[0]->show();
-	
-	rts[1]->findTarget(rts[0]->pic_rgb, true, "0");
-	rts[1]->show();
 	
 	cout << "------system end------" << endl;
 	return   0;

@@ -170,6 +170,7 @@ int judge_rect(area_infor* ar, double width, double height){
 		if(top_bottom_l/left_right_l >= 4.25||top_bottom_l/left_right_l <= 3.25){
 			return 0;
 		}
+		printf("55555555555555\n")
 	}
 	//面积要吻合
 	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.2 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
