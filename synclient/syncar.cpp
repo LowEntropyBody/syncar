@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
 	rts[0]->findTarget(true, "0");
 	rts[0]->show();
 	
-	rts[1]->findTarget(true, "0");
+	rts[1]->findTarget(rts[0]->pic_rgb,true, "0");
 	rts[1]->show();
 	
 	cout << "------system end------" << endl;
