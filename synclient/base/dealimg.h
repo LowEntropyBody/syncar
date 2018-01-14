@@ -149,7 +149,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 	return infor;
 }
 
-//判断连通图是否是8.5*21 矩形
+//判断连通图是否是矩形
 int judge_rect(area_infor* ar, double width, double height){
 	//太小不算目标
 	if(ar -> area < 200)
@@ -160,14 +160,17 @@ int judge_rect(area_infor* ar, double width, double height){
 	//上下直径
 	double top_bottom_l = (ar -> bottom_x - ar -> top_x);
 
+	if(width == 8.2){
 	//上下和左右的直径符合要求比例
-	if(top_bottom_l/left_right_l >= 3.2||top_bottom_l/left_right_l <= 2){
-		return 0;
+		if(top_bottom_l/left_right_l >= 3.06||top_bottom_l/left_right_l <= 2.06){
+			return 0;
+		}
 	}
-	/*//上下和左右的直径符合要求比例
-	if(top_bottom_l/left_right_l >= 3.6||top_bottom_l/left_right_l <= 2.4){
-		return 0;
-	}*/
+	if(width == 5.6){
+		if(top_bottom_l/left_right_l >= 4.25||top_bottom_l/left_right_l <= 3.25){
+			return 0;
+		}
+	}
 	//面积要吻合
 	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.2 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
 		return 0;
