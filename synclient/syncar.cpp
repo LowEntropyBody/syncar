@@ -90,23 +90,14 @@ int main(int argc, char* argv[])
 		for(int j = 0; j < rts.size(); j++){
 			if(rts[j]->isfind()) find_num++;
 		}
-		cout <<"ffffffff:"<< find_num << endl;
 		for(int j = 0; j < rts.size(); j++){
 			
 			if(!rts[j]->isfind()){
 				if(takephoto_index != -1){
-					if(j == 2)
-						cout <<"xxxxxx:"<<takephoto_index<<endl;
 					rts[j]->findTarget(rts[takephoto_index]->pic_rgb, false, "0");
-					if(j == 2)
-						cout <<"xxxxxx:end"<<endl;
 				}else{
-					if(j == 2)
-						cout <<"-1-1-1-1-1--1"<<endl;
 					takephoto_index = j;
 					rts[j]->findTarget(false, "0");
-					if(j == 2)
-						cout <<"--1-1-1-1-11-1-:end"<<endl;
 				}
 				if(rts[j]->isfind()){
 					rts[j]->base_degree = rotate_degrees_array[i];
@@ -118,9 +109,27 @@ int main(int argc, char* argv[])
 		usleep(1000*1000);
 	}
 	// 归位
-	car.move_rotate(rotate_degrees_array[i]);
+	car.move_rotate(rotate_degrees_array[0]);
 	for(int i = 0; i < rts.size(); i++) rts[i]->show();
-		
+	
+	cout << endl << "------upload data------" << endl;
+	string send = "devId=";
+	send = send + devId + "&targetdata=";
+	string targetdata = "[";
+	for(int i = 0; i < rts.size(); i++){
+		string dd = "{id=\'" + rts[i]->infor->id + "\',distance=\'" + rts[i]->infor->distance +'},';
+		targetdata = targetdata + dd;
+	}
+	send += targetdata;
+	cout << send << endl; 
+	auto res = cli.post("/uploadinfor/", send.c_str(), "application/x-www-form-urlencoded");
+	if (res && res->status == 200) {
+		string body = res->body;
+		cout << body << endl;
+	}else{
+		cout << endl << "------network failed------" << endl;
+		exit(-1);
+	}	
 	
 	cout<< endl << "------system end------" << endl;
 	return   0;

@@ -296,12 +296,12 @@ class RectTarget {
 		string id;
 		double distance;
 		double degree;
-		aim_infor* infor;
 		int cm_height;
 		int cm_width;
 	public:
 		unsigned char* pic_rgb;
 		double base_degree;
+		aim_infor* infor;
 		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp);
 		~RectTarget();
 		bool findTarget(bool isSave, string flag);
@@ -393,10 +393,8 @@ bool RectTarget::findTarget(bool isSave, string flag){
 
 // 找目标返回是否找到目标
 bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
-	cout <<"111111"<<endl;
-	cout <<"2222222"<<endl;
+	//if(pic_rgb != NULL) free(pic_rgb);,这里没有必要free，第一次拍摄时已经被其他类free了
 	pic_rgb = rbg_temp;
-	cout <<"33333333"<<endl;
 	if(isSave){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
@@ -405,12 +403,9 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
 	}
-	cout <<"44444444"<<endl;
 	// 找目标
 	if(infor != NULL) free(infor);
-	cout <<"55555555"<<endl;
 	infor = find_aim(pic_rgb, cm_width, cm_height, cm, width, height);
-	cout <<"66666666"<<endl;
 	if(infor -> isfind){
 		// 摄像头到目标距离
 		distance = (double)(707.14 * height)/(double)infor -> l;
