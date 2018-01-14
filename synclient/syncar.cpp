@@ -92,13 +92,21 @@ int main(int argc, char* argv[])
 		}
 		cout <<"ffffffff:"<< find_num << endl;
 		for(int j = 0; j < rts.size(); j++){
-			cout <<"jjjjjjjj:"<< j << endl;
+			
 			if(!rts[j]->isfind()){
 				if(takephoto_index != -1){
+					if(j == 2)
+						cout <<"xxxxxx:"<<takephoto_index<<endl;
 					rts[j]->findTarget(rts[takephoto_index]->pic_rgb, false, "0");
+					if(j == 2)
+						cout <<"xxxxxx:end"<<endl;
 				}else{
+					if(j == 2)
+						cout <<"-1-1-1-1-1--1"<<endl;
 					takephoto_index = j;
 					rts[j]->findTarget(false, "0");
+					if(j == 2)
+						cout <<"--1-1-1-1-11-1-:end"<<endl;
 				}
 				if(rts[j]->isfind()){
 					rts[j]->base_degree = rotate_degrees_array[i];
