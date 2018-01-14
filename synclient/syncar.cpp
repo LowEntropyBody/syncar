@@ -207,6 +207,7 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 	if(infor -> isfind){
 		//摄像头到目标距离
 		distance = (double)(707.14 * height)/(double)infor -> l;
+		printf("dddddddddd:%f\n",distance);
 		degree = 0;
 		if(infor -> center_y > 320){
 			double k = (double)(640 - infor -> center_y)/(double)(infor -> center_y - 320);
