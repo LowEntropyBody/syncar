@@ -117,7 +117,8 @@ int main(int argc, char* argv[])
 	send = send + devId + "&targetdata=";
 	string targetdata = "[";
 	for(int i = 0; i < rts.size(); i++){
-		string dd = "{id=\'" + rts[i]->infor->id + "\',distance=\'" + rts[i]->infor->distance +'},';
+		string dd = "{id=\'";
+		dd = dd + rts[i]->infor->id + "\',distance=\'" + rts[i].getDistance() +'},';
 		targetdata = targetdata + dd;
 	}
 	send += targetdata;

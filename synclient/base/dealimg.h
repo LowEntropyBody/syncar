@@ -293,15 +293,15 @@ class RectTarget {
 		int (*cm)(int,int,int);
 		double width;
 		double height;
-		string id;
 		double distance;
 		double degree;
 		int cm_height;
 		int cm_width;
+		aim_infor* infor;
 	public:
 		unsigned char* pic_rgb;
 		double base_degree;
-		aim_infor* infor;
+		string id;
 		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp);
 		~RectTarget();
 		bool findTarget(bool isSave, string flag);
