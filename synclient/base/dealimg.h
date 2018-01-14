@@ -115,6 +115,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 			if(flags[i * height + j] == 0){
 				area_infor* temp_area = deal_area(flags,height,width,i,j);
 				if(judge_rect(temp_area, width_tag, height_tag)){
+					/*
 					printf("(%d,%d)\n",i,j);
 					printf("area:%d\n",temp_area->area);
 					printf("left_x:%d\n",temp_area->left_x);
@@ -131,6 +132,7 @@ aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(in
 					(temp_area -> right_y + temp_area -> left_y)/2,
 					(temp_area -> bottom_x - temp_area -> top_x),
 					(temp_area -> right_y - temp_area -> left_y));
+					*/
 					//保存结果
 					infor -> isfind = 1;
 					if(infor -> area < temp_area -> area){
