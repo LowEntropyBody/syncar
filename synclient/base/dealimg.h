@@ -160,6 +160,7 @@ int judge_rect(area_infor* ar, double width, double height){
 	//上下直径
 	double top_bottom_l = (ar -> bottom_x - ar -> top_x);
 
+	printf("wwwwwwwww:%f\n",width);
 	if(width == 8.2){
 	//上下和左右的直径符合要求比例
 		if(top_bottom_l/left_right_l >= 3.06||top_bottom_l/left_right_l <= 2.06){
