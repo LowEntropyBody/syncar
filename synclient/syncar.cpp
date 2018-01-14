@@ -68,6 +68,10 @@ int main(int argc, char* argv[])
 	cout << " car motative system start" << endl;
 	rts.push_back(new RectTarget("target1", color_match_red, 8.2, 21));
 	rts.push_back(new RectTarget("target2", color_match_red, 5.6, 21));
+	rts.push_back(new RectTarget("target3", color_match_red, 8.2, 21));
+	rts.push_back(new RectTarget("target4", color_match_red, 5.6, 21));
+	rts.push_back(new RectTarget("target5", color_match_red, 8.2, 21));
+	rts.push_back(new RectTarget("target6", color_match_red, 5.6, 21));
 	//rts.push_back(new RectTarget("target3", color_match_green, 8.2, 21));
 	//rts.push_back(new RectTarget("target4", color_match_green, 5.6, 21));
 	//rts.push_back(new RectTarget("target5", color_match_blue, 8.2, 21));
@@ -84,6 +88,9 @@ int main(int argc, char* argv[])
 		int takephoto_index = -1;
 		int find_num = 0;
 		for(int j = 0; j < rts.size(); j++){
+			if(rts[j]->isfind()) find_num++;
+		}	
+		for(int j = 0; j < rts.size(); j++){
 			if(!rts[j]->isfind()){
 				if(takephoto_index != -1){
 					rts[j]->findTarget(rts[takephoto_index]->pic_rgb, false, "0");
@@ -91,8 +98,11 @@ int main(int argc, char* argv[])
 					takephoto_index = j;
 					rts[j]->findTarget(false, "0");
 				}
-				if(rts[j]->isfind()) rts[j]->base_degree = rotate_degrees_array[i];
-			}else find_num++;
+				if(rts[j]->isfind()){
+					rts[j]->base_degree = rotate_degrees_array[i];
+					find_num++;
+				}
+			}
 		}
 		if(find_num == rts.size()) break;
 		usleep(1000*1000);
@@ -102,6 +112,6 @@ int main(int argc, char* argv[])
 	for(int i = 0; i < rts.size(); i++) rts[i]->show();
 		
 	
-	cout << "------system end------" << endl;
+	cout<< endl << "------system end------" << endl;
 	return   0;
 }
