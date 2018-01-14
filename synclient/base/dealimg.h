@@ -395,7 +395,9 @@ bool RectTarget::findTarget(bool isSave, string flag){
 bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 	cout <<"111111"<<endl;
 	if(pic_rgb != NULL) free(pic_rgb);
+	cout <<"2222222"<<endl;
 	pic_rgb = rbg_temp;
+	cout <<"33333333"<<endl;
 	if(isSave){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
@@ -404,11 +406,12 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 		fclose(out);
 		cout << " save orign picture into " << name << endl;
 	}
+	cout <<"44444444"<<endl;
 	// 找目标
 	if(infor != NULL) free(infor);
-	cout <<"2222222"<<endl;
+	cout <<"55555555"<<endl;
 	infor = find_aim(pic_rgb, cm_width, cm_height, cm, width, height);
-	cout <<"3333333"<<endl;
+	cout <<"66666666"<<endl;
 	if(infor -> isfind){
 		// 摄像头到目标距离
 		distance = (double)(707.14 * height)/(double)infor -> l;
