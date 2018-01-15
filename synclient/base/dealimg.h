@@ -333,7 +333,7 @@ RectTarget::~RectTarget(){
 		infor = NULL;
 	};
 	if(pic_rgb != NULL){
-		free(pic_rgb)
+		free(pic_rgb);
 		pic_rgb = NULL;
 	};
 }
