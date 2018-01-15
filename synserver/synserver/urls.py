@@ -24,5 +24,5 @@ urlpatterns = [
 	url(r'^end/', deal_views.end,name='end'),
 	url(r'^controlstart/', deal_views.controlstart,name='controlstart'),
 	url(r'^getstatus/', deal_views.getstatus,name='getstatus'),
-	url(r'^getaimid/', deal_views.getstatus,name='getstatus'),
+	url(r'^getaimid/', deal_views.getaimid,name='getaimid'),
 ]

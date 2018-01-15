@@ -6,7 +6,7 @@ from deal.models import StartFlag
 
 @csrf_exempt
 def start(request):
-	devId=str(request.POST['devId']);
+	devId = str(request.POST['devId']);
 	startFlag = StartFlag.objects.filter(id = 1);
 	if startFlag:
 		startFlag = startFlag[0]
@@ -21,7 +21,7 @@ def uploadinfor(request):
 	
 @csrf_exempt
 def getaimid(request):
-	devId=str(request.POST['devId']);
+	devId = str(request.POST['devId']);
 	return HttpResponse(u"1")
 	
 @csrf_exempt
