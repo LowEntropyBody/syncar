@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
 		string dd = "{id=\'" + rts[i]->id + "\',distance=\'" + to_string(rts[i]->getDistance()) +"},";
 		targetdata = targetdata + dd;
 	}
-	send += targetdata;
+	send = send + targetdata +"]";
 	cout << send << endl; 
 	auto res = cli.post("/uploadinfor/", send.c_str(), "application/x-www-form-urlencoded");
 	if (res && res->status == 200) {
