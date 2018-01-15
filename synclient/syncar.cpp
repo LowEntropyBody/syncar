@@ -161,9 +161,12 @@ int main(int argc, char* argv[])
 	}
 	
 	cout << endl << "------move to aim------" << endl;
-	cout << " aim id:" << rts[aim_index]->id << endl;
-	car.move_rotate(rts[aim_index]->base_degree + rts[aim_index]->degree);
-	usleep(1000 * (rts[aim_index]->base_degree + rts[aim_index]->degree) * 2);
+	cout << " aim id: " << rts[aim_index]->id << endl;
+	double move_degree = rts[aim_index]->base_degree + rts[aim_index]->degree;
+	if( move_degree > 180) move_degree = move_degree - 360;
+	cout << " move degree: " << move_degree << endl;
+	car.move_rotate(move_degree);
+	usleep(1000 * 500);
 	rts[aim_index]->findTarget(false, "0");
 	rts[aim_index]->show();
 	
