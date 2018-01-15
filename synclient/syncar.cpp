@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 	
 	cout << endl << "------target detection------" << endl;
 	// 旋转一圈寻找目标
-	for(int i = 0; i < 10; i++){
+	for(int i = 0; i < 9; i++){
 		cout << " car base degree:" << rotate_degrees_array[i] << endl;
 		car.move_rotate(rotate_degrees_array[i]);
 		int takephoto_index = -1;
@@ -107,9 +107,10 @@ int main(int argc, char* argv[])
 			}
 		}
 		if(find_num == rts.size()) break;
-		usleep(1000*1000);
+		usleep(1000*500);
 	}
 	car.move_rotate(rotate_degrees_array[0]);
+	usleep(1000*500);
 	for(int i = 0; i < rts.size(); i++) rts[i]->show();
 	
 	cout << endl << "------upload data------" << endl;
