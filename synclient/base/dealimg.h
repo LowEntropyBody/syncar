@@ -317,14 +317,14 @@ RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), dou
 	cm = color_match_temp;
 	width = width_temp;
 	height = height_temp;
-	distance = -1;
-	degree = -1;
+	distance = 0;
+	degree = 0;
 	infor = NULL;
 	pic_rgb = NULL;
 	cm_width = 640;
 	cm_height = 320;
 	base_degree = 0;
-	center_distance = -1;
+	center_distance = 0;
 }
 // 析构函数
 RectTarget::~RectTarget(){
@@ -333,6 +333,9 @@ RectTarget::~RectTarget(){
 }
 // 找目标返回是否找到目标
 bool RectTarget::findTarget(bool isSave, string flag){
+	distance = 0;
+	degree = 0;
+	center_distance = 0;
 	// 打开摄像机
 	camera_t* camera = camera_open("/dev/video0", cm_width, cm_height);
 	camera_init(camera);
@@ -392,6 +395,9 @@ bool RectTarget::findTarget(bool isSave, string flag){
 
 // 找目标返回是否找到目标
 bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
+	distance = 0;
+	degree = 0;
+	center_distance = 0;
 	//if(pic_rgb != NULL) free(pic_rgb);,这里没有必要free，第一次拍摄时已经被其他类free了
 	pic_rgb = rbg_temp;
 	if(isSave){

@@ -44,9 +44,9 @@ int main(int argc, char* argv[])
 	
 	cout << endl << "------wait for starting------" << endl;
 	httplib::Client cli(serverIP.c_str(), 8001);
-	// 50s
+	// 100s
 	int i = 0;
-	for(i = 0; i < 100; i++){
+	for(i = 0; i < 200; i++){
 		if(i%2 == 0) cout << " " << i/2 + 1 << "s pass..." << endl;
 		string send = "devId=";
 		send = send + devId;
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
 	
 	cout << endl << "------target detection------" << endl;
 	// 旋转一圈寻找目标
-	for(int i = 0; i < 19; i++){
+	for(int i = 0; i < 10; i++){
 		cout << " car base degree----> " << rotate_degrees_array[i] << endl;
 		car.move_rotate(rotate_degrees_array[i]);
 		int takephoto_index = -1;
@@ -169,8 +169,15 @@ int main(int argc, char* argv[])
 	cout << " move degree: " << move_degree << endl;
 	car.move_rotate(move_degree);
 	usleep(1000 * 500);
-	rts[aim_index]->findTarget(false, "0");
-	rts[aim_index]->show();
+	
+	// 调整数次
+	for (int i = 0; i < 4; i++){
+		cout << "adjust: " << i + 1 << "times" <<endl;
+		rts[aim_index]->findTarget(false, "0");
+		rts[aim_index]->show();
+		move_degree = move_degree + rts[aim_index]->degree;
+		car.move_rotate(move_degree);
+	}
 	
 	cout<< endl << "------system end success------" << endl;
 	return   0;
