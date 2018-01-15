@@ -179,6 +179,7 @@ int main(int argc, char* argv[])
 		car.move_rotate(move_degree);
 	}
 	
+	car.move_forward(rts[aim_index]->distance/3);
 	cout<< endl << "------system end success------" << endl;
 	return   0;
 }
