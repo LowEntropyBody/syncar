@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 	cout << endl << "------target detection------" << endl;
 	// 旋转一圈寻找目标
 	for(int i = 0; i < 9; i++){
-		cout << " car base degree:" << rotate_degrees_array[i] << endl;
+		cout << " car base degree: " << rotate_degrees_array[i] << endl;
 		car.move_rotate(rotate_degrees_array[i]);
 		int takephoto_index = -1;
 		int find_num = 0;
@@ -103,6 +103,7 @@ int main(int argc, char* argv[])
 				if(rts[j]->isfind()){
 					rts[j]->base_degree = rotate_degrees_array[i];
 					find_num++;
+					cout << "     find target: " << rts[j]->id << endl;
 				}
 			}
 		}
