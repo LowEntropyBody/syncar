@@ -293,22 +293,20 @@ class RectTarget {
 		int (*cm)(int,int,int);
 		double width;
 		double height;
-		double distance;
-		double degree;
 		int cm_height;
 		int cm_width;
-		aim_infor* infor;
 	public:
 		unsigned char* pic_rgb;
 		double base_degree;
+		double distance;
+		double center_distance;
+		double degree;
+		aim_infor* infor;
 		string id;
 		RectTarget(string id_temp, int (*color_match_temp)(int,int,int), double width_temp, double height_temp);
 		~RectTarget();
 		bool findTarget(bool isSave, string flag);
 		bool findTarget(unsigned char* rbg_temp, bool isSave, string flag);
-		aim_infor* getAimInfor();
-		double getDistance();
-		double getDegree();
 		void show();
 		bool isfind();
 };
@@ -326,6 +324,7 @@ RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), dou
 	cm_width = 640;
 	cm_height = 320;
 	base_degree = 0;
+	center_distance = -1;
 }
 // 析构函数
 RectTarget::~RectTarget(){
@@ -385,7 +384,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
 		}
 		// 余弦定理算机器人中心距目标多远c^2 = a^2 + b^2 - 2abcos(<c)
-		distance = sqrt(14.5 * 14.5 + distance * distance -
+		center_distance = sqrt(14.5 * 14.5 + distance * distance -
 						2 * 14.5 * distance * cos((double)(180 - abs(degree))/180.0 * 3.1415926));
 	}
 	return 0;
@@ -418,7 +417,7 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.1415926;
 		}
 		// 余弦定理算机器人中心距目标多远c^2 = a^2 + b^2 - 2abcos(<c)
-		distance = sqrt(14.5 * 14.5 + distance * distance -
+		center_distance = sqrt(14.5 * 14.5 + distance * distance -
 						2 * 14.5 * distance * cos((double)(180 - abs(degree))/180.0 * 3.1415926));
 	}
 	return 0;
@@ -426,17 +425,6 @@ bool RectTarget::findTarget(unsigned char* rbg_temp, bool isSave, string flag){
 bool RectTarget::isfind(){
 	if(infor == NULL) return false;
 	return infor -> isfind;
-}
-aim_infor* RectTarget::getAimInfor(){
-	return infor;
-}
-// 返回目标距离
-double RectTarget::getDistance(){
-	return distance;
-}
-// 返回目标偏角
-double RectTarget::getDegree(){
-	return degree;
 }
 // 输出信息
 void RectTarget::show(){
@@ -447,6 +435,7 @@ void RectTarget::show(){
 	cout << " width: " << width << endl;
 	cout << " height: " << height << endl;
 	cout << " distance: " << distance << endl;
+	cout << " center distance: " << center_distance << endl;
 	cout << " degree: " << degree << endl;
 	cout << " base degree: " << base_degree << endl;
 	if(infor != NULL){

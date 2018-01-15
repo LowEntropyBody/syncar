@@ -4,28 +4,29 @@
 #include "usart.h"
 
 class Car{
-	int fd;
+	double now_degree;
 	public:
 		Car();
 		~Car();
 		void move_frist_start();
-		void move_rotate(int degree);
+		void move_rotate(double degree);
 		
 };
 
-void Car::move_rotate(int degree){
-	degree = degree * 21;
+void Car::move_rotate(double degree){
+	now_degree = degree;
+	int degree_temp = degree * 21;
 	int high,low;
 	char ch[10] = {0xff,0xfe,2,20,0,20,0,20,0,0x07};
-	if(degree>=0){
-		low = degree%256;
-		high = degree/256;
+	if(degree_temp >= 0){
+		low = degree_temp%256;
+		high = degree_temp/256;
 		ch[3] = ch[5] = ch[7] = high;
 		ch[4] = ch[6] = ch[8] = low;
 	}else{
-		degree = -degree;
-		low = degree%256;
-		high = degree/256;
+		degree_temp = -degree_temp;
+		low = degree_temp%256;
+		high = degree_temp/256;
 		ch[3] = ch[5] = ch[7] = high;
 		ch[4] = ch[6] = ch[8] = low;
 		ch[9] = 0x00;
@@ -45,6 +46,7 @@ void Car::move_frist_start(){
 }
 
 Car::Car(){
+	now_degree = 0;
 }
 Car::~Car(){
 	usart_close();

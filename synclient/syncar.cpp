@@ -67,12 +67,12 @@ int main(int argc, char* argv[])
 	cout << endl << "------system start------" << endl;
 	car.move_frist_start();
 	cout << " car motative system start" << endl;
-	rts.push_back(new RectTarget("target1", color_match_red, 8.2, 21));
-	rts.push_back(new RectTarget("target2", color_match_red, 5.6, 21));
-	rts.push_back(new RectTarget("target3", color_match_red, 8.2, 21));
-	rts.push_back(new RectTarget("target4", color_match_red, 5.6, 21));
-	rts.push_back(new RectTarget("target5", color_match_red, 8.2, 21));
-	rts.push_back(new RectTarget("target6", color_match_red, 5.6, 21));
+	rts.push_back(new RectTarget("1", color_match_red, 8.2, 21));
+	rts.push_back(new RectTarget("2", color_match_red, 5.6, 21));
+	rts.push_back(new RectTarget("3", color_match_red, 8.2, 21));
+	rts.push_back(new RectTarget("4", color_match_red, 5.6, 21));
+	rts.push_back(new RectTarget("5", color_match_red, 8.2, 21));
+	rts.push_back(new RectTarget("6", color_match_red, 5.6, 21));
 	//rts.push_back(new RectTarget("target3", color_match_green, 8.2, 21));
 	//rts.push_back(new RectTarget("target4", color_match_green, 5.6, 21));
 	//rts.push_back(new RectTarget("target5", color_match_blue, 8.2, 21));
@@ -117,7 +117,7 @@ int main(int argc, char* argv[])
 	send = send + devId + "&targetdata=";
 	string targetdata = "[";
 	for(int i = 0; i < rts.size(); i++){
-		string dd = "{id=\'" + rts[i]->id + "\',distance=\'" + to_string(rts[i]->getDistance()) +"},";
+		string dd = "{aimId=\'" + rts[i]->id + "\',distance=\'" + to_string(rts[i]->center_distance) +"},";
 		targetdata = targetdata + dd;
 	}
 	send = send + targetdata +"]";
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
 	}
 	
 	cout << endl << "------wait aim id------" << endl;
-	string aimid = "";
+	int aim_index = -1;
 	// 50s
 	for(i = 0; i < 100; i++){
 		if(i%2 == 0) cout << " " << i/2 + 1 << "s pass..." << endl;
@@ -142,7 +142,12 @@ int main(int argc, char* argv[])
 		if (res && res->status == 200) {
 			string body = res->body;
 			if(body != "-1"){
-				aimid = body;
+				for(int j = 0; j < rts.size(); j++){
+					if(rts[j]->id == body){
+						aim_index = j;
+						break;
+					}
+				}
 				break;
 			}else usleep(1000*500);
 		}else{
@@ -156,7 +161,11 @@ int main(int argc, char* argv[])
 	}
 	
 	cout << endl << "------move to aim------" << endl;
-	cout << " aim id:" << aimid << endl;
+	cout << " aim id:" << rts[aim_index]->id << endl;
+	car.move_rotate(rts[aim_index]->base_degree + rts[aim_index]->degree);
+	usleep(1000 * (rts[aim_index]->base_degree + rts[aim_index]->degree) * 2);
+	rts[aim_index]->findTarget(false, "0");
+	rts[aim_index]->show();
 	
 	cout<< endl << "------system end success------" << endl;
 	return   0;
