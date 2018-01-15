@@ -350,8 +350,11 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	// 拍摄照片
 	camera_frame(camera, timeout);
 	// 转换为rgb
+	cout <<"111111111111"<<endl;
 	if(pic_rgb != NULL) free(pic_rgb);
+	cout <<"222222222222"<<endl;
 	pic_rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
+	cout <<"333333333333"<<endl;
 	if(isSave){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
@@ -362,7 +365,9 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	}
 	// 找目标
 	if(infor != NULL) free(infor);
+	cout <<"444444444444"<<endl;
 	infor = find_aim(pic_rgb, camera->width, camera->height, cm, width, height);
+	cout <<"55555555555"<<endl;
 	/*
 	if(isSave){
 		string name = "deal_pic_";
