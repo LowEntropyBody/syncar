@@ -79,11 +79,11 @@ int main(int argc, char* argv[])
 	//rts.push_back(new RectTarget("target6", color_match_blue, 5.6, 21));
 	cout << " target information load success" << endl;
 	// 旋转角度
-	int rotate_degrees_array[9] = {0,40,80,120,160,200,240,280,320};
+	int rotate_degrees_array[19] = {0,40,80,120,160,200,240,280,320,360,320,280,240,200,160,120,80,40,0};
 	
 	cout << endl << "------target detection------" << endl;
 	// 旋转一圈寻找目标
-	for(int i = 0; i < 9; i++){
+	for(int i = 0; i < 19; i++){
 		cout << " car base degree----> " << rotate_degrees_array[i] << endl;
 		car.move_rotate(rotate_degrees_array[i]);
 		int takephoto_index = -1;
@@ -107,11 +107,11 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
-		if(find_num == rts.size()) break;
+		//if(find_num == rts.size()) break;
 		usleep(1000*500);
 	}
-	car.move_rotate(rotate_degrees_array[0]);
-	usleep(1000*1000);
+	//car.move_rotate(rotate_degrees_array[0]);
+	//usleep(1000*1000);
 	for(int i = 0; i < rts.size(); i++) rts[i]->show();
 	
 	cout << endl << "------upload data------" << endl;
