@@ -28,7 +28,7 @@ Car car;
 
 int main(int argc, char* argv[])
 {
-	cout << "------system prepare------" << endl;
+	cout << endl << "------system prepare------" << endl;
 	if( argc >= 2){
 		devId = argv[2];
 		cout << " read dev Id: " << devId << endl;
@@ -41,6 +41,7 @@ int main(int argc, char* argv[])
 	}else{
 		cout << " use default server IP: " << serverIP << endl;
 	}
+	
 	cout << endl << "------wait for starting------" << endl;
 	httplib::Client cli(serverIP.c_str(), 8001);
 	// 50s
@@ -62,7 +63,7 @@ int main(int argc, char* argv[])
 		cout << endl << "------server command timeout------" << endl;
 		exit(-1);
 	}
-	// start
+	
 	cout << endl << "------system start------" << endl;
 	car.move_frist_start();
 	cout << " car motative system start" << endl;
@@ -108,7 +109,6 @@ int main(int argc, char* argv[])
 		if(find_num == rts.size()) break;
 		usleep(1000*1000);
 	}
-	// 归位
 	car.move_rotate(rotate_degrees_array[0]);
 	for(int i = 0; i < rts.size(); i++) rts[i]->show();
 	
@@ -129,8 +129,35 @@ int main(int argc, char* argv[])
 	}else{
 		cout << endl << "------network failed------" << endl;
 		exit(-1);
-	}	
+	}
 	
-	cout<< endl << "------system end------" << endl;
+	cout << endl << "------wait aim id------" << endl;
+	string aimid = "";
+	// 50s
+	for(i = 0; i < 100; i++){
+		if(i%2 == 0) cout << " " << i/2 + 1 << "s pass..." << endl;
+		string send = "devId=";
+		send = send + devId;
+		auto res = cli.post("/getaimid/", send.c_str(), "application/x-www-form-urlencoded");
+		if (res && res->status == 200) {
+			string body = res->body;
+			if(body != "-1"){
+				aimid = body;
+				break;
+			}else usleep(1000*500);
+		}else{
+			cout << endl << "------network failed------" << endl;
+			exit(-1);
+		}
+	}
+	if(i == 100){
+		cout << endl << "------wait aim timeout------" << endl;
+		exit(-1);
+	}
+	
+	cout << endl << "------move to aim------" << endl;
+	cout << " aim id:" << aimid << endl;
+	
+	cout<< endl << "------system end success------" << endl;
 	return   0;
 }
