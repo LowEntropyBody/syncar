@@ -328,8 +328,14 @@ RectTarget::RectTarget(string id_temp, int (*color_match_temp)(int,int,int), dou
 }
 // 析构函数
 RectTarget::~RectTarget(){
-	if(infor != NULL) free(infor);
-	if(pic_rgb != NULL) free(pic_rgb);
+	if(infor != NULL) {
+		free(infor);
+		infor = NULL;
+	};
+	if(pic_rgb != NULL){
+		free(pic_rgb)
+		pic_rgb = NULL;
+	};
 }
 // 找目标返回是否找到目标
 bool RectTarget::findTarget(bool isSave, string flag){
@@ -350,11 +356,7 @@ bool RectTarget::findTarget(bool isSave, string flag){
 	// 拍摄照片
 	camera_frame(camera, timeout);
 	// 转换为rgb
-	cout <<"111111111111"<<endl;
-	if(pic_rgb != NULL) free(pic_rgb);
-	cout <<"222222222222"<<endl;
 	pic_rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
-	cout <<"333333333333"<<endl;
 	if(isSave){
 		string name = "orign_pic_";
 		name = name + id + "_" + flag + ".jpg";
@@ -364,10 +366,11 @@ bool RectTarget::findTarget(bool isSave, string flag){
 		cout << " save orign picture into " << name << endl;
 	}
 	// 找目标
-	if(infor != NULL) free(infor);
-	cout <<"444444444444"<<endl;
+	if(infor != NULL) {
+		free(infor);
+		infor = NULL;
+	};
 	infor = find_aim(pic_rgb, camera->width, camera->height, cm, width, height);
-	cout <<"55555555555"<<endl;
 	/*
 	if(isSave){
 		string name = "deal_pic_";

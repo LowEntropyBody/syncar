@@ -107,6 +107,13 @@ int main(int argc, char* argv[])
 				}
 			}
 		}
+		// release pic_rgb
+		for(int j = 0; j < rts.size(); j++){
+			if(j == takephoto_index){
+				free(rts[j]->pic_rgb);
+			}
+			rts[j]->pic_rgb = NULL;
+		}
 		//if(find_num == rts.size()) break;
 		usleep(1000*500);
 	}
@@ -172,9 +179,11 @@ int main(int argc, char* argv[])
 	
 	// 调整数次
 	for (int i = 0; i < 4; i++){
-		cout << "adjust: " << i + 1 << "times" <<endl;
+		cout << " adjust: " << i + 1 << "times" <<endl;
 		rts[aim_index]->findTarget(false, "0");
 		rts[aim_index]->show();
+		free(rts[aim_index]->pic_rgb);
+		rts[aim_index]->pic_rgb = NULL;
 		move_degree = move_degree + rts[aim_index]->degree;
 		car.move_rotate(move_degree);
 	}
