@@ -20,6 +20,11 @@ def uploadinfor(request):
 	return HttpResponse(u"14")
 	
 @csrf_exempt
+def getaimid(request):
+	devId=str(request.POST['devId']);
+	return HttpResponse(u"1")
+	
+@csrf_exempt
 def end(request):
 	return HttpResponse(u"end")
 
