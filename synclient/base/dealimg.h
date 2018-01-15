@@ -434,12 +434,12 @@ void RectTarget::show(){
 	if(cm == color_match_green) cout << " color: green" << endl;
 	cout << " width: " << width << endl;
 	cout << " height: " << height << endl;
-	cout << " distance: " << distance << endl;
-	cout << " center distance: " << center_distance << endl;
-	cout << " degree: " << degree << endl;
-	cout << " base degree: " << base_degree << endl;
 	if(infor != NULL){
 		if(infor->isfind){
+			cout << " distance: " << distance << endl;
+			cout << " center distance: " << center_distance << endl;
+			cout << " degree: " << degree << endl;
+			cout << " base degree: " << base_degree << endl;
 			cout << " infor->isfind: " << "yes" << endl;
 			cout << " center: (" << infor->center_x <<", "<< infor->center_y <<")"<<endl;
 			cout << " infor->l: " << infor->l <<endl;
