@@ -251,12 +251,12 @@ int judge_rect(area_infor* ar, double width, double height){
 		}
 	}
 	if(width == 3.4){
-		if(top_bottom_l/left_right_l >= 7||top_bottom_l/left_right_l <= 4.4){
+		if(top_bottom_l/left_right_l >= 7||top_bottom_l/left_right_l <= 4.5){
 			return 0;
 		}
 	}
 	//面积要吻合
-	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.2 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
+	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.3 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
 		return 0;
 	}
 	return 1;
