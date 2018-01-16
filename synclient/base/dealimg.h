@@ -176,6 +176,11 @@ int judge_rect(area_infor* ar, double width, double height){
 			return 0;
 		}
 	}
+	if(width == 3.4){
+		if(top_bottom_l/left_right_l >= 5.5||top_bottom_l/left_right_l <= 7){
+			return 0;
+		}
+	}
 	//面积要吻合
 	if(((left_right_l * top_bottom_l)/((double)ar -> area)) > 1.2 || ((left_right_l * top_bottom_l)/((double)ar -> area)) < 0.8){
 		return 0;
