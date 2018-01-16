@@ -70,7 +70,7 @@ int main(int argc, char* argv[])
 	rts.push_back(new RectTarget("1", color_match_red, 8.2, 21));
 	rts.push_back(new RectTarget("2", color_match_red, 5.6, 21));
 	rts.push_back(new RectTarget("3", color_match_green, 8.2, 21));
-	rts.push_back(new RectTarget("4", color_match_red, 5.6, 21));
+	rts.push_back(new RectTarget("4", color_match_green, 5.6, 21));
 	rts.push_back(new RectTarget("5", color_match_red, 8.2, 21));
 	rts.push_back(new RectTarget("6", color_match_red, 5.6, 21));
 	//rts.push_back(new RectTarget("target3", color_match_green, 8.2, 21));
