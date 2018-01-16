@@ -183,31 +183,64 @@ int judge_rect(area_infor* ar, double width, double height){
 	return 1;
 }
 
+
+class RGB2HSL{
+public:
+	double h,s,l;
+	double r,g,b;
+	void convert(int r_temp, int g_temp, int b_temp);
+	void show();
+};
+
+void RGB2HSL::show(){
+	cout << " R: " << r << ", G: " << g << ", B: " << b << endl;
+	cout << " H: " << h << ", S: " << s << ", L: " << l << endl;
+}
+
+void RGB2HSL::convert(int r_temp, int g_temp, int b_temp){
+	r = (double)r_temp/255.0; g = (double)g_temp/255.0; b = (double)b_temp/255.0;
+	double var_Min = min(b, min(r, g));    //Min. value of RGB
+	double var_Max = max(b, max(r, g));    //Max. value of RGB
+	double del_Max = var_Max - var_Min;      //Delta RGB value
+	l = (var_Max + var_Min)/2.0;
+	if (del_Max == 0){                     //This is a gray, no chroma...
+		h = 0;                                //HSL results from 0 to 1
+		s = 0;
+	}else{                                    //Chromatic data...
+		if(l < 0.5)	s = del_Max/(var_Max + var_Min);
+		else	s = del_Max/(2 - var_Max - var_Min);
+
+		if     (r == var_Max && g >= b) h = 60 * (g - b)/del_Max;
+		else if(r == var_Max && b > g)	h = 60 * (g - b)/del_Max + 360;
+		else if(g == var_Max)	h = 60 * (b - r)/del_Max + 120;
+		else if(b == var_Max)	h = 60 * (r - g)/del_Max + 240;
+	}
+}
+
+RGB2HSL rgb2hsl;
+
 //颜色是否匹配->红
 int color_match_red(int r,int g,int b){
-	if((double)r >= 70 && (double)r <= 120){
-		if(g>=10&&g<=40&&b<=40) return 1;
-	}
-	if((double)r >= 120){
-		if(1.1 * (double)r - (double)g >= 80&&
-		   1.1 * (double)r - (double)g <= 160&&
-	       1.2 * (double)r - (double)b >= 100&&
-	       1.2 * (double)r - (double)b <= 200) return 1;
-	}
+	rgb2hsl.convert(r, g, b)
+	double h = rgb2hsl.h;
+	double s = rgb2hsl.s;
+	double l = rgb2hsl.l;
+    if((h >= 0 && h <= 17) || (h >= 350 && h <= 360))
+        if(s >= 0.35 && l < 0.8 && g < 115 && b < 115)
+            return 1;
 	return 0;
 }
 
 //颜色是否匹配->绿
 int color_match_green(int r,int g,int b){
-	if((double)g/(double)b>1&&(double)g/(double)r>1){
-		double k = (double)r + (double)b;
-		if((double)k/(double)g<1.7&&(double)k/(double)g>1.15){
-			if((double)r/(double)b<2.5&&(double)r/(double)b>0.8){
-				return 1;
-			}
-		}
-	}
-	return 0;
+	rgb2hsl.convert(r, g, b)
+	double h = rgb2hsl.h;
+	double s = rgb2hsl.s;
+	double l = rgb2hsl.l;
+	if(h >= 125 && h <= 175)
+        if(s >= 0.17 && l < 0.7 && g > 40 && r < 190 && b < 190)
+            return 1;
+    return 0;
 }
 
 //颜色是否匹配->蓝
