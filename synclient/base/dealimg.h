@@ -251,7 +251,7 @@ int judge_rect(area_infor* ar, double width, double height){
 		}
 	}
 	if(width == 3.4){
-		if(top_bottom_l/left_right_l >= 4.5||top_bottom_l/left_right_l <= 6.5){
+		if(top_bottom_l/left_right_l >= 6.5||top_bottom_l/left_right_l <= 4.5){
 			return 0;
 		}
 	}
