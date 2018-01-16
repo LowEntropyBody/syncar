@@ -221,7 +221,7 @@ RGB2HSL rgb2hsl;
 
 //颜色是否匹配->红
 int color_match_red(int r,int g,int b){
-	rgb2hsl.convert(r, g, b)
+	rgb2hsl.convert(r, g, b);
 	double h = rgb2hsl.h;
 	double s = rgb2hsl.s;
 	double l = rgb2hsl.l;
@@ -233,7 +233,7 @@ int color_match_red(int r,int g,int b){
 
 //颜色是否匹配->绿
 int color_match_green(int r,int g,int b){
-	rgb2hsl.convert(r, g, b)
+	rgb2hsl.convert(r, g, b);
 	double h = rgb2hsl.h;
 	double s = rgb2hsl.s;
 	double l = rgb2hsl.l;
