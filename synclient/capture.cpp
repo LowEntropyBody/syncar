@@ -1,3 +1,12 @@
+/*
+**  Author: ZhaoYang
+**	Compile: g++ synclient/capture.cpp -ljpeg -lm -fpermissive -o capture.out
+**  Run: ./capture.out "re1.jpg"
+**  Lib: sudo apt-get install libv4l-dev
+**		 sudo apt-get install libjpeg-dev
+**  Download: git clone https://github.com/LowEntropyBody/syncar.git
+**  Date: 2018/1
+*/
 #include "base/cap.h"
 #include <math.h>
 #include <iostream>
