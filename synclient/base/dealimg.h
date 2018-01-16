@@ -251,9 +251,7 @@ int judge_rect(area_infor* ar, double width, double height){
 		}
 	}
 	if(width == 3.4){
-		cout << "top_bottom_l:" << top_bottom_l << endl;
-		cout << "left_right_l" << left_right_l << endl;
-		if(top_bottom_l/left_right_l >= 4.5||top_bottom_l/left_right_l <= 7){
+		if(top_bottom_l/left_right_l >= 4.5||top_bottom_l/left_right_l <= 6.5){
 			return 0;
 		}
 	}
