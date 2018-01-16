@@ -43,6 +43,7 @@ typedef struct {
 
 //处理图片返回目标信息
 aim_infor* find_aim(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), double width_tag, double height_tag);
+aim_infor* find_aim2(unsigned char* rgb,int height,int width,int(*color_match)(int,int,int), double width_tag, double height_tag);
 
 //颜色是否匹配->红
 int color_match_red(int r,int g,int b);
@@ -154,6 +155,79 @@ aim_infor* find_aim(unsigned char* rgb,int w,int h,int(*color_match)(int,int,int
 	return infor;
 }
 
+//处理图片返回目标信息
+aim_infor* find_aim2(unsigned char* rgb,int w,int h,int(*color_match)(int,int,int), double width_tag, double height_tag){
+	//用于计算连通图
+	unsigned char* flags = (unsigned char*)calloc(w * h, sizeof (unsigned char)); 
+	//返回结果
+	aim_infor* infor = (aim_infor*)malloc(sizeof (aim_infor));
+	infor -> isfind = 0;
+	infor -> center_x = 0;
+	infor -> center_y = 0;
+	infor -> l = 0;
+	infor -> w = 0;
+	infor -> area = 0;
+	
+	//颜色过滤
+	for (size_t i = 0; i < h; i++) {
+		for (size_t j = 0; j < w; j++) {
+			if((*color_match)(rgb[(i * w + j) * 3 + 0],
+				rgb[(i * w + j) * 3 + 1],rgb[(i * w + j) * 3 + 2])){
+				flags[i * w + j] = 0;
+			}else{
+				flags[i * w + j] = 1;
+				
+				rgb[(i * w + j) * 3 + 0] = 0;
+				rgb[(i * w + j) * 3 + 1] = 0;
+				rgb[(i * w + j) * 3 + 2] = 0;
+				
+			}
+		}
+	}
+	
+	
+	//形状过滤
+	for (size_t i = 0; i < h; i++) {
+		for (size_t j = 0; j < w; j++) {
+			if(flags[i * w + j] == 0){
+				area_infor* temp_area = deal_area(flags,w,h,i,j);
+				if(judge_rect(temp_area, width_tag, height_tag)){
+					
+					printf("(%d,%d)\n",i,j);
+					printf("area:%d\n",temp_area->area);
+					printf("left_x:%d\n",temp_area->left_x);
+					printf("left_y:%d\n",temp_area->left_y);
+					printf("right_x:%d\n",temp_area->right_x);
+					printf("right_y:%d\n",temp_area->right_y);
+					printf("top_x:%d\n",temp_area->top_x);
+					printf("top_y:%d\n",temp_area->top_y);
+					printf("bottom_x:%d\n",temp_area->bottom_x);
+					printf("bottom_y:%d\n",temp_area->bottom_y);
+					
+					printf("面积 S = %d,中心 O = (%d,%d),长 l = %d,宽 w = %d\n",temp_area->area,
+					(temp_area -> bottom_x + temp_area -> top_x)/2,
+					(temp_area -> right_y + temp_area -> left_y)/2,
+					(temp_area -> bottom_x - temp_area -> top_x),
+					(temp_area -> right_y - temp_area -> left_y));
+					
+					//保存结果
+					infor -> isfind = 1;
+					if(infor -> area < temp_area -> area){
+						infor -> area = temp_area -> area;
+						infor -> center_x = (temp_area -> bottom_x + temp_area -> top_x)/2;
+						infor -> center_y = (temp_area -> right_y + temp_area -> left_y)/2;
+						infor -> l = (temp_area -> bottom_x - temp_area -> top_x);
+						infor -> w = (temp_area -> right_y - temp_area -> left_y);
+					}
+					free(temp_area);
+				}
+			}
+		}
+	}
+	free(flags);
+	return infor;
+}
+
 //判断连通图是否是矩形
 int judge_rect(area_infor* ar, double width, double height){
 	//太小不算目标
@@ -179,7 +253,7 @@ int judge_rect(area_infor* ar, double width, double height){
 	if(width == 3.4){
 		cout << "top_bottom_l:" << top_bottom_l << endl;
 		cout << "left_right_l" << left_right_l << endl;
-		if(top_bottom_l/left_right_l >= 5.5||top_bottom_l/left_right_l <= 7){
+		if(top_bottom_l/left_right_l >= 4.5||top_bottom_l/left_right_l <= 7){
 			return 0;
 		}
 	}
