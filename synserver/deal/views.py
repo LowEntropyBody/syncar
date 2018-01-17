@@ -104,7 +104,7 @@ def getaimid(request):
 			da1 = DevAim.objects.get(devId = 1, aimId = i)
 			for j in range(0,2):
 				if da1.aimSocre > highSocre[j]:
-					 highSocre[j] = id
+					 highSocre[j] = i
 					 break
 		print highSocre
 		sum = 100000000;
