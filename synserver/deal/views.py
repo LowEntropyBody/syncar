@@ -107,6 +107,7 @@ def getaimid(request):
 				if da1.aimSocre > highSocre[j]:
 					 highSocre[j] = i
 					 break
+			print highSocre
 		print highSocre
 		sum = 100000000;
 		pos_i = -1
