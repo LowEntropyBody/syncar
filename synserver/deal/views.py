@@ -73,9 +73,9 @@ def getaimid(request):
 		pos_i = -1
 		pos_j = -1
 		pos_k = -1
-		for i in range(1,6):
-			for j in range(1,6):
-				for k in range(1,6):
+		for i in range(1,7):
+			for j in range(1,7):
+				for k in range(1,7):
 					if j != i and k != i and k != j:
 						da1 = DevAim.objects.get(devId = 1, aimId = i)
 						da2 = DevAim.objects.get(devId = 2, aimId = j)
@@ -100,10 +100,10 @@ def getaimid(request):
 	
 	if startFlag.flag == 2:
 		highSocre = [0, 0, 0]
-		for i in range(1,6):
+		for i in range(1,7):
 			da1 = DevAim.objects.get(devId = 1, aimId = i)
 			print da1.aimSocre
-			for j in range(0,2):
+			for j in range(0,3):
 				if da1.aimSocre > highSocre[j]:
 					 highSocre[j] = i
 					 break
