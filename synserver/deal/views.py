@@ -42,7 +42,22 @@ def controlstart(request):
 	startFlag.flag = int(flag_temp);
 	startFlag.save();
 	
-	devAim = DevAim.objects.filter(devId = '1');
+	devAim = DevAim.objects.filter(devId = 1);
+	a=devAim[0];
+	a.distance =0.0;
+	a.save();
+	devAim[1].distance = 0;
+	devAim[1].save();
+	devAim[2].distance = 0;
+	devAim[2].save();
+	devAim[3].distance = 0;
+	devAim[3].save();
+	devAim[4].distance = 0;
+	devAim[4].save();
+	devAim[5].distance = 0;
+	devAim[5].save();
+	
+	devAim = DevAim.objects.filter(devId = 2);
 	devAim[0].distance = 0;
 	devAim[0].save();
 	devAim[1].distance = 0;
@@ -56,21 +71,7 @@ def controlstart(request):
 	devAim[5].distance = 0;
 	devAim[5].save();
 	
-	devAim = DevAim.objects.filter(devId = '2');
-	devAim[0].distance = 0;
-	devAim[0].save();
-	devAim[1].distance = 0;
-	devAim[1].save();
-	devAim[2].distance = 0;
-	devAim[2].save();
-	devAim[3].distance = 0;
-	devAim[3].save();
-	devAim[4].distance = 0;
-	devAim[4].save();
-	devAim[5].distance = 0;
-	devAim[5].save();
-	
-	devAim = DevAim.objects.filter(devId = '3');
+	devAim = DevAim.objects.filter(devId = 3);
 	devAim[0].distance = 0;
 	devAim[0].save();
 	devAim[1].distance = 0;

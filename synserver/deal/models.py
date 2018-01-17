@@ -8,5 +8,5 @@ class StartFlag(models.Model):
 class DevAim(models.Model):
 	devId = models.IntegerField(default = 0);
 	aimId = models.IntegerField(default = 0);
-	distance = models.IntegerField(default = 0);
-	aimSocre = models.IntegerField(default = 0);
+	distance = models.models.FloatField(default = 0.0);
+	aimSocre = models.models.FloatField(default = 0.0);
