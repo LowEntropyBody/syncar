@@ -44,20 +44,17 @@ def controlstart(request):
 	
 	devAim = DevAim.objects.filter(devId = 1);
 	for da in devAim:
-		da = devAim[0];
 		da.distance = 0.1;
 		da.save();
 
 	
 	devAim = DevAim.objects.filter(devId = 2);
 	for da in devAim:
-		da = devAim[0];
 		da.distance = 0.1;
 		da.save();
 	
 	devAim = DevAim.objects.filter(devId = 3);
 	for da in devAim:
-		da = devAim[0];
 		da.distance = 0.1;
 		da.save();
 
