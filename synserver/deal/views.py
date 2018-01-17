@@ -24,8 +24,13 @@ def start(request):
 def uploadinfor(request):
 	devId = str(request.POST['devId']);
 	targetdata = str(request.POST['targetdata']);
-	print targetdata
-	return HttpResponse(u"14")
+	ll = list(eval(targetdata))
+	for da in ll:
+		print da
+		devAim = DevAim.objects.get(devId = int(devId), aimId = da['aimId']);
+		devAim.distance = da['distance']
+		devAim.save()		
+	return HttpResponse(u" success upload")
 	
 @csrf_exempt
 def getaimid(request):
@@ -47,18 +52,18 @@ def controlstart(request):
 	
 	devAim = DevAim.objects.filter(devId = 1);
 	for da in devAim:
-		da.distance = 0.0;
+		da.distance = -2;
 		da.save();
 
 	
 	devAim = DevAim.objects.filter(devId = 2);
 	for da in devAim:
-		da.distance = 0.0;
+		da.distance = -2;
 		da.save();
 	
 	devAim = DevAim.objects.filter(devId = 3);
 	for da in devAim:
-		da.distance = 0.0;
+		da.distance = -2;
 		da.save();
 
 	return HttpResponse("System Start")
