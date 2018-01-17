@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
 		string dd = to_string(int(rts[i]->center_distance)) +",";
 		targetdata = targetdata + dd;
 	}
-	send = send + targetdata +"]";
+	send = send + targetdata +"]&temp=5";
 	cout << send << endl; 
 	auto res = cli.post("/uploadinfor/", send.c_str(), "application/x-www-form-urlencoded");
 	if (res && res->status == 200) {
