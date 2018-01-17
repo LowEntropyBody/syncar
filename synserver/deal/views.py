@@ -23,12 +23,12 @@ def start(request):
 @csrf_exempt
 def uploadinfor(request):
 	devId = str(request.POST['devId']);
-	targetdata = str(request.POST['targetdata']);
-	ll = list(eval(targetdata))
+	targetdata1 = str(request.POST['targetdata1']);
+	ll = list(eval(targetdata1))
 	for da in ll:
 		print da
-		devAim = DevAim.objects.get(devId = int(devId), aimId = da['aimId']);
-		devAim.distance = da['distance']
+		devAim = DevAim.objects.get(devId = int(devId), aimId = da['a']);
+		devAim.distance = da['d']
 		devAim.save()		
 	return HttpResponse(u" success upload")
 	
