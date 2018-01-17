@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 		auto res = cli.post("/start/", send.c_str(), "application/x-www-form-urlencoded");
 		if (res && res->status == 200) {
 			string body = res->body;
-			if(body == "1")	break; else usleep(1000*500);
+			if(body != "0")	break; else usleep(1000*500);
 		}else{
 			cout << endl << "------network failed------" << endl;
 			exit(-1);

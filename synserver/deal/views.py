@@ -5,6 +5,10 @@ from django.views.decorators.csrf import csrf_exempt
 from deal.models import StartFlag
 
 @csrf_exempt
+def home(request):
+	return render(request,'home.html');
+
+@csrf_exempt
 def start(request):
 	devId = str(request.POST['devId']);
 	startFlag = StartFlag.objects.filter(id = 1);

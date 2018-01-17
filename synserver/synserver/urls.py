@@ -25,4 +25,5 @@ urlpatterns = [
 	url(r'^controlstart/', deal_views.controlstart,name='controlstart'),
 	url(r'^getstatus/', deal_views.getstatus,name='getstatus'),
 	url(r'^getaimid/', deal_views.getaimid,name='getaimid'),
+	url(r'^home/', deal_views.home,name='home'),
 ]
