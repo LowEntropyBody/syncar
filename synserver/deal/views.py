@@ -6,7 +6,7 @@ from deal.models import StartFlag
 
 @csrf_exempt
 def home(request):
-	return render(request,'home.html');
+	return render(request,'templates/home.html');
 
 @csrf_exempt
 def start(request):
