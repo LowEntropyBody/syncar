@@ -102,6 +102,7 @@ def getaimid(request):
 		highSocre = [0, 0, 0]
 		for i in range(1,6):
 			da1 = DevAim.objects.get(devId = 1, aimId = i)
+			print da1.aimSocre
 			for j in range(0,2):
 				if da1.aimSocre > highSocre[j]:
 					 highSocre[j] = i
