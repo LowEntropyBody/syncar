@@ -5,12 +5,21 @@
 	<title>syn car</title>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
-	function startOne(){
-		$.post("166.111.66.49:8001/controlstart", {'flag':'1'});
-	}
+		$(document).ready(function(){
+			$("button").click(function(){
+				$.post("166.111.66.49:8001/controlstart",
+				{
+					flag:"1",
+					city:"Duckburg"
+				},
+				function(data,status){
+					alert("data:" + data + "\n×´Ì¬£º" + status);
+				});
+			});
+		});
 	</script>
 </head> 
 <body bgcolor="#1685a9">
-	<button onclick="startOne()">Start Experiment One</button> 
+	<button>Start Experiment One</button> 
 </body>
 </html> 
