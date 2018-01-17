@@ -52,15 +52,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'synserver.urls'
 
-BASE_TEMPLATE_DIRS = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-TEMPLATE_DIRS = (
-    os.path.join(BASE_TEMPLATE_DIRS,'deal'),
-)
-'''
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_TEMPLATE_DIRS, 'deal')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +67,7 @@ TEMPLATES = [
         },
     },
 ]
-'''
+
 WSGI_APPLICATION = 'synserver.wsgi.application'
 
 
