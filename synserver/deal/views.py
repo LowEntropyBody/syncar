@@ -60,8 +60,8 @@ def uploadinfor(request):
 def getaimid(request):
 	devId = str(request.POST['devId']);
 	devAim1 = DevAim.objects.get(devId = 1, aimId = 1);
-	devAim2 = DevAim.objects.get(devId = 1, aimId = 1);
-	devAim3 = DevAim.objects.get(devId = 1, aimId = 1);
+	devAim2 = DevAim.objects.get(devId = 2, aimId = 1);
+	devAim3 = DevAim.objects.get(devId = 3, aimId = 1);
 	if devAim1.distance >= 0 and devAim2.distance >= 0 and devAim3.distance >= 0:
 		return HttpResponse(u"2")
 	return HttpResponse(u"1")
