@@ -88,6 +88,7 @@ def getaimid(request):
 							pos_k = k
 							sum = da1.distance + da2.distance + da2.distance
 		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
+		print sum
 		'''
 		if devId = 1:
 			return HttpResponse(str(pos_i))
@@ -130,6 +131,7 @@ def getaimid(request):
 							pos_k = k
 							sum = da1.distance + da2.distance + da2.distance
 		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
+		print sum
 		'''
 		if devId = 1:
 			return HttpResponse(str(pos_i))
