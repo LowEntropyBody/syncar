@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
 		auto res = cli.post("/getaimid/", send.c_str(), "application/x-www-form-urlencoded");
 		if (res && res->status == 200) {
 			string body = res->body;
-			if(body != "-1"){
+			if(body != "0"){
 				for(int j = 0; j < rts.size(); j++){
 					if(rts[j]->id == body){
 						aim_index = j;
@@ -169,7 +169,10 @@ int main(int argc, char* argv[])
 		cout << endl << "------wait aim timeout------" << endl;
 		exit(-1);
 	}
-	
+	if(aim_index == -1){
+		cout << endl << "------!can not find target!------" << endl;
+		exit(-1);
+	}
 	cout << endl << "------move to aim------" << endl;
 	cout << " aim id: " << rts[aim_index]->id << endl;
 	double move_degree = rts[aim_index]->base_degree + rts[aim_index]->degree;

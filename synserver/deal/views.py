@@ -58,7 +58,7 @@ def uploadinfor(request):
 	
 @csrf_exempt
 def getaimid(request):
-	#devId = int(str(request.POST['devId']));
+	devId = int(str(request.POST['devId']));
 	
 	devAim1 = DevAim.objects.get(devId = 1, aimId = 1);
 	devAim2 = DevAim.objects.get(devId = 2, aimId = 1);
@@ -82,8 +82,6 @@ def getaimid(request):
 						da3 = DevAim.objects.get(devId = 3, aimId = k)
 						if da1.distance == 0 or da2.distance == 0 or da3.distance == 0:
 							continue
-						print str(i)+','+str(j)+','+str(k)+','
-						print str(da1.distance) +','+ str(da2.distance) +','+ str(da3.distance)
 						if da1.distance + da2.distance + da3.distance < sum: 
 							pos_i = i
 							pos_j = j
@@ -91,15 +89,14 @@ def getaimid(request):
 							sum = da1.distance + da2.distance + da3.distance
 		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
 		print sum
-		'''
+		
 		if devId = 1:
 			return HttpResponse(str(pos_i))
 		if devId = 2:
 			return HttpResponse(str(pos_j))
 		if devId = 3:
 			return HttpResponse(str(pos_k))
-		'''
-		return HttpResponse(str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k))
+		
 	
 	if startFlag.flag == 2:
 		highSocre = [0, 0, 0]
@@ -133,16 +130,13 @@ def getaimid(request):
 							pos_k = k
 							sum = da1.distance + da2.distance + da3.distance
 		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
-		print sum
-		'''
+		
 		if devId = 1:
 			return HttpResponse(str(pos_i))
 		if devId = 2:
 			return HttpResponse(str(pos_j))
 		if devId = 3:
 			return HttpResponse(str(pos_k))
-		'''
-		return HttpResponse(str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k))
 	return HttpResponse(u"-1")
 	
 @csrf_exempt
