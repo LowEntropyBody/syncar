@@ -30,14 +30,6 @@ def uploadinfor(request):
 		devAim = DevAim.objects.get(devId = int(devId), aimId = da['a']);
 		devAim.distance = da['d']
 		devAim.save()
-
-	targetdata2 = str(request.POST['targetdata2']);
-	ll2 = list(eval(targetdata2))
-	for da in ll2:
-		print da
-		devAim = DevAim.objects.get(devId = int(devId), aimId = da['a']);
-		devAim.distance = da['d']
-		devAim.save()		
 	return HttpResponse(u" success upload")
 	
 @csrf_exempt
