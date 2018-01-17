@@ -70,9 +70,9 @@ def getaimid(request):
 	startFlag = StartFlag.objects.get(id = 1);
 	if startFlag.flag == 1:
 		sum = 100000000;
-		pos_i = 0
-		pos_j = 0
-		pos_k = 0
+		pos_i = -1
+		pos_j = -1
+		pos_k = -1
 		for i in range(1,6):
 			for j in range(1,6):
 				for k in range(1,6):
@@ -97,8 +97,36 @@ def getaimid(request):
 			return HttpResponse(str(pos_k))
 		'''
 		return HttpResponse(str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k))
-	if startFlag.flag == 2: 
-		print 11111
+	
+	if startFlag.flag == 2:
+		sum = 100000000;
+		pos_i = -1
+		pos_j = -1
+		pos_k = -1
+		for i in range(1,3):
+			for j in range(1,3):
+				for k in range(1,3):
+					if j != i and k != i and k != j:
+						da1 = DevAim.objects.get(devId = 1, aimId = i)
+						da2 = DevAim.objects.get(devId = 2, aimId = j)
+						da3 = DevAim.objects.get(devId = 3, aimId = k)
+						if da1.distance == 0 or da2.distance == 0 or da3.distance == 0:
+							continue
+						if da1.distance + da2.distance + da2.distance < sum:
+							pos_i = i
+							pos_j = j
+							pos_k = k
+							sum = da1.distance + da2.distance + da2.distance
+		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
+		'''
+		if devId = 1:
+			return HttpResponse(str(pos_i))
+		if devId = 2:
+			return HttpResponse(str(pos_j))
+		if devId = 3:
+			return HttpResponse(str(pos_k))
+		'''
+		return HttpResponse(str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k))
 	return HttpResponse(u"-1")
 	
 @csrf_exempt
