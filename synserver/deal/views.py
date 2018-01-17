@@ -99,13 +99,21 @@ def getaimid(request):
 		return HttpResponse(str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k))
 	
 	if startFlag.flag == 2:
+		highSocre = [0, 0, 0]
+		for i in range(1,6):
+			da1 = DevAim.objects.get(devId = 1, aimId = i)
+			for j in range(0,2):
+				if da1.aimSocre > highSocre[j]:
+					 highSocre[j] = id
+					 break
+		print highSocre
 		sum = 100000000;
 		pos_i = -1
 		pos_j = -1
 		pos_k = -1
-		for i in range(1,3):
-			for j in range(1,3):
-				for k in range(1,3):
+		for i in highSocre:
+			for j in highSocre:
+				for k in highSocre:
 					if j != i and k != i and k != j:
 						da1 = DevAim.objects.get(devId = 1, aimId = i)
 						da2 = DevAim.objects.get(devId = 2, aimId = j)
