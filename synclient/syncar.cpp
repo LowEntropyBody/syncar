@@ -123,13 +123,14 @@ int main(int argc, char* argv[])
 	
 	cout << endl << "------upload data------" << endl;
 	string send = "devId=";
-	send = send + devId + "&targetdata1=";
-	string targetdata = "[";
-	for(int i = 0; i < rts.size(); i++){
-		string dd = to_string(rts[i]->center_distance) +",";
-		targetdata = targetdata + dd;
-	}
-	send = send + targetdata +"]&temp=5";
+	send = send + devId +
+			"&d1=" +  to_string(rts[0]->center_distance) +
+			"&d2=" +  to_string(rts[1]->center_distance) +
+			"&d3=" +  to_string(rts[2]->center_distance) +
+			"&d4=" +  to_string(rts[3]->center_distance) +
+			"&d5=" +  to_string(rts[4]->center_distance) +
+			"&d6=" +  to_string(rts[5]->center_distance);
+
 	cout << send << endl; 
 	auto res = cli.post("/uploadinfor/", send.c_str(), "application/x-www-form-urlencoded");
 	if (res && res->status == 200) {

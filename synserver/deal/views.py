@@ -23,15 +23,37 @@ def start(request):
 @csrf_exempt
 def uploadinfor(request):
 	devId = str(request.POST['devId']);
-	targetdata1 = str(request.POST['targetdata1']);
-	ll = list(eval(targetdata1))
-	print ll
-	index = 1;
-	for da in ll:
-		devAim = DevAim.objects.get(devId = int(devId), aimId = index);
-		devAim.distance = da
-		devAim.save()
-		index = index + 1
+	d1 = str(request.POST['d1']);
+	d2 = str(request.POST['d2']);
+	d3 = str(request.POST['d3']);
+	d4 = str(request.POST['d4']);
+	d5 = str(request.POST['d5']);
+	d6 = str(request.POST['d6']);
+	print d1
+	print d2
+	print d3
+	print d4
+	print d5
+	print d6
+	devAim = DevAim.objects.get(devId = int(devId), aimId = 1);
+	devAim.distance = d1
+	devAim.save()
+	devAim = DevAim.objects.get(devId = int(devId), aimId = 2);
+	devAim.distance = d2
+	devAim.save()
+	devAim = DevAim.objects.get(devId = int(devId), aimId = 3);
+	devAim.distance = d3
+	devAim.save()
+	devAim = DevAim.objects.get(devId = int(devId), aimId = 4);
+	devAim.distance = d4
+	devAim.save()
+	devAim = DevAim.objects.get(devId = int(devId), aimId = 5);
+	devAim.distance = d5
+	devAim.save()
+	devAim = DevAim.objects.get(devId = int(devId), aimId = 6);
+	devAim.distance = d6
+	devAim.save()
+	
 	return HttpResponse(u" success upload")
 	
 @csrf_exempt
