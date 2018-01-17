@@ -22,6 +22,9 @@ def start(request):
 
 @csrf_exempt
 def uploadinfor(request):
+	devId = str(request.POST['devId']);
+	targetdata = str(request.POST['targetdata']);
+	print targetdata
 	return HttpResponse(u"14")
 	
 @csrf_exempt
@@ -33,7 +36,7 @@ def getaimid(request):
 def end(request):
 	return HttpResponse(u"end")
 
-#启动系统
+
 @csrf_exempt
 def controlstart(request):
 	flag_temp = str(request.POST['flag']);
@@ -44,18 +47,18 @@ def controlstart(request):
 	
 	devAim = DevAim.objects.filter(devId = 1);
 	for da in devAim:
-		da.distance = 0.1;
+		da.distance = 0.0;
 		da.save();
 
 	
 	devAim = DevAim.objects.filter(devId = 2);
 	for da in devAim:
-		da.distance = 0.1;
+		da.distance = 0.0;
 		da.save();
 	
 	devAim = DevAim.objects.filter(devId = 3);
 	for da in devAim:
-		da.distance = 0.1;
+		da.distance = 0.0;
 		da.save();
 
 	return HttpResponse("System Start")
