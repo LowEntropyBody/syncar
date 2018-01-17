@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
 	send = send + devId + "&targetdata1=";
 	string targetdata = "[";
 	for(int i = 0; i < rts.size(); i++){
-		string dd = to_string(int(rts[i]->center_distance)) +",";
+		string dd = to_string(rts[i]->center_distance) +",";
 		targetdata = targetdata + dd;
 	}
 	send = send + targetdata +"]&temp=5";
