@@ -6,7 +6,7 @@ class StartFlag(models.Model):
 	flag = models.IntegerField(default = 0);
 	
 class DevAim(models.Model):
-	devId = models.CharField(max_length=100,default="0");
-	aimId = models.CharField(max_length=100,default="0");
+	devId = models.IntegerField(default = 0);
+	aimId = models.IntegerField(default = 0);
 	distance = models.IntegerField(default = 0);
 	aimSocre = models.IntegerField(default = 0);
