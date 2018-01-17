@@ -25,11 +25,13 @@ def uploadinfor(request):
 	devId = str(request.POST['devId']);
 	targetdata1 = str(request.POST['targetdata1']);
 	ll = list(eval(targetdata1))
+	print ll
+	index = 1;
 	for da in ll:
-		print da
-		devAim = DevAim.objects.get(devId = int(devId), aimId = da['a']);
-		devAim.distance = da['d']
+		devAim = DevAim.objects.get(devId = int(devId), aimId = index);
+		devAim.distance = da
 		devAim.save()
+		index = index + 1
 	return HttpResponse(u" success upload")
 	
 @csrf_exempt
