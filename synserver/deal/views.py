@@ -83,6 +83,7 @@ def getaimid(request):
 						if da1.distance == 0 or da2.distance == 0 or da3.distance == 0:
 							continue
 						if da1.distance + da2.distance + da2.distance < sum:
+							print da1.distance + da2.distance + da2.distance 
 							pos_i = i
 							pos_j = j
 							pos_k = k
