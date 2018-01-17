@@ -83,12 +83,12 @@ def getaimid(request):
 						if da1.distance == 0 or da2.distance == 0 or da3.distance == 0:
 							continue
 						print str(i)+','+str(j)+','+str(k)+','
-						print str(da1.distance) +','+ str(da2.distance) +','+ str(da2.distance)
-						if da1.distance + da2.distance + da2.distance < sum: 
+						print str(da1.distance) +','+ str(da2.distance) +','+ str(da3.distance)
+						if da1.distance + da2.distance + da3.distance < sum: 
 							pos_i = i
 							pos_j = j
 							pos_k = k
-							sum = da1.distance + da2.distance + da2.distance
+							sum = da1.distance + da2.distance + da3.distance
 		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
 		print sum
 		'''
@@ -127,11 +127,11 @@ def getaimid(request):
 						da3 = DevAim.objects.get(devId = 3, aimId = k)
 						if da1.distance == 0 or da2.distance == 0 or da3.distance == 0:
 							continue
-						if da1.distance + da2.distance + da2.distance < sum:
+						if da1.distance + da2.distance + da3.distance < sum:
 							pos_i = i
 							pos_j = j
 							pos_k = k
-							sum = da1.distance + da2.distance + da2.distance
+							sum = da1.distance + da2.distance + da3.distance
 		print str(pos_i) + ',' + str(pos_j) + ',' + str(pos_k)
 		print sum
 		'''
