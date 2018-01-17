@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from deal.models import StartFlag
+from deal.models import DevAim
 
 @csrf_exempt
 def home(request):
