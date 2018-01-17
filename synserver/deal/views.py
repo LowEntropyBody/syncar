@@ -36,15 +36,55 @@ def end(request):
 #启动系统
 @csrf_exempt
 def controlstart(request):
-	startFlag = StartFlag.objects.filter(id = 1);
-	if startFlag:
-		startFlag = startFlag[0]
-		startFlag.flag = 1;
-		startFlag.save();
-		return HttpResponse("System start");
-	sf = StartFlag(id = 1, flag = 1);
-	sf.save();
-	return HttpResponse("System start")
+	flag_temp = str(request.POST['flag']);
+	
+	startFlag = StartFlag.objects.get(id = 1);
+	startFlag.flag = int(flag_temp);
+	startFlag.save();
+	
+	devAim = DevAim.objects.filter(devId = '1');
+	devAim[0].distance = 0;
+	devAim[0].save();
+	devAim[1].distance = 0;
+	devAim[1].save();
+	devAim[2].distance = 0;
+	devAim[2].save();
+	devAim[3].distance = 0;
+	devAim[3].save();
+	devAim[4].distance = 0;
+	devAim[4].save();
+	devAim[5].distance = 0;
+	devAim[5].save();
+	
+	devAim = DevAim.objects.filter(devId = '2');
+	devAim[0].distance = 0;
+	devAim[0].save();
+	devAim[1].distance = 0;
+	devAim[1].save();
+	devAim[2].distance = 0;
+	devAim[2].save();
+	devAim[3].distance = 0;
+	devAim[3].save();
+	devAim[4].distance = 0;
+	devAim[4].save();
+	devAim[5].distance = 0;
+	devAim[5].save();
+	
+	devAim = DevAim.objects.filter(devId = '3');
+	devAim[0].distance = 0;
+	devAim[0].save();
+	devAim[1].distance = 0;
+	devAim[1].save();
+	devAim[2].distance = 0;
+	devAim[2].save();
+	devAim[3].distance = 0;
+	devAim[3].save();
+	devAim[4].distance = 0;
+	devAim[4].save();
+	devAim[5].distance = 0;
+	devAim[5].save();
+
+	return HttpResponse("System Start")
 	
 @csrf_exempt
 def getstatus(request):
