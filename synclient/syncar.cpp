@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
 	send = send + devId + "&targetdata=";
 	string targetdata = "[";
 	for(int i = 0; i < rts.size(); i++){
-		string dd = "{\'aimId\':" + rts[i]->id + ",\'distance\':" + to_string(rts[i]->center_distance) +"},";
+		string dd = "{\'a\':" + rts[i]->id + ",\'d\':" + to_string(rts[i]->center_distance) +"},";
 		targetdata = targetdata + dd;
 	}
 	send = send + targetdata +"]";
