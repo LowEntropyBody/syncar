@@ -192,7 +192,19 @@ int main(int argc, char* argv[])
 		car.move_rotate(move_degree);
 	}
 	
-	car.move_forward(rts[aim_index]->distance/3);
+	car.move_forward(rts[aim_index]->distance);
+	
+	string send = "devId=";
+	send = send + devId;
+	auto res = cli.post("/end/", send.c_str(), "application/x-www-form-urlencoded");
+	if (res && res->status == 200) {
+		string body = res->body;
+		cout << body << endl;
+	}else{
+		cout << endl << "------network failed------" << endl;
+		exit(-1);
+	}
+	
 	cout<< endl << "------system end success------" << endl;
 	return   0;
 }

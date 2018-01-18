@@ -141,6 +141,9 @@ def getaimid(request):
 	
 @csrf_exempt
 def end(request):
+	startFlag = StartFlag.objects.get(id = 1);
+	startFlag.flag = 0;
+	startFlag.save();
 	return HttpResponse(u"end")
 
 
