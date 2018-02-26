@@ -1,6 +1,6 @@
 /*
 **  Author: ZhaoYang
-**	Compile: g++ synclient/capture.cpp -ljpeg -lm -fpermissive -o capture.out
+**	Compile: g++ synclient/client_static/capture.cpp -ljpeg -lm -fpermissive -o capture.out
 **  Run: ./capture.out re1.jpg
 **  Lib: sudo apt-get install libv4l-dev
 **		 sudo apt-get install libjpeg-dev
