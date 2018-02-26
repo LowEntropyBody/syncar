@@ -14,7 +14,7 @@ class Cam{
 	unsigned char* rgb;
 	public:
 		uint32_t width;
-		uint32_t height
+		uint32_t height;
 		Cam(const char * device, uint32_t width, uint32_t height);
 		~Cam();
 		unsigned char* getrgb();
