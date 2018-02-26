@@ -1,7 +1,7 @@
 /*
 **  Author: ZhaoYang
-**	Compile: g++ synclient/client_dynamic/main.cpp -ljpeg -lm -fpermissive -o dynamic.out
-**  Run: ./dynamic.out re1.jpg
+**	Compile: g++ synclient/client_dynamic/main.cpp -std=c++11 -ljpeg -lm -fpermissive -o dynamic.out
+**  Run: ./dynamic.out
 **  Lib: sudo apt-get install libv4l-dev
 **		 sudo apt-get install libjpeg-dev
 **  Download: git clone https://github.com/LowEntropyBody/syncar.git
@@ -35,6 +35,32 @@ int main(int argc, char* argv[]){
 	camera_stop(camera);
 	camera_finish(camera);
 	camera_close(camera);
+	
+	
+	camera_t* camera1 = camera_open("/dev/video1", 640,360);
+	camera_init(camera1);
+	camera_start(camera1);
+	struct timeval timeout1;
+	timeout1.tv_sec = 1;
+	timeout1.tv_usec = 0;
+	// Ìø¹ýÇ°ÃæµÄ5Ö¡Í¼Ïñ 
+	for (int i = 0; i < 5; i++) {
+		camera_frame(camera1, timeout1);
+	}
+	//ÅÄÉãÕÕÆ¬
+	camera_frame(camera1, timeout1);
+	unsigned char* rgb1 = yuyv2rgb(camera1->head.start, camera1->width, camera1->height);
+
+	FILE* out1 = fopen("result1.jpg", "w");
+	jpeg(out1, rgb1, camera1->width, camera1->height, 100);
+	
+	fclose(out1);
+	free(rgb1);
+	camera_stop(camera1);
+	camera_finish(camera1);
+	camera_close(camera1);
+	
+	
 	
 	return 0;
 }
