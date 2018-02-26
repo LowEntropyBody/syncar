@@ -136,6 +136,18 @@ void camera_init(camera_t* camera) {
   format.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
   format.fmt.pix.field = V4L2_FIELD_NONE;
   if (xioctl(camera->fd, VIDIOC_S_FMT, &format) == -1) quit("VIDIOC_S_FMT");
+  
+  ////
+  struct v4l2_streamparm *setfps;
+  setfps=(struct v4l2_streamparm *) calloc(1, sizeof(structv4l2_streamparm));
+  memset(setfps, 0, sizeof(struct v4l2_streamparm));
+  setfps->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  if(xioctl(camera->fd, VIDIOC_G_PARM, setfps) == 0)
+    printf("\n  Frame rate:  %u/%u\n", setfps->parm.capture.timeperframe.denominator, setfps->parm.capture.timeperframe.numerator);
+  else{
+      perror("Unable to read out current framerate");return -1;}
+
+  ////
 
   struct v4l2_requestbuffers req;
   memset(&req, 0, sizeof req);
