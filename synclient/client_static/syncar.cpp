@@ -1,6 +1,6 @@
 /*
 **  Author: ZhaoYang
-**	Compile: g++ synclient/syncar.cpp -ljpeg -lm -fpermissive -o syncar.out
+**	Compile: g++ synclient/syncar.cpp -std=c++11 -ljpeg -lm -fpermissive -o syncar.out
 **  Run: ./syncar.out -devId 1 -serverIP "166.111.66.49"
 **  Lib: sudo apt-get install libv4l-dev
 **		 sudo apt-get install libjpeg-dev
