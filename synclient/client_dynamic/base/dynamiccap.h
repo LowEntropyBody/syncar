@@ -26,6 +26,8 @@ unsigned char* Cam::getrgb(){
 		rgb = NULL;
 	}
 	//拍摄照片
+	camera_stop(camera);
+	camera_start(camera);
 	camera_frame(camera, timeout);
 	rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
 	return rgb;

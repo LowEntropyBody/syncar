@@ -137,7 +137,7 @@ void camera_init(camera_t* camera) {
   format.fmt.pix.field = V4L2_FIELD_NONE;
   if (xioctl(camera->fd, VIDIOC_S_FMT, &format) == -1) quit("VIDIOC_S_FMT");
   
-  ////
+  /**
   struct v4l2_streamparm *setfps;
   setfps=(struct v4l2_streamparm *) calloc(1, sizeof(struct v4l2_streamparm));
   memset(setfps, 0, sizeof(struct v4l2_streamparm));
@@ -147,7 +147,7 @@ void camera_init(camera_t* camera) {
   else{
       perror("Unable to read out current framerate");return -1;}
 
-  ////
+  **/
 
   struct v4l2_requestbuffers req;
   memset(&req, 0, sizeof req);
