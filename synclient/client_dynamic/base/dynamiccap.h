@@ -20,7 +20,7 @@ class Cam{
 		unsigned char* getrgb();
 };
 
-unsigned char* getrgb(){
+unsigned char* Cam::getrgb(){
 	if(rgb != NULL) {
 		free(rgb);
 		rgb = NULL;
