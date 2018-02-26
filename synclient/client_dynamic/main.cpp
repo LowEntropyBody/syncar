@@ -7,84 +7,23 @@
 **  Download: git clone https://github.com/LowEntropyBody/syncar.git
 **  Date: 2018/2
 */
-#include "base/cap.h"
+#include "base/dynamiccap.h"
 #include <math.h>
 #include <iostream>
 #include <vector>
 
+
+
 int main(int argc, char* argv[]){
-	camera_t* camera = camera_open("/dev/video0", 640,360);
-	camera_init(camera);
-	camera_start(camera);
-	struct timeval timeout;
-	timeout.tv_sec = 1;
-	timeout.tv_usec = 0;
-	// Ìø¹ýÇ°ÃæµÄ5Ö¡Í¼Ïñ 
-	for (int i = 0; i < 5; i++) {
-		camera_frame(camera, timeout);
-	}
-	//ÅÄÉãÕÕÆ¬
-	camera_frame(camera, timeout);
-	unsigned char* rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
-
+	Cam* cam = new Cam("/dev/video0", 640, 360);
+	
 	FILE* out = fopen("result.jpg", "w");
-	jpeg(out, rgb, camera->width, camera->height, 100);
-	
+	jpeg(out, cam->getPic(), cam->width, cam->height, 100);
 	fclose(out);
-	free(rgb);
-	camera_stop(camera);
-	camera_finish(camera);
-	camera_close(camera);
 	
-	
-	camera_t* camera1 = camera_open("/dev/video1", 640,360);
-	camera_init(camera1);
-	camera_start(camera1);
-	struct timeval timeout1;
-	timeout1.tv_sec = 1;
-	timeout1.tv_usec = 0;
-	// Ìø¹ýÇ°ÃæµÄ5Ö¡Í¼Ïñ 
-	for (int i = 0; i < 5; i++) {
-		camera_frame(camera1, timeout1);
-	}
-	//ÅÄÉãÕÕÆ¬
-	camera_frame(camera1, timeout1);
-	unsigned char* rgb1 = yuyv2rgb(camera1->head.start, camera1->width, camera1->height);
-
-	FILE* out1 = fopen("result1.jpg", "w");
-	jpeg(out1, rgb1, camera1->width, camera1->height, 100);
-	
-	fclose(out1);
-	free(rgb1);
-	camera_stop(camera1);
-	camera_finish(camera1);
-	camera_close(camera1);
-	
-	
-	camera_t* camera2 = camera_open("/dev/video2", 640,360);
-	camera_init(camera2);
-	camera_start(camera2);
-	struct timeval timeout2;
-	timeout2.tv_sec = 1;
-	timeout2.tv_usec = 0;
-	// Ìø¹ýÇ°ÃæµÄ5Ö¡Í¼Ïñ 
-	for (int i = 0; i < 5; i++) {
-		camera_frame(camera2, timeout2);
-	}
-	//ÅÄÉãÕÕÆ¬
-	camera_frame(camera2, timeout2);
-	unsigned char* rgb2 = yuyv2rgb(camera2->head.start, camera2->width, camera2->height);
-
 	FILE* out2 = fopen("result2.jpg", "w");
-	jpeg(out2, rgb2, camera2->width, camera2->height, 100);
-	
+	jpeg(out2, cam->getrgb(), cam->width, cam->height, 100);
 	fclose(out2);
-	free(rgb2);
-	camera_stop(camera2);
-	camera_finish(camera2);
-	camera_close(camera2);
-	
-	
-	
+
 	return 0;
 }
