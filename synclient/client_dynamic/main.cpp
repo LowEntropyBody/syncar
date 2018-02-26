@@ -21,6 +21,8 @@ int main(int argc, char* argv[]){
 	jpeg(out, cam->getrgb(), cam->width, cam->height, 100);
 	fclose(out);
 	
+	usleep(1000*2000);
+	
 	FILE* out2 = fopen("result2.jpg", "w");
 	jpeg(out2, cam->getrgb(), cam->width, cam->height, 100);
 	fclose(out2);
