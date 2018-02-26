@@ -28,7 +28,7 @@ unsigned char* getrgb(){
 	//拍摄照片
 	camera_frame(camera, timeout);
 	rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
-	return rbg;
+	return rgb;
 }
 
 Cam::Cam(const char * device, uint32_t width_temp, uint32_t height_temp){

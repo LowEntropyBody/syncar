@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
 	Cam* cam = new Cam("/dev/video0", 640, 360);
 	
 	FILE* out = fopen("result.jpg", "w");
-	jpeg(out, cam->getPic(), cam->width, cam->height, 100);
+	jpeg(out, cam->getrgb(), cam->width, cam->height, 100);
 	fclose(out);
 	
 	FILE* out2 = fopen("result2.jpg", "w");
