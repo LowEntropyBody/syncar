@@ -139,7 +139,7 @@ void camera_init(camera_t* camera) {
   
   ////
   struct v4l2_streamparm *setfps;
-  setfps=(struct v4l2_streamparm *) calloc(1, sizeof(structv4l2_streamparm));
+  setfps=(struct v4l2_streamparm *) calloc(1, sizeof(struct v4l2_streamparm));
   memset(setfps, 0, sizeof(struct v4l2_streamparm));
   setfps->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
   if(xioctl(camera->fd, VIDIOC_G_PARM, setfps) == 0)
