@@ -61,6 +61,30 @@ int main(int argc, char* argv[]){
 	camera_close(camera1);
 	
 	
+	camera_t* camera2 = camera_open("/dev/video2", 640,360);
+	camera_init(camera2);
+	camera_start(camera2);
+	struct timeval timeout2;
+	timeout2.tv_sec = 1;
+	timeout2.tv_usec = 0;
+	// Ìø¹ýÇ°ÃæµÄ5Ö¡Í¼Ïñ 
+	for (int i = 0; i < 5; i++) {
+		camera_frame(camera2, timeout2);
+	}
+	//ÅÄÉãÕÕÆ¬
+	camera_frame(camera2, timeout2);
+	unsigned char* rgb2 = yuyv2rgb(camera2->head.start, camera2->width, camera2->height);
+
+	FILE* out2 = fopen("result2.jpg", "w");
+	jpeg(out2, rgb2, camera2->width, camera2->height, 100);
+	
+	fclose(out2);
+	free(rgb2);
+	camera_stop(camera2);
+	camera_finish(camera2);
+	camera_close(camera2);
+	
+	
 	
 	return 0;
 }
