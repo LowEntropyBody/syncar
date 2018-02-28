@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include <thread>
+#include <mutex>
 using namespace std;
 
 
@@ -102,7 +103,7 @@ class ThreadCam{
 void ThreadCam::show(){
 	deal_img -> show();
 }
-MoveInfo* get_move_info(){
+MoveInfo* ThreadCam::get_move_info(){
 	lock_guard<mutex> guard(mx);
 	if(move_info -> isfind){
 		move_info -> isfind = false;
