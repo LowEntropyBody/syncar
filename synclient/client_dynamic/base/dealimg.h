@@ -66,7 +66,6 @@ void RGB2HSL::convert(int r_temp, int g_temp, int b_temp){
 
 class DealImg{
 	private:
-		AimInfor* infor;
 		RGB2HSL rgb2hsl;
 		bool color_match_red(int r,int g,int b);
 		bool judge_rect(AreaInfor* ar);
@@ -78,7 +77,12 @@ class DealImg{
 		AimInfor* find_aim(unsigned char* rgb, int w, int h);		
 };
 
-DealImg::DealImg(){}
+DealImg::DealImg(){
+	
+}
+DealImg::~DealImg(){
+
+}
 
 //颜色是否匹配->红
 bool DealImg::color_match_red(int r,int g,int b){
@@ -94,7 +98,8 @@ bool DealImg::color_match_red(int r,int g,int b){
 
 AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 	//用于计算连通图
-	unsigned char* flags = (unsigned char*)calloc(w * h, sizeof (unsigned char)); 
+	unsigned char* flags = (unsigned char*)calloc(w * h, sizeof (unsigned char));
+	AimInfor* infor = (AimInfor*)malloc(sizeof (AimInfor));	
 	infor -> isfind = false;
 	infor -> center_x = 0;
 	infor -> center_y = 0;

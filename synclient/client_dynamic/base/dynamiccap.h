@@ -86,8 +86,9 @@ class ThreadCam{
 void ThreadCam::run(){
 	DealImg* deal_img = new DealImg();
 	while(run_flag){
+		cout << "cam->width:" << cam->width <<endl; 
 		deal_img->find_aim(cam->take_pic(), cam->width, cam-> height);
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));  // 2 休眠100ms
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));  // 2 休眠500ms
 	}	
 }
 void ThreadCam::thread_run() {
