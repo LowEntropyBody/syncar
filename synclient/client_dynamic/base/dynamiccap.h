@@ -65,7 +65,7 @@ Cam::~Cam(){
 }
 
 class DynamicCap{
-	vector<camera_t*> cameras;
+	vector<Cam*> cameras;
 	public:
 		DynamicCap();
 		~DynamicCap();
