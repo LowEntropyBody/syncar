@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 	cam->savePic("re1.jpg");
 	usleep(1000*5000);
 	
-	Fcam->takePic();
+	cam->takePic();
 	cam->savePic("re2.jpg");
 
 	return 0;
