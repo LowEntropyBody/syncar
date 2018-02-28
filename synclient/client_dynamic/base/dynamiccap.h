@@ -2,6 +2,7 @@
 #define __DYNAMICCAP_H
 //////////////////////////////////////
 #include "cap.h"
+#include "dealimg.h"
 #include <math.h>
 #include <iostream>
 #include <vector>
