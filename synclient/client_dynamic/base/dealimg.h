@@ -74,7 +74,7 @@ class DealImg{
 		void compare_two_ainfor(AreaInfor* a,AreaInfor* b);
 	public:
 		double distance;
-		double center distance;
+		double center_distance;
 		double degree;
 		DealImg();
 		~DealImg();
