@@ -66,6 +66,9 @@ Cam::~Cam(){
 	camera_close(camera);
 }
 
+
+
+
 class ThreadCam{
 	private:
 		Cam* cam;
@@ -80,8 +83,9 @@ class ThreadCam{
 		void thread_stop();
 };
 void ThreadCam::run(){
+	DealImg* deal_img = new DealImg();
 	while(run_flag){
-		cout<< "in: " << cam_name << endl;
+		deal_img->find_aim(cam->take_pic(), cam->width, cam-> height);
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));  // 2 休眠100ms
 	}	
 }

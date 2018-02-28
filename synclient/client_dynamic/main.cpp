@@ -1,6 +1,6 @@
 /*
 **  Author: ZhaoYang
-**	Compile: g++ synclient/client_dynamic/main.cpp -std=c++11 -ljpeg -lm -fpermissive -o dynamic.out
+**	Compile: g++ synclient/client_dynamic/main.cpp -lpthread -std=c++11 -ljpeg -lm -fpermissive -o dynamic.out
 **  Run: ./dynamic.out
 **  Lib: sudo apt-get install libv4l-dev
 **		 sudo apt-get install libjpeg-dev
@@ -14,12 +14,9 @@
 
 int main(int argc, char* argv[]){
 	ThreadCam* tc1 = new ThreadCam("/dev/video0", 640, 360);
-	ThreadCam* tc2 = new ThreadCam("/dev/video1", 640, 360);
 	tc1->thread_run();
-	tc2->thread_run();
-	usleep(1000*5133);
+	usleep(1000*10000);
 	tc1->thread_stop();
-	tc2->thread_stop();
 	cout << "main" << endl;
 	return 0;
 }
