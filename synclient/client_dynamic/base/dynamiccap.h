@@ -35,23 +35,18 @@ unsigned char* Cam::takePic(){
 		rgb = NULL;
 	}
 	//拍摄照片
-	camera_stop(camera);
 	camera_start(camera);
 	camera_frame(camera, timeout);
 	rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
+	camera_stop(camera);
 	return rgb;
 }
 
 Cam::Cam(const char * device, uint32_t width_temp, uint32_t height_temp){
 	camera = camera_open(device, width_temp, height_temp);
 	camera_init(camera);
-	camera_start(camera);
 	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;
-	// 跳过前面的5帧图像 
-	for (int i = 0; i < 5; i++) {
-		camera_frame(camera, timeout);
-	}
 	rgb = NULL;
 	width = width_temp;
 	height = height_temp;
@@ -59,7 +54,6 @@ Cam::Cam(const char * device, uint32_t width_temp, uint32_t height_temp){
 
 Cam::~Cam(){
 	if(rgb != NULL) free(rgb);
-	camera_stop(camera);
 	camera_finish(camera);
 	camera_close(camera);
 }
