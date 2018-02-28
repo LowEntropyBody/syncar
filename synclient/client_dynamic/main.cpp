@@ -15,14 +15,7 @@
 
 
 int main(int argc, char* argv[]){
-	Cam* cam = new Cam("/dev/video0", 640, 360);
-	
-	cam->takePic();
-	cam->savePic("re1.jpg");
-	usleep(1000*5000);
-	
-	cam->takePic();
-	cam->savePic("re2.jpg");
+	DynamicCap dc = new DynamicCap();
 
 	return 0;
 }

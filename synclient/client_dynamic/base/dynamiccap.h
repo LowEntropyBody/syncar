@@ -48,8 +48,8 @@ Cam::Cam(const char * device, uint32_t width_temp, uint32_t height_temp){
 	camera_start(camera);
 	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;
-	// 跳过前面的5帧图像 
-	for (int i = 0; i < 5; i++) {
+	// 跳过前面的6帧图像 
+	for (int i = 0; i < 6; i++) {
 		camera_frame(camera, timeout);
 	}
 	rgb = NULL;
@@ -64,13 +64,25 @@ Cam::~Cam(){
 	camera_close(camera);
 }
 
-/**
 class DynamicCap{
 	vector<camera_t*> cameras;
 	public:
-		DynamicCapture();
-		~DynamicCapture();
-};**/
+		DynamicCap();
+		~DynamicCap();
+};
 
+DynamicCap::DynamicCap(){
+	cameras.push_back(new Cam("/dev/video0", 640, 360));
+	cameras.push_back(new Cam("/dev/video1", 640, 360));
+	cameras.push_back(new Cam("/dev/video2", 640, 360));
+	usleep(1000*500);
+	cameras[0]->takePic();
+	cameras[0]->savePic("re1.jpg");
+	cameras[1]->takePic();
+	cameras[1]->savePic("re2.jpg");
+	cameras[2]->takePic();
+	cameras[2]->savePic("re3.jpg");
+	
+}
 
 #endif
