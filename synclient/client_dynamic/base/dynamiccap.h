@@ -12,6 +12,9 @@
 using namespace std;
 
 
+//全局拍照片锁
+mutex cam_mx;
+
 class Cam{
 	camera_t* camera;
 	struct timeval timeout;
@@ -39,10 +42,13 @@ unsigned char* Cam::take_pic(){
 		rgb = NULL;
 	}
 	//拍摄照片
-	camera_start(camera);
-	camera_frame(camera, timeout);
+	{
+		lock_guard<mutex> guard(cam_mx);
+		camera_start(camera);
+		camera_frame(camera, timeout);
+		camera_stop(camera);
+	}
 	rgb = yuyv2rgb(camera->head.start, camera->width, camera->height);
-	camera_stop(camera);
 	return rgb;
 }
 
