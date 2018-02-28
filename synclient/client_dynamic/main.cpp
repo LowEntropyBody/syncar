@@ -17,15 +17,12 @@
 int main(int argc, char* argv[]){
 	Cam* cam = new Cam("/dev/video0", 640, 360);
 	
-	FILE* out = fopen("result.jpg", "w");
-	jpeg(out, cam->getrgb(), cam->width, cam->height, 100);
-	fclose(out);
-	cout << "change" << endl;
+	cam->takePic();
+	cam->savePic("re1.jpg");
 	usleep(1000*5000);
 	
-	FILE* out2 = fopen("result2.jpg", "w");
-	jpeg(out2, cam->getrgb(), cam->width, cam->height, 100);
-	fclose(out2);
+	Fcam->takePic();
+	cam->savePic("re2.jpg");
 
 	return 0;
 }

@@ -17,10 +17,19 @@ class Cam{
 		uint32_t height;
 		Cam(const char * device, uint32_t width, uint32_t height);
 		~Cam();
-		unsigned char* getrgb();
+		unsigned char* takePic();
+		bool savePic(const char * name);
 };
 
-unsigned char* Cam::getrgb(){
+bool Cam::savePic(const char * name){
+	if(rgb == NULL) return false;
+	FILE* out = fopen(name, "w");
+	jpeg(out, rgb, width, height, 100);
+	fclose(out);
+	return true;
+}
+
+unsigned char* Cam::takePic(){
 	if(rgb != NULL) {
 		free(rgb);
 		rgb = NULL;
