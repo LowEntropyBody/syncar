@@ -90,7 +90,7 @@ void ThreadCam::thread_run() {
 }
 void ThreadCam::thread_stop(){
 	run_flag = false;
-	t.join();
+	t->join();
 }
 ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height){
 	t = NULL;
