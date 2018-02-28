@@ -96,7 +96,7 @@ ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height){
 	t = NULL;
 	run_flag = true;
 	cam = new Cam(device, width, height);
-	cam_name = device
+	cam_name = device;
 }
 
 
