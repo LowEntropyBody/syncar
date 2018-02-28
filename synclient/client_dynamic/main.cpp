@@ -14,13 +14,23 @@
 
 int main(int argc, char* argv[]){
 	ThreadCam* tc1 = new ThreadCam("/dev/video0", 640, 360);
+	ThreadCam* tc2 = new ThreadCam("/dev/video1", 640, 360);
 	tc1->thread_run();
+	tc2->thread_run();
 	int i = 0;
-	while(i < 10){
+	int j = 0;
+	while(i < 10 || j < 10){
 		if(tc1 -> get_move_info() != NULL){
+			cout<< "1111111:" << endl;
 			tc1 -> show();
 			i++;
 		}
+		if(tc2 -> get_move_info() != NULL){
+			cout<< "222222:" << endl;
+			tc2 -> show();
+			j++;
+		}
+		usleep(1000*10);
 	}
 	tc1->thread_stop();
 	cout << "main" << endl;
