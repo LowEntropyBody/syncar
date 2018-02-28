@@ -15,9 +15,11 @@
 int main(int argc, char* argv[]){
 	ThreadCam* tc1 = new ThreadCam("/dev/video0", 640, 360);
 	ThreadCam* tc2 = new ThreadCam("/dev/video1", 640, 360);
-	tc1.thread_run();
-	tc2.thread_run();
+	tc1 -> thread_run();
+	tc2 -> thread_run();
 	usleep(1000*5133);
+	tc1 -> thread_stop();
+	tc2 -> thread_stop();
 	cout << "main" << endl;
 	return 0;
 }

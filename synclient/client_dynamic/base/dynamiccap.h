@@ -5,6 +5,8 @@
 #include <math.h>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <thread>
 using namespace std;
 
 
@@ -67,7 +69,7 @@ Cam::~Cam(){
 class ThreadCam{
 	private:
 		Cam* cam;
-		String cam_name;
+		string cam_name;
 		thread* t;
 		bool run_flag;
 		void run();
@@ -86,7 +88,7 @@ void ThreadCam::run(){
 void ThreadCam::thread_run() {
    t = new thread(&ThreadCam::run, this);
 }
-void thread_stop(){
+void ThreadCam::thread_stop(){
 	run_flag = false;
 	t.join();
 }
