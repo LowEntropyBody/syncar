@@ -15,7 +15,7 @@
 
 
 int main(int argc, char* argv[]){
-	DynamicCap dc = new DynamicCap();
+	DynamicCap* dc = new DynamicCap();
 
 	return 0;
 }
