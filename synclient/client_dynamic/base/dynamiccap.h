@@ -45,11 +45,17 @@ unsigned char* Cam::takePic(){
 Cam::Cam(const char * device, uint32_t width_temp, uint32_t height_temp){
 	camera = camera_open(device, width_temp, height_temp);
 	camera_init(camera);
+	camera_start(camera);
 	timeout.tv_sec = 1;
 	timeout.tv_usec = 0;
+	// 跳过前面的5帧图像 
+	for (int i = 0; i < 5; i++) {
+		camera_frame(camera, timeout);
+	}
 	rgb = NULL;
 	width = width_temp;
 	height = height_temp;
+	camera_stop(camera);
 }
 
 Cam::~Cam(){
