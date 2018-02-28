@@ -17,11 +17,11 @@ class Cam{
 		uint32_t height;
 		Cam(const char * device, uint32_t width, uint32_t height);
 		~Cam();
-		unsigned char* takePic();
-		bool savePic(const char * name);
+		unsigned char* take_pic();
+		bool save_pic(const char * name);
 };
 
-bool Cam::savePic(const char * name){
+bool Cam::save_pic(const char * name){
 	if(rgb == NULL) return false;
 	FILE* out = fopen(name, "w");
 	jpeg(out, rgb, width, height, 100);
@@ -29,7 +29,7 @@ bool Cam::savePic(const char * name){
 	return true;
 }
 
-unsigned char* Cam::takePic(){
+unsigned char* Cam::take_pic(){
 	if(rgb != NULL) {
 		free(rgb);
 		rgb = NULL;
@@ -64,25 +64,38 @@ Cam::~Cam(){
 	camera_close(camera);
 }
 
-class DynamicCap{
-	vector<Cam*> cameras;
+class ThreadCam{
+	private:
+		Cam* cam;
+		String cam_name;
+		thread* t;
+		bool run_flag;
+		void run();
 	public:
-		DynamicCap();
-		~DynamicCap();
+		ThreadCam(const char * device, uint32_t width, uint32_t height);
+		~ThreadCam();
+		void thread_run();
+		void thread_stop();
 };
-
-DynamicCap::DynamicCap(){
-	cameras.push_back(new Cam("/dev/video0", 640, 360));
-	cameras.push_back(new Cam("/dev/video1", 640, 360));
-	cameras.push_back(new Cam("/dev/video2", 640, 360));
-	usleep(1000*500);
-	cameras[0]->takePic();
-	//cameras[0]->savePic("re1.jpg");
-	cameras[1]->takePic();
-	//cameras[1]->savePic("re2.jpg");
-	cameras[2]->takePic();
-	//cameras[2]->savePic("re3.jpg");
-	
+void ThreadCam::run(){
+	while(run_flag){
+		cout<< "in: " << cam_name << endl;
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));  // 2 休眠100ms
+	}	
 }
+void ThreadCam::thread_run() {
+   t = new thread(&ThreadCam::run, this);
+}
+void thread_stop(){
+	run_flag = false;
+	t.join();
+}
+ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height){
+	t = NULL;
+	run_flag = true;
+	cam = new Cam(device, width, height);
+	cam_name = device
+}
+
 
 #endif
