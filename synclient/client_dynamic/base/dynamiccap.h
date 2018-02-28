@@ -88,6 +88,7 @@ void ThreadCam::run(){
 	while(run_flag){
 		cout << "cam->width:" << cam->width <<endl; 
 		deal_img->find_aim(cam->take_pic(), cam->width, cam-> height);
+		deal_img->show();
 		std::this_thread::sleep_for(std::chrono::milliseconds(500));  // 2 休眠500ms
 	}	
 }

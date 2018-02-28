@@ -66,22 +66,31 @@ void RGB2HSL::convert(int r_temp, int g_temp, int b_temp){
 
 class DealImg{
 	private:
+		AimInfor* infor;
 		RGB2HSL rgb2hsl;
 		bool color_match_red(int r,int g,int b);
 		bool judge_rect(AreaInfor* ar);
 		AreaInfor* deal_area(unsigned char* flags,int height,int width,int start_x,int start_y);
 		void compare_two_ainfor(AreaInfor* a,AreaInfor* b);
 	public:
+		double distance;
+		double center distance;
+		double degree;
 		DealImg();
 		~DealImg();
-		AimInfor* find_aim(unsigned char* rgb, int w, int h);		
+		AimInfor* find_aim(unsigned char* rgb, int w, int h);
+		void show();
+		
 };
 
 DealImg::DealImg(){
-	
+	infor = (AimInfor*)malloc(sizeof (AimInfor));
+	distance = 0;
+	center_distance = 0;
+	degree = 0;
 }
 DealImg::~DealImg(){
-
+	free(infor);
 }
 
 //颜色是否匹配->红
@@ -99,7 +108,6 @@ bool DealImg::color_match_red(int r,int g,int b){
 AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 	//用于计算连通图
 	unsigned char* flags = (unsigned char*)calloc(w * h, sizeof (unsigned char));
-	AimInfor* infor = (AimInfor*)malloc(sizeof (AimInfor));	
 	infor -> isfind = false;
 	infor -> center_x = 0;
 	infor -> center_y = 0;
@@ -128,7 +136,7 @@ AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 			if(flags[i * w + j] == 0){
 				AreaInfor* temp_area = deal_area(flags,w,h,i,j);
 				if(judge_rect(temp_area)){
-					
+					/**
 					printf("(%d,%d)\n",i,j);
 					printf("area:%d\n",temp_area->area);
 					printf("left_x:%d\n",temp_area->left_x);
@@ -145,7 +153,7 @@ AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 					(temp_area -> right_y + temp_area -> left_y)/2,
 					(temp_area -> bottom_x - temp_area -> top_x),
 					(temp_area -> right_y - temp_area -> left_y));
-					
+					**/
 					//保存结果
 					infor -> isfind = true;
 					if(infor -> area < temp_area -> area){
@@ -161,6 +169,20 @@ AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 		}
 	}
 	free(flags);
+	if(infor -> isfind){
+		distance = (double)(707.14 * 21)/(double)infor -> l;
+		degree = 0;
+		if(infor -> center_y > 320){
+			double k = (double)(640 - infor -> center_y)/(double)(infor -> center_y - 320);
+			degree = -atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+		}else if (infor -> center_y < 320){
+			double k = (double)(infor -> center_y)/(double)(320 - infor -> center_y);
+			degree = atan(1/((1+k)*sqrt(3)))*180.0/3.14159;
+		}
+		// 余弦定理算机器人中心距目标多远c^2 = a^2 + b^2 - 2abcos(<c)
+		center_distance = sqrt(14.5 * 14.5 + distance * distance -
+						2 * 14.5 * distance * cos((double)(180 - abs(degree))/180.0 * 3.1415926));
+	}
 	return infor;
 }
 
@@ -254,6 +276,24 @@ void DealImg::compare_two_ainfor(AreaInfor* a,AreaInfor* b){
 		a -> bottom_x = b -> bottom_x;
 		a -> bottom_y = b -> bottom_y;
 	}
+}
+
+// 输出信息
+void DealImg::show(){
+	cout << endl << "--------------------------" << endl;
+	if(infor != NULL){
+		if(infor->isfind){
+			cout << " distance: " << distance << endl;
+			cout << " center distance: " << center_distance << endl;
+			cout << " degree: " << degree << endl;
+			cout << " infor->isfind: " << "yes" << endl;
+			cout << " center: (" << infor->center_x <<", "<< infor->center_y <<")"<<endl;
+			cout << " infor->l: " << infor->l <<endl;
+			cout << " infor->w: " << infor->w <<endl;
+			cout << " infor->area: " << infor->area <<endl;
+		}else cout << " can not find target" << endl;
+	}else cout << " infor is NULL" << endl;
+	cout << "--------------------------" << endl;
 }
 
 /**
