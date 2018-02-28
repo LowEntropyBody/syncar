@@ -77,11 +77,11 @@ DynamicCap::DynamicCap(){
 	cameras.push_back(new Cam("/dev/video2", 640, 360));
 	usleep(1000*500);
 	cameras[0]->takePic();
-	cameras[0]->savePic("re1.jpg");
+	//cameras[0]->savePic("re1.jpg");
 	cameras[1]->takePic();
-	cameras[1]->savePic("re2.jpg");
+	//cameras[1]->savePic("re2.jpg");
 	cameras[2]->takePic();
-	cameras[2]->savePic("re3.jpg");
+	//cameras[2]->savePic("re3.jpg");
 	
 }
 
