@@ -73,6 +73,7 @@ class DealImg{
 		AreaInfor* deal_area(unsigned char* flags,int height,int width,int start_x,int start_y);
 		void compare_two_ainfor(AreaInfor* a,AreaInfor* b);
 	public:
+		bool isfind;
 		double distance;
 		double center_distance;
 		double degree;
@@ -88,6 +89,7 @@ DealImg::DealImg(){
 	distance = 0;
 	center_distance = 0;
 	degree = 0;
+	isfind = false;
 }
 DealImg::~DealImg(){
 	free(infor);
@@ -108,6 +110,7 @@ bool DealImg::color_match_red(int r,int g,int b){
 AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 	//用于计算连通图
 	unsigned char* flags = (unsigned char*)calloc(w * h, sizeof (unsigned char));
+	isfind = false;
 	infor -> isfind = false;
 	infor -> center_x = 0;
 	infor -> center_y = 0;
@@ -170,6 +173,7 @@ AimInfor* DealImg::find_aim(unsigned char* rgb, int w, int h){
 	}
 	free(flags);
 	if(infor -> isfind){
+		isfind = true;
 		distance = (double)(707.14 * 21)/(double)infor -> l;
 		degree = 0;
 		if(infor -> center_y > 320){

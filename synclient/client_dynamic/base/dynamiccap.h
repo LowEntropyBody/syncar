@@ -69,6 +69,14 @@ Cam::~Cam(){
 
 
 
+typedef struct {
+  bool isfind;
+  double distance;
+  double degree;
+  double base_degree;
+  double center_distance;
+  long long index;
+} MoveInfo;
 
 class ThreadCam{
 	private:
@@ -77,19 +85,54 @@ class ThreadCam{
 		thread* t;
 		bool run_flag;
 		void run();
+		MoveInfo* move_info;
+		MoveInfo* move_info_out;
+		mutex mx;
+		DealImg* deal_img;
 	public:
 		ThreadCam(const char * device, uint32_t width, uint32_t height);
 		~ThreadCam();
 		void thread_run();
 		void thread_stop();
+		bool isfind();
+		MoveInfo* get_move_info();
+		void show();
+		
 };
+void ThreadCam::show(){
+	deal_img -> show();
+}
+MoveInfo* get_move_info(){
+	lock_guard<mutex> guard(mx);
+	if(move_info -> isfind){
+		move_info -> isfind = false;
+		move_info_out -> isfind = true;
+		move_info_out -> distance = move_info -> distance;
+		move_info_out -> degree = move_info -> degree;
+		move_info_out -> center_distance = move_info -> center_distance;
+		move_info_out -> index = move_info -> index;
+		return move_info_out;
+	}
+	return NULL;
+}
+
 void ThreadCam::run(){
-	DealImg* deal_img = new DealImg();
+	long long index = 0;
 	while(run_flag){
-		cout << "cam->width:" << cam->width <<endl; 
-		deal_img->find_aim(cam->take_pic(), cam->width, cam-> height);
-		deal_img->show();
-		std::this_thread::sleep_for(std::chrono::milliseconds(500));  // 2 休眠500ms
+		index ++;
+		if(deal_img -> find_aim(cam -> take_pic(), cam -> width, cam -> height) -> isfind){
+			lock_guard<mutex> guard(mx);
+			move_info -> isfind = true;
+			move_info -> distance = deal_img -> distance;
+			move_info -> degree = deal_img -> degree;
+			move_info -> center_distance = deal_img -> center_distance;
+			move_info -> index = index;
+		}else{
+			lock_guard<mutex> guard(mx);
+			move_info -> isfind = false;
+		}
+		//deal_img -> show();
+		this_thread::sleep_for(chrono::milliseconds(500));  // 2 休眠500ms
 	}	
 }
 void ThreadCam::thread_run() {
@@ -104,7 +147,19 @@ ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height){
 	run_flag = true;
 	cam = new Cam(device, width, height);
 	cam_name = device;
+	deal_img = new DealImg();
+	move_info = (MoveInfo*)malloc(sizeof (MoveInfo));
+	move_info_out = (MoveInfo*)malloc(sizeof (MoveInfo));
+	move_info -> isfind = false;
+	move_info -> distance = 0;
+	move_info -> degree = 0;
+	move_info -> base_degree = 0;
+	move_info -> center_distance = 0;
+	move_info -> index = 0;
 }
-
+ThreadCam::~ThreadCam(){
+	free(move_info);
+	free(move_info_out);
+}
 
 #endif

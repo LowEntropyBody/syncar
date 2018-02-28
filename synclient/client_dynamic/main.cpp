@@ -15,7 +15,13 @@
 int main(int argc, char* argv[]){
 	ThreadCam* tc1 = new ThreadCam("/dev/video0", 640, 360);
 	tc1->thread_run();
-	usleep(1000*10000);
+	int i = 0;
+	while(i < 10){
+		if(tc1 -> get_move_info() != NULL){
+			tc1 -> show();
+			i++;
+		}
+	}
 	tc1->thread_stop();
 	cout << "main" << endl;
 	return 0;
