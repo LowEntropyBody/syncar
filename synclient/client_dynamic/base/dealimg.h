@@ -78,6 +78,8 @@ class DealImg{
 		AimInfor* find_aim(unsigned char* rgb, int w, int h);		
 };
 
+DealImg::DealImg(){}
+
 //颜色是否匹配->红
 bool DealImg::color_match_red(int r,int g,int b){
 	rgb2hsl.convert(r, g, b);
