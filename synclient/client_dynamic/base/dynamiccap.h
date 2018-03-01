@@ -139,7 +139,7 @@ void ThreadCam::run(){
 			move_info -> isfind = false;
 		}
 		//deal_img -> show();
-		this_thread::sleep_for(chrono::milliseconds(500));  // 2 休眠500ms
+		//this_thread::sleep_for(chrono::milliseconds(500));  // 2 休眠500ms
 	}	
 }
 void ThreadCam::thread_run() {
