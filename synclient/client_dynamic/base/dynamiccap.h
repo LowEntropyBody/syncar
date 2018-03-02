@@ -117,6 +117,7 @@ MoveInfo* ThreadCam::get_move_info(){
 		move_info_out -> distance = move_info -> distance;
 		move_info_out -> degree = move_info -> degree;
 		move_info_out -> center_distance = move_info -> center_distance;
+		move_info_out -> base_degree = move_info -> base_degree;
 		move_info_out -> index = move_info -> index;
 		return move_info_out;
 	}
