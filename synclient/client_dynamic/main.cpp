@@ -25,6 +25,7 @@ int main(int argc, char* argv[]){
 	cam3 -> take_pic();
 	cam3 -> save_pic("re3.jpg");
 	**/
+	
  	cout << "--------------------------START" << endl;
 	Car* car = new Car();
 	car -> move_frist_start();
