@@ -42,7 +42,7 @@ int main(int argc, char* argv[]){
 		for(int i = 0; i < cams.size(); i++){
 			move_info = cams[i] -> get_move_info();
 			if(move_info != NULL){
-				cout << endl << "-----Cam Index:" << i <<"------"endl;
+				cout << endl << "-----Cam Index:" << i << "------" << endl;
 				car -> move_rotate(car -> now_degree + move_info -> base_degree + move_info -> degree);
 				cams[i] -> show();
 				break;
