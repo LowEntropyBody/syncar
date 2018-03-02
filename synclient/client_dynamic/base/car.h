@@ -19,7 +19,7 @@ class CarSpeed{
 };
 void CarSpeed::move(double degree, double distance, double base_speed){
 	degree = degree / 180 * 3.1415926;
-	double x = - distance * sin(degree);
+	double x = distance * sin(degree);
 	double y = distance * cos(degree);
 	double x_abs = x;
 	double y_abs = y;
