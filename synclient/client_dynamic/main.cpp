@@ -15,12 +15,14 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
+	/*
 	CarSpeed* cs = new CarSpeed(); 
 	cs -> move_frist_start();
 	cs -> speed_x_y_z(-20, 20, 0);
 	usleep(1000*2000);
 	cs -> speed_x_y_z(0, 0, 0);
-	/**
+	*/
+	
  	cout << "--------------------------START" << endl;
 	CarSpeed* cs = new CarSpeed(); 
 	cs -> move_frist_start();
@@ -57,7 +59,7 @@ int main(int argc, char* argv[]){
 	for(int i = 0; i < cams.size(); i++) 
 		cams[i] -> thread_stop();
 	cout << "-------------------------END" << endl;
-	**/
+	
 	
 	return 0;
 }
