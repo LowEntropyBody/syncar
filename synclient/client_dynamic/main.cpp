@@ -48,6 +48,7 @@ int main(int argc, char* argv[]){
 				cout << "base_degree:" << move_info -> base_degree << endl;
 				cout << "degree:" << move_info -> degree << endl;
 				car -> move_rotate(car -> now_degree + move_info -> base_degree + move_info -> degree);
+				car -> move_forward(move_info -> distance/2);
 				cams[i] -> show();
 				break;
 			}
