@@ -44,7 +44,7 @@ int main(int argc, char* argv[]){
 		usleep(1000*200);
 		dd ++;
 		if(dd%5 == 0) { 
-			//cs -> speed_x_y_z(0, 0, 0);
+			cs -> speed_x_y_z(0, 0, 0);
 			cout << "This is " << dd/5 << "s" << endl;
 		}
 	}
