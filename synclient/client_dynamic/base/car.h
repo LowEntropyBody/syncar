@@ -47,7 +47,7 @@ void CarSpeed::speed_x_y_z(int x, int y, int z){
     tcflush(usart_fd, TCOFLUSH);//Çå¿Õout»º³åÇø
 }
 
-void CCarSpeed::move_frist_start(){
+void CarSpeed::move_frist_start(){
 	char ch[1] = {0x00};
 	int re = usart_init();
 	if(re < 0) exit(-1);
