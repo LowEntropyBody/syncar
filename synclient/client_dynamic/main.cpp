@@ -30,9 +30,9 @@ int main(int argc, char* argv[]){
 	car -> move_frist_start();
 	
 	vector<ThreadCam*> cams;
-	cams.push_back(new ThreadCam("/dev/video0", 640, 360, 35));
+	cams.push_back(new ThreadCam("/dev/video0", 640, 360, -35));
 	cams.push_back(new ThreadCam("/dev/video1", 640, 360, 0));
-	cams.push_back(new ThreadCam("/dev/video2", 640, 360, -35));
+	cams.push_back(new ThreadCam("/dev/video2", 640, 360, 35));
 	for(int i = 0; i < cams.size(); i++) 
 		cams[i] -> thread_run();
 	
@@ -42,8 +42,8 @@ int main(int argc, char* argv[]){
 		for(int i = 0; i < cams.size(); i++){
 			move_info = cams[i] -> get_move_info();
 			if(move_info != NULL){
-				cout<< "Cam Index:" << i <<endl;
-				car -> move_rotate(move_info -> base_degree + move_info -> degree);
+				cout << endl << "-----Cam Index:" << i <<"------"endl;
+				car -> move_rotate(car -> now_degree + move_info -> base_degree + move_info -> degree);
 				cams[i] -> show();
 				break;
 			}

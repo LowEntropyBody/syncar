@@ -4,8 +4,8 @@
 #include "usart.h"
 
 class Car{
-	double now_degree;
 	public:
+		double now_degree;
 		Car();
 		~Car();
 		void move_frist_start();
