@@ -30,9 +30,9 @@ int main(int argc, char* argv[]){
 	car -> move_frist_start();
 	
 	vector<ThreadCam*> cams;
-	cams.push_back(new ThreadCam("/dev/video0", 640, 360, -35));
-	cams.push_back(new ThreadCam("/dev/video1", 640, 360, -3));
-	cams.push_back(new ThreadCam("/dev/video2", 640, 360, 35));
+	cams.push_back(new ThreadCam("/dev/video0", 640, 360, 35));
+	cams.push_back(new ThreadCam("/dev/video1", 640, 360, 0));
+	cams.push_back(new ThreadCam("/dev/video2", 640, 360, -35));
 	for(int i = 0; i < cams.size(); i++) 
 		cams[i] -> thread_run();
 	
