@@ -68,6 +68,7 @@ void CarSpeed::speed_x_y_z(int x, int y, int z){
 	high = z/256;
 	ch[7] = high;
 	ch[8] = low;
+	ch[9] = direction;
 	write(usart_fd, ch, sizeof(ch));
 	tcflush(usart_fd, TCIFLUSH);//清空in缓冲区
     tcflush(usart_fd, TCOFLUSH);//清空out缓冲区
