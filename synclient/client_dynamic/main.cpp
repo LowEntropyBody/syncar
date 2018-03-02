@@ -15,9 +15,12 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-	
-
-	
+	CarSpeed* cs = new CarSpeed(); 
+	cs -> move_frist_start();
+	cs -> speed_x_y_z(-20, 20, 0);
+	usleep(1000*2000);
+	cs -> speed_x_y_z(0, 0, 0);
+	/**
  	cout << "--------------------------START" << endl;
 	CarSpeed* cs = new CarSpeed(); 
 	cs -> move_frist_start();
@@ -36,6 +39,7 @@ int main(int argc, char* argv[]){
 			move_info = cams[i] -> get_move_info();
 			if(move_info != NULL){
 				cout << endl << "-----Cam Index:" << i + 1 << "------" << endl;
+				
 				cs -> move(move_info -> base_degree + move_info -> degree, move_info -> distance, 20);
 				cams[i] -> show();
 				break;
@@ -53,7 +57,7 @@ int main(int argc, char* argv[]){
 	for(int i = 0; i < cams.size(); i++) 
 		cams[i] -> thread_stop();
 	cout << "-------------------------END" << endl;
-	
+	**/
 	
 	return 0;
 }
