@@ -8,6 +8,7 @@
 **  Date: 2018/2
 */
 #include "base/dynamiccap.h"
+#include "base/car.h"
 #include <math.h>
 #include <iostream>
 #include <vector>
@@ -24,41 +25,37 @@ int main(int argc, char* argv[]){
 	cam3 -> take_pic();
 	cam3 -> save_pic("re3.jpg");
 	**/
- 	
+ 	cout << "--------------------------START" << endl;
+	Car* car = new Car();
+	car -> move_frist_start();
 	
-	ThreadCam* tc1 = new ThreadCam("/dev/video0", 640, 360);
-	ThreadCam* tc2 = new ThreadCam("/dev/video1", 640, 360);
-	ThreadCam* tc3 = new ThreadCam("/dev/video2", 640, 360);
-	tc1->thread_run();
-	tc2->thread_run();
-	tc3->thread_run();
+	vector<ThreadCam*> cams;
+	cams.push_back(new ThreadCam("/dev/video0", 640, 360, -35));
+	cams.push_back(new ThreadCam("/dev/video1", 640, 360, -3));
+	cams.push_back(new ThreadCam("/dev/video2", 640, 360, 35));
+	for(int i = 0; i < cams.size(); i++) 
+		cams[i] -> thread_run();
 	
-	int i = 0;
-	int j = 0;
-	int k = 0;
-	while(i < 3 || j < 3 || k < 3){
-		if(tc1 -> get_move_info() != NULL){
-			cout<< "1111111:" << endl;
-			tc1 -> show();
-			i++;
+	int dd = 0;
+	while(dd < 1000){
+		MoveInfo* move_info;
+		for(int i = 0; i < cams.size(); i++){
+			move_info = cams[i] -> get_move_info();
+			if(move_info != NULL){
+				cout<< "Cam Index:" << i <<endl;
+				car -> move_rotate(move_info -> base_degree + move_info -> degree);
+				cams[i] -> show();
+				break;
+			}
 		}
-		if(tc2 -> get_move_info() != NULL){
-			cout<< "222222:" << endl;
-			tc2 -> show();
-			j++;
-		}
-		if(tc3 -> get_move_info() != NULL){
-			cout<< "333333:" << endl;
-			tc3 -> show();
-			k++;
-		}
-		usleep(1000*10);
+		usleep(1000*100);
+		dd ++;
+		if(dd%10 == 0) cout << "This is " << dd/10 << "s" << endl;
 	}
 	//usleep(1000*10000);
-	tc1->thread_stop();
-	tc2->thread_stop();
-	tc3->thread_stop();
-	cout << "main" << endl;
+	for(int i = 0; i < cams.size(); i++) 
+		cams[i] -> thread_stop();
+	cout << "-------------------------END" << endl;
 	
 	return 0;
 }
