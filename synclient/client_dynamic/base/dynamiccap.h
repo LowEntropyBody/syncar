@@ -97,7 +97,7 @@ class ThreadCam{
 		mutex mx;
 		DealImg* deal_img;
 	public:
-		ThreadCam(const char * device, uint32_t width, uint32_t height);
+		ThreadCam(const char * device, uint32_t width, uint32_t height, double base_degree);
 		~ThreadCam();
 		void thread_run();
 		void thread_stop();
@@ -149,7 +149,7 @@ void ThreadCam::thread_stop(){
 	run_flag = false;
 	t->join();
 }
-ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height){
+ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height, double base_degree){
 	t = NULL;
 	run_flag = true;
 	cam = new Cam(device, width, height);
@@ -160,7 +160,7 @@ ThreadCam::ThreadCam(const char * device, uint32_t width, uint32_t height){
 	move_info -> isfind = false;
 	move_info -> distance = 0;
 	move_info -> degree = 0;
-	move_info -> base_degree = 0;
+	move_info -> base_degree = base_degree;
 	move_info -> center_distance = 0;
 	move_info -> index = 0;
 }
