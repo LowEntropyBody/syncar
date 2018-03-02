@@ -14,7 +14,7 @@ class CarSpeed{
 		~CarSpeed();
 		void move_frist_start();
 		void speed_x_y_z(int x, int y, int z);
-		void move(double degree, double distance);
+		void move(double degree, double distance, double base_speed);
 		
 };
 void CarSpeed::move(double degree, double distance, double base_speed){
