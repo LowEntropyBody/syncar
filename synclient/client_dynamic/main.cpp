@@ -35,23 +35,28 @@ int main(int argc, char* argv[]){
 		cams[i] -> thread_run();
 	
 	int dd = 0;
-	while(dd < 500){
+	double time_move = 0;
+	double time_move_flag = 0;
+	while(dd < 1000){
 		MoveInfo* move_info;
 		for(int i = 0; i < cams.size(); i++){
 			move_info = cams[i] -> get_move_info();
 			if(move_info != NULL){
 				cout << endl << "-----Cam Index:" << i + 1 << "------" << endl;
-				
+				time_move = 0;
+				time_move_flag = move_info -> distance/3;
 				cs -> move(move_info -> base_degree + move_info -> degree, move_info -> distance, 20);
 				cams[i] -> show();
 				break;
 			}
 		}
-		usleep(1000*200);
+		usleep(1000*100);
 		dd ++;
-		if(dd%5 == 0) { 
+		if(dd%10 == 0) 
+			cout << "This is " << dd/10 << "s" << endl;
+		time_move ++;
+		if(time_move > time_move_flag){
 			cs -> speed_x_y_z(0, 0, 0);
-			cout << "This is " << dd/5 << "s" << endl;
 		}
 	}
 	cs -> speed_x_y_z(0, 0, 0);
