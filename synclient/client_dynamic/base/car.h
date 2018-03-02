@@ -2,6 +2,10 @@
 #define __CAR_H
 //////////////////////////////////////
 #include "usart.h"
+#include <math.h>
+#include <iostream>
+#include <vector>
+using namespace std;
 
 //速度模式
 class CarSpeed{
@@ -10,8 +14,30 @@ class CarSpeed{
 		~CarSpeed();
 		void move_frist_start();
 		void speed_x_y_z(int x, int y, int z);
+		void move(double degree, double distance);
 		
 };
+void CarSpeed::move(double degree, double distance, double base_speed){
+	degree = degree / 180 * 3.1415926;
+	double x = - distance * sin(degree);
+	double y = distance * cos(degree);
+	double x_abs = x;
+	double y_abs = y;
+	if(x < 0) x_abs = -x;
+	if(y < 0) y_abs = -y;
+	if(y_abs > x_abs){
+		x_abs = base_speed * x_abs / y_abs;
+		y_abs = base_speed;
+	}else{
+		y_abs = base_speed * y_abs / x_abs;
+		x_abs = base_speed;
+	}
+	if(x < 0) x = -x_abs; else x = x_abs;
+	if(y < 0) y = -y_abs; else y = y_abs;
+	cout << x << ",," << y << endl;
+	speed_x_y_z(x, y, 0);
+	
+}
 CarSpeed::CarSpeed(){
 	
 }

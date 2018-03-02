@@ -12,11 +12,12 @@
 #include <math.h>
 #include <iostream>
 #include <vector>
+using namespace std;
 
 int main(int argc, char* argv[]){
 	CarSpeed* cs = new CarSpeed(); 
 	cs -> move_frist_start();
-	cs -> speed_x_y_z(10,10,0);
+	cs -> move(30,100,20);
 	usleep(1000*2000);
 	cs -> speed_x_y_z(0,0,0);
 	/**
