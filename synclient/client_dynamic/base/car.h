@@ -3,9 +3,63 @@
 //////////////////////////////////////
 #include "usart.h"
 
-class Car{
+//速度模式
+class CarSpeed{
 	public:
-		double now_degree;
+		CarSpeed();
+		~CarSpeed();
+		void move_frist_start();
+		void speed_x_y_z(int x, int y, int z);
+		
+};
+CarSpeed::CarSpeed(){
+	
+}
+void CarSpeed::speed_x_y_z(int x, int y, int z){
+	char ch[10] = {0xff,0xfe,1,0,0,0,0,0,0,0x00};
+	char direction = 0x00;
+	if(x < 0){
+		direction += 4;
+		x = -x;
+	}
+	if(y < 0){
+		direction += 2;
+		y = -y;
+	}
+	if(z < 0){
+		direction += 1;
+		z = -z;
+	}
+	char low = x%256;
+	char high = x/256;
+	ch[3] = high;
+	ch[4] = low;
+	low = y%256;
+	high = y/256;
+	ch[5] = high;
+	ch[6] = low;
+	low = z%256;
+	high = z/256;
+	ch[7] = high;
+	ch[8] = low;
+	write(usart_fd, ch, sizeof(ch));
+	tcflush(usart_fd, TCIFLUSH);//清空in缓冲区
+    tcflush(usart_fd, TCOFLUSH);//清空out缓冲区
+}
+
+void CCarSpeed::move_frist_start(){
+	char ch[1] = {0x00};
+	int re = usart_init();
+	if(re < 0) exit(-1);
+	write(usart_fd, ch, sizeof(ch));
+	tcflush(usart_fd, TCIFLUSH);//清空in缓冲区
+    tcflush(usart_fd, TCOFLUSH);//清空out缓冲区
+}
+
+
+class Car{
+	double now_degree;
+	public:
 		Car();
 		~Car();
 		void move_frist_start();

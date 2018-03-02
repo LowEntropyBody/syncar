@@ -14,18 +14,12 @@
 #include <vector>
 
 int main(int argc, char* argv[]){
+	CarSpeed* cs = new CarSpeed(); 
+	cs -> move_frist_start();
+	cs -> speed_x_y_z(10,10,0);
+	usleep(1000*2);
+	cs -> speed_x_y_z(0,0,0);
 	/**
-	Cam* cam1 = new Cam("/dev/video0", 640, 360);
-	Cam* cam2 = new Cam("/dev/video1", 640, 360);
-	Cam* cam3 = new Cam("/dev/video2", 640, 360);
-	cam1 -> take_pic();
-	cam1 -> save_pic("re1.jpg");
-	cam2 -> take_pic();
-	cam2 -> save_pic("re2.jpg");
-	cam3 -> take_pic();
-	cam3 -> save_pic("re3.jpg");
-	**/
-	
  	cout << "--------------------------START" << endl;
 	Car* car = new Car();
 	car -> move_frist_start();
@@ -61,6 +55,7 @@ int main(int argc, char* argv[]){
 	for(int i = 0; i < cams.size(); i++) 
 		cams[i] -> thread_stop();
 	cout << "-------------------------END" << endl;
+	**/
 	
 	return 0;
 }
